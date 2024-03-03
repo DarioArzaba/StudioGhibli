@@ -1,24 +1,24 @@
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {getFilms} from '../app/actions/actionCreators';
-import {Pressable, Text} from 'react-native';
-import {StyleSheet} from 'react-native';
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Pressable, Text, StyleSheet} from 'react-native';
+import {
+  getFilms,
+  toggleGetFilmsButtonIsPressed,
+} from '../app/actions/actionCreators';
+import {selectButtonIsPressed} from '../app/selectors/uiSelector';
 
-const ActionButton = (): React.JSX.Element => {
-  // Use redux?
-  const [isPressed, setIsPressed] = useState(false);
-  const handlePressIn = () => setIsPressed(true);
-  const handlePressOut = () => setIsPressed(false);
+const GetFilmsButton = (): React.JSX.Element => {
   const dispatch = useDispatch();
-  const handleClick = () => {
-    dispatch(getFilms());
-  };
+  const handleClick = () => dispatch(getFilms());
+  const handlePressIn = () => dispatch(toggleGetFilmsButtonIsPressed());
+  const handlePressOut = () => dispatch(toggleGetFilmsButtonIsPressed());
+  const buttonIsPressed = useSelector(selectButtonIsPressed);
 
   return (
     <Pressable
       style={[
         styles.getFilmsButton,
-        isPressed
+        buttonIsPressed
           ? styles.getFilmsButtonPressed
           : styles.getFilmsButtonReleased,
       ]}
@@ -52,4 +52,4 @@ export const styles = StyleSheet.create({
   },
 });
 
-export default ActionButton;
+export default GetFilmsButton;

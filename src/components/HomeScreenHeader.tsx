@@ -12,10 +12,10 @@ const HomeScreenHeader = (): React.JSX.Element => (
 const styles = StyleSheet.create({
   header: {
     width: '70%',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     fontFamily: 'Verdana, Geneva, Tahoma, sans-serif',
-    flexDirection: 'column',
     paddingTop: 40,
     paddingHorizontal: 10,
     backgroundColor: '#282c34c0',

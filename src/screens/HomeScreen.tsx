@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   ActivityIndicator,
   ImageBackground,
@@ -7,15 +7,16 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {selectFilms, selectIsLoading} from '../app/selectors/filmsSelector';
 import HomeScreenHeader from '../components/HomeScreenHeader';
 import HomeScreenFooter from '../components/HomeScreenFooter';
 import FilmList from '../components/FilmList';
 import FilmListHeader from '../components/FilmListHeader';
+import {updateOrientationState} from '../app/actions/actionCreators';
+import {selectCurrentOrientation} from '../app/selectors/uiSelector';
 
 const HomeScreen = (): React.JSX.Element => {
-  const [screen, setScreen] = useState(Dimensions.get('window'));
   const films = useSelector(selectFilms);
   const isLoading = useSelector(selectIsLoading);
   const backgroundImageOne = {
@@ -26,17 +27,18 @@ const HomeScreen = (): React.JSX.Element => {
   };
 
   const filmsFetched = films && films.length !== 0;
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    const updateDimensions = () => setScreen(Dimensions.get('window'));
+    const updateDimensions = () => dispatch(updateOrientationState());
     const subscription = Dimensions.addEventListener(
       'change',
       updateDimensions,
     );
 
-    return () => subscription.remove(); // Cleanup
+    return () => subscription.remove();
   });
-  const isPortrait = screen.height >= screen.width;
+  const screenDimentions = useSelector(selectCurrentOrientation);
+  const isPortrait = screenDimentions.height >= screenDimentions.width;
 
   return (
     <SafeAreaView style={portraitStyles.homeScreenSafeAreaView}>

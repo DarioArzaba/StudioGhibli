@@ -8,7 +8,7 @@ import FilmListHeader from './FilmListHeader';
 
 const FilmList = (): React.JSX.Element => {
   const films = useSelector(selectFilms);
-  const renderItem = ({item}: {item: Film}) => (
+  const filmCard = ({item}: {item: Film}) => (
     <FilmCard key={item.id} film={item} />
   );
 
@@ -17,7 +17,7 @@ const FilmList = (): React.JSX.Element => {
       <FilmListHeader />
       <FlatList
         data={films || []}
-        renderItem={renderItem}
+        renderItem={filmCard}
         keyExtractor={item => item.id}
       />
     </View>
