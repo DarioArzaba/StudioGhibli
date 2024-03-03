@@ -1,12 +1,9 @@
 import React from 'react';
 import {
   ActivityIndicator,
-  Image,
   ImageBackground,
   SafeAreaView,
   ScrollView,
-  Text,
-  View,
 } from 'react-native';
 import {StyleSheet} from 'react-native';
 import HomeScreenHeader from '../components/HomeScreenHeader';
@@ -15,7 +12,7 @@ import FilmList from '../components/FilmList';
 import {useSelector} from 'react-redux';
 import {selectFilms, selectIsLoading} from '../app/selectors/filmsSelector';
 
-const HomeScreenTwo = (): React.JSX.Element => {
+const HomeScreen = (): React.JSX.Element => {
   const films = useSelector(selectFilms);
   const isLoading = useSelector(selectIsLoading);
   const image = {uri: 'https:www.ghibli.jp/gallery/chihiro039.jpg'};
@@ -60,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreenTwo;
+export default HomeScreen;
