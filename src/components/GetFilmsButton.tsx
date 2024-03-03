@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {getFilms} from '../app/actions/actionCreators';
-import {Button, Pressable, Text} from 'react-native';
+import {Pressable, Text} from 'react-native';
 import {StyleSheet} from 'react-native';
 
 const ActionButton = (): React.JSX.Element => {
@@ -17,21 +17,21 @@ const ActionButton = (): React.JSX.Element => {
   return (
     <Pressable
       style={[
-        styles.actionButtonGetFilms,
+        styles.getFilmsButton,
         isPressed
-          ? styles.actionButtonGetFilmsPressed
-          : styles.actionButtonGetFilmsReleased,
+          ? styles.getFilmsButtonPressed
+          : styles.getFilmsButtonReleased,
       ]}
       onPress={handleClick}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}>
-      <Text>Get Films</Text>
+      <Text style={styles.getFilmsButtonText}>Get Films</Text>
     </Pressable>
   );
 };
 
 export const styles = StyleSheet.create({
-  actionButtonGetFilms: {
+  getFilmsButton: {
     marginTop: 20,
     marginBottom: 16,
     paddingHorizontal: 20,
@@ -41,11 +41,14 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: '#008080',
   },
-  actionButtonGetFilmsPressed: {
+  getFilmsButtonPressed: {
     backgroundColor: '#00A0A0',
   },
-  actionButtonGetFilmsReleased: {
+  getFilmsButtonReleased: {
     backgroundColor: '#008080',
+  },
+  getFilmsButtonText: {
+    color: 'white',
   },
 });
 

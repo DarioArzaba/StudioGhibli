@@ -11,8 +11,6 @@ export const styles = StyleSheet.create({
   footer: {
     padding: 10,
     textAlign: 'center',
-    position: 'absolute',
-    bottom: 0,
     width: '100%',
     backgroundColor: '#282c34',
   },

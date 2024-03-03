@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import ActionButton from './ActionButton';
+import GetFilmsButton from './GetFilmsButton';
 
 const HomeScreenHeader = (): React.JSX.Element => (
   <View style={styles.header}>
     <Text style={styles.headerText}>Studio Ghibli Films</Text>
-    <ActionButton />
+    <GetFilmsButton />
   </View>
 );
 
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   headerText: {
-    fontSize: 32,
+    fontSize: 28,
     color: 'white',
     textAlign: 'center',
   },
