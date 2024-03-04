@@ -13,12 +13,23 @@ import HomeScreenHeader from '../components/HomeScreenHeader';
 import HomeScreenFooter from '../components/HomeScreenFooter';
 import FilmList from '../components/FilmList';
 import FilmListHeader from '../components/FilmListHeader';
+import {selectScreenDimensions} from '../app/selectors/uiSelector';
 import {updateOrientationState} from '../app/actions/actionCreators';
-import {selectCurrentOrientation} from '../app/selectors/uiSelector';
 
 const HomeScreen = (): React.JSX.Element => {
   const films = useSelector(selectFilms);
   const isLoading = useSelector(selectIsLoading);
+  const screenDimensions = useSelector(selectScreenDimensions);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const updateDimensions = () => dispatch(updateOrientationState());
+    const subscription = Dimensions.addEventListener(
+      'change',
+      updateDimensions,
+    );
+    return () => subscription.remove();
+  });
+
   const backgroundImageOne = {
     uri: 'https://www.ghibli.jp/gallery/chihiro039.jpg',
   };
@@ -27,18 +38,7 @@ const HomeScreen = (): React.JSX.Element => {
   };
 
   const filmsFetched = films && films.length !== 0;
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const updateDimensions = () => dispatch(updateOrientationState());
-    const subscription = Dimensions.addEventListener(
-      'change',
-      updateDimensions,
-    );
-
-    return () => subscription.remove();
-  });
-  const screenDimentions = useSelector(selectCurrentOrientation);
-  const isPortrait = screenDimentions.height >= screenDimentions.width;
+  const isPortrait = screenDimensions.height >= screenDimensions.width;
 
   return (
     <SafeAreaView style={portraitStyles.homeScreenSafeAreaView}>
@@ -47,7 +47,7 @@ const HomeScreen = (): React.JSX.Element => {
         resizeMode="cover"
         blurRadius={5}
         style={portraitStyles.homeScreenBackgroundImage}>
-        {!filmsFetched && (
+        {!filmsFetched && !isLoading && (
           <View
             style={
               isPortrait
@@ -58,7 +58,7 @@ const HomeScreen = (): React.JSX.Element => {
           </View>
         )}
         {isLoading && (
-          <View style={{width: '100%'}}>
+          <View style={portraitStyles.loadingFilmsContainer}>
             <FilmListHeader />
             <ActivityIndicator
               color="blue"
@@ -93,19 +93,15 @@ const portraitStyles = StyleSheet.create({
   homeScreenLoadingIndicator: {
     marginTop: '50%',
   },
+  loadingFilmsContainer: {
+    width: '100%',
+  },
   homeScreenHeader: {
     marginTop: '70%',
   },
 });
 
 const landscapeStyles = StyleSheet.create({
-  homeScreenSafeAreaView: {
-    flex: 1,
-  },
-  homeScreenBackgroundImage: {
-    flex: 1,
-    alignItems: 'center',
-  },
   homeScreenLoadingIndicator: {
     marginTop: '20%',
   },

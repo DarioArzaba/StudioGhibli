@@ -1,3 +1,4 @@
+import {ScaledSize} from 'react-native';
 import Film from '../../models/FilmsResponse';
 import {ActionType} from './actions';
 

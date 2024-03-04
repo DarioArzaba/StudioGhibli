@@ -1,10 +1,16 @@
 import {Dimensions} from 'react-native';
-import {UpdateOrientationState, ActionType} from '../actions/actions';
+import {
+  UpdateOrientationState,
+  ActionType,
+  ToggleGetFilmsButtonIsPressed,
+} from '../actions/actions';
 
-type UserInterfaceActions = UpdateOrientationState;
+type UserInterfaceActions =
+  | UpdateOrientationState
+  | ToggleGetFilmsButtonIsPressed;
 
 const initialState = {
-  isPortrait: Dimensions.get('window'),
+  screenDimensions: Dimensions.get('window'),
   isPressed: false,
 };
 
@@ -13,7 +19,7 @@ const uiReducer = (state = initialState, action: UserInterfaceActions) => {
     case ActionType.UPDATE_ORIENTATION_STATE:
       return {
         ...state,
-        isPortrait: Dimensions.get('window'),
+        screenDimensions: Dimensions.get('window'),
       };
     case ActionType.TOGGLE_GET_FILMS_BUTTON_IS_PRESSED:
       return {

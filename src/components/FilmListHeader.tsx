@@ -13,11 +13,10 @@ const FilmListHeader = (): React.JSX.Element => {
 
 const styles = StyleSheet.create({
   header: {
-    margin: 'auto',
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     fontFamily: 'Verdana, Geneva, Tahoma, sans-serif',
-    flexDirection: 'row',
     paddingVertical: 5,
     paddingHorizontal: 10,
     backgroundColor: '#004156',
