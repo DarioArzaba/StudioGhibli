@@ -6,6 +6,7 @@ import {
   View,
   StyleSheet,
   Dimensions,
+  Platform,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectFilms, selectIsLoading} from '../app/selectors/filmsSelector';
@@ -25,7 +26,7 @@ const HomeScreen = (): React.JSX.Element => {
       updateDimensions,
     );
     return () => subscription.remove();
-  });
+  }, []);
   const films = useSelector(selectFilms);
   const filmsFetched = films && films.length !== 0;
   const isLoading = useSelector(selectIsLoading);
@@ -33,13 +34,15 @@ const HomeScreen = (): React.JSX.Element => {
   const isPortrait = screenDimensions.height >= screenDimensions.width;
   const bgNoFilmsFetched = require('../assets/chihiro039.jpg');
   const bgFilmsFetched = require('../assets/kazetachinu024.jpg');
+  const isAndroid = Platform.OS === 'android';
+  // Move ui logic to separate file
 
   return (
     <SafeAreaView style={portraitStyles.homeScreenSafeAreaView}>
       <ImageBackground
-        source={filmsFetched ? bgNoFilmsFetched : bgFilmsFetched}
+        source={!filmsFetched ? bgNoFilmsFetched : bgFilmsFetched}
         resizeMode="cover"
-        blurRadius={5}
+        blurRadius={!isAndroid ? 5 : undefined}
         style={portraitStyles.homeScreenBackgroundImage}>
         {!filmsFetched && !isLoading && (
           <View

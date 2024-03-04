@@ -1,4 +1,3 @@
-import {ScaledSize} from 'react-native';
 import Film from '../../models/FilmsResponse';
 
 export enum ActionType {

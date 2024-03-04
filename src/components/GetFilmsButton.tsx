@@ -16,6 +16,7 @@ const GetFilmsButton = (): React.JSX.Element => {
 
   return (
     <Pressable
+      accessibilityRole="button"
       style={[
         styles.getFilmsButton,
         buttonIsPressed

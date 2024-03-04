@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import GetFilmsButton from './GetFilmsButton';
 
 const HomeScreenHeader = (): React.JSX.Element => (
-  <View style={styles.header}>
+  <View testID="HeaderContainer" style={styles.header}>
     <Text style={styles.headerText}>Studio Ghibli Films</Text>
     <GetFilmsButton />
   </View>

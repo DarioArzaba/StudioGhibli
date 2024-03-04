@@ -20,10 +20,12 @@ const FilmCard = ({film}: {film: Film}): React.JSX.Element => {
   const filmDescription = truncate(film.description, 428);
 
   const screenDimensions = useSelector(selectScreenDimensions);
-  const isPortrait = screenDimensions.height >= screenDimensions.width;
+  const isPortrait = screenDimensions?.height >= screenDimensions?.width;
 
   return (
-    <View style={isPortrait ? portraitStyles.card : landscapeStyles.card}>
+    <View
+      testID="card"
+      style={isPortrait ? portraitStyles.card : landscapeStyles.card}>
       <Image
         src={film.image}
         alt={film.title}

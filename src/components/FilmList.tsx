@@ -13,12 +13,14 @@ const FilmList = (): React.JSX.Element => {
     <FilmCard key={item.id} film={item} />
   );
   const dispatch = useDispatch();
+  // Fix infinite scroll
+  // Take first items and fake pagination (push) - slice
   const loadMoreFilms = () => {
     dispatch(getFilms());
   };
 
   return (
-    <View>
+    <View testID="FilmListContainer">
       <FilmListHeader />
       <FlatList
         data={films || []}
