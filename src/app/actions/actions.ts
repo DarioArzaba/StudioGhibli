@@ -14,7 +14,7 @@ export interface GetFilmsFetch {
 
 export interface GetFilmsSuccess {
   type: ActionType.GET_FILMS_SUCCESS;
-  payload?: Film[];
+  payload: Film[];
 }
 
 export interface GetFilmsFailure {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Film from '../models/FilmsResponse';
 
-const GHIBLI_FILMS_ENDPOINT = 'https://ghibliapi.vercel.app/films?limit=10';
+const GHIBLI_FILMS_ENDPOINT = 'https://ghibliapi.vercel.app/films';
 
 export const fetchFilmsResponse = async (): Promise<Film[]> => {
   try {
