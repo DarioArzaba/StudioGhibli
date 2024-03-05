@@ -3,6 +3,6 @@ module.exports = {
   transform: {
     '^.+\\.(png|jpg|jpeg|gif|webp|svg)$': 'jest-transform-stub',
   },
-  setupFilesAfterEnv: ['@testing-library/react-native/extend-expect'],
+  //setupFilesAfterEnv: ['@testing-library/react-native/extend-expect'],
   //testEnvironment: 'jsdom',
 };

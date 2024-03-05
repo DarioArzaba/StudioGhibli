@@ -43,6 +43,7 @@ describe('FilmCard tests', () => {
     expect(truncatedDescription.children).not.toEqual(longDescription);
   });
 
+  //Fix redux dispatch
   it('should render correctly in landscape mode', () => {
     //const mockScreenDimensions = {height: 500, width: 1000};
     //const useSelector = jest.fn();

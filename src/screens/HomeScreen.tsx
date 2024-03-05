@@ -6,12 +6,10 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  Platform,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectFilms, selectIsLoading} from '../app/selectors/filmsSelector';
-import {selectScreenDimensions} from '../app/selectors/uiSelector';
+import {useDispatch} from 'react-redux';
 import {updateOrientationState} from '../app/actions/actionCreators';
+import {useHomeScreenLogic} from '../hooks/useHomeScreenLogic';
 import HomeScreenHeader from '../components/HomeScreenHeader';
 import HomeScreenFooter from '../components/HomeScreenFooter';
 import FilmList from '../components/FilmList';
@@ -19,6 +17,7 @@ import FilmListHeader from '../components/FilmListHeader';
 
 const HomeScreen = (): React.JSX.Element => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     const updateDimensions = () => dispatch(updateOrientationState());
     const subscription = Dimensions.addEventListener(
@@ -26,44 +25,40 @@ const HomeScreen = (): React.JSX.Element => {
       updateDimensions,
     );
     return () => subscription.remove();
-  }, []);
-  const films = useSelector(selectFilms);
-  const filmsFetched = films && films.length !== 0;
-  const isLoading = useSelector(selectIsLoading);
-  const screenDimensions = useSelector(selectScreenDimensions);
-  const isPortrait = screenDimensions.height >= screenDimensions.width;
-  const bgNoFilmsFetched = require('../assets/chihiro039.jpg');
-  const bgFilmsFetched = require('../assets/kazetachinu024.jpg');
-  const isAndroid = Platform.OS === 'android';
-  // Move ui logic to separate file
+  });
+
+  const {
+    filmsFetched,
+    isLoading,
+    isPortrait,
+    isAndroid,
+    bgNoFilmsFetched,
+    bgFilmsFetched,
+  } = useHomeScreenLogic();
 
   return (
-    <SafeAreaView style={portraitStyles.homeScreenSafeAreaView}>
+    <SafeAreaView style={portraitStyles.safeAreaView}>
       <ImageBackground
         source={!filmsFetched ? bgNoFilmsFetched : bgFilmsFetched}
         resizeMode="cover"
         blurRadius={!isAndroid ? 5 : undefined}
-        style={portraitStyles.homeScreenBackgroundImage}>
+        style={portraitStyles.bgImage}>
         {!filmsFetched && !isLoading && (
           <View
-            style={
-              isPortrait
-                ? portraitStyles.homeScreenHeader
-                : landscapeStyles.homeScreenHeader
-            }>
+            style={isPortrait ? portraitStyles.header : landscapeStyles.header}>
             <HomeScreenHeader />
           </View>
         )}
         {isLoading && (
-          <View style={portraitStyles.loadingFilmsContainer}>
+          <View style={portraitStyles.fetchingFilmsContainer}>
             <FilmListHeader />
             <ActivityIndicator
               color="blue"
               size={'large'}
               style={
                 isPortrait
-                  ? portraitStyles.homeScreenLoadingIndicator
-                  : landscapeStyles.homeScreenLoadingIndicator
+                  ? portraitStyles.loadingIndicator
+                  : landscapeStyles.loadingIndicator
               }
             />
           </View>
@@ -76,29 +71,29 @@ const HomeScreen = (): React.JSX.Element => {
 };
 
 const portraitStyles = StyleSheet.create({
-  homeScreenSafeAreaView: {
+  safeAreaView: {
     flex: 1,
   },
-  homeScreenBackgroundImage: {
+  bgImage: {
     flex: 1,
     alignItems: 'center',
   },
-  homeScreenLoadingIndicator: {
+  loadingIndicator: {
     marginTop: '50%',
   },
-  loadingFilmsContainer: {
+  fetchingFilmsContainer: {
     width: '100%',
   },
-  homeScreenHeader: {
+  header: {
     marginTop: '70%',
   },
 });
 
 const landscapeStyles = StyleSheet.create({
-  homeScreenLoadingIndicator: {
+  loadingIndicator: {
     marginTop: '20%',
   },
-  homeScreenHeader: {
+  header: {
     marginTop: '10%',
   },
 });
