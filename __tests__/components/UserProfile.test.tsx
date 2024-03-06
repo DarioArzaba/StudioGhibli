@@ -1,5 +1,3 @@
-//     5. UserProfile should save the changes after save button is pressed
-
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react-native';
 import UserProfile from '../../src/components/UserProfile';

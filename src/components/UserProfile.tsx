@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View, TextInput} from 'react-native';
+import {readData, storeData, updateData} from '../utils/PersistanceManager';
 
 interface UserProfileProps {
   name?: string;
@@ -11,21 +12,52 @@ const UserProfile: React.FC<UserProfileProps> = ({
   email = 'dario@gmail.com',
 }) => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>(name);
-  const [userEmail, setUserEmail] = useState<string>(email);
+
+  const fetchName = () => {
+    let userName;
+    readData('name').then(resolvedName => {
+      userName = resolvedName;
+    });
+    return userName;
+  };
+
+  const fetchEmail = () => {
+    let userEmail;
+    readData('email').then(resolvedEmail => {
+      userEmail = resolvedEmail;
+    });
+    return userEmail;
+  };
+
+  useEffect(() => {
+    const storeUserData = async () => {
+      storeData('name', name);
+      storeData('email', email);
+    };
+    storeUserData();
+  }, [name, email]);
+
+  const handleNameChange = async (newName: string) => {
+    await updateData('name', newName);
+  };
+
+  const handleEmailChange = async (newEmail: string) => {
+    await updateData('email', newEmail);
+  };
+
   return (
     <View>
       {isEditMode ? (
         <View>
           <TextInput
-            onChangeText={newName => setUserName(newName)}
+            onChangeText={handleNameChange}
             accessibilityLabel="name"
-            value={userName}
+            value={fetchName()}
           />
           <TextInput
-            onChangeText={newEmail => setUserEmail(newEmail)}
+            onChangeText={handleEmailChange}
             accessibilityLabel="email"
-            value={userEmail}
+            value={fetchEmail()}
           />
           <TouchableOpacity
             testID="save-button"
@@ -37,8 +69,8 @@ const UserProfile: React.FC<UserProfileProps> = ({
         </View>
       ) : (
         <View>
-          <Text>{userName}</Text>
-          <Text>{userEmail}</Text>
+          <Text>{fetchName()}</Text>
+          <Text>{fetchEmail()}</Text>
           <TouchableOpacity
             testID="edit-button"
             onPress={() => {
