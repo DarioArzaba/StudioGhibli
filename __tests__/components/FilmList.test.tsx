@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import FilmList from '../src/components/FilmList';
-import {mockFilms} from '../src/utils/testMocks';
+import FilmList from '../../src/components/FilmList';
+import {mockFilms} from '../../src/utils/testMocks';
 
 describe('Film List', () => {
   const mockOnLoadMoreFilms = jest.fn();

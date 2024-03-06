@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react-native';
-import HomeScreenHeader from '../src/components/HomeScreenHeader';
+import HomeScreenHeader from '../../src/components/HomeScreenHeader';
 
 describe('Home Screen Header', () => {
   it('should render correctly', () => {

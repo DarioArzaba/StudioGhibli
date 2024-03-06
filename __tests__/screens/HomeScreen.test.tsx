@@ -1,7 +1,7 @@
 import React from 'react';
-import HomeScreen from '../src/screens/HomeScreen';
+import HomeScreen from '../../src/screens/HomeScreen';
 import {fireEvent, screen} from '@testing-library/react-native';
-import {renderWithProviders} from '../src/utils/testUtils';
+import {renderWithProviders} from '../../src/utils/testUtils';
 
 describe('GetFilmsButton tests', () => {
   it('should render correctly', () => {

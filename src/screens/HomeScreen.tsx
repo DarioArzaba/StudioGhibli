@@ -29,6 +29,7 @@ import HomeScreenFooter from '../components/HomeScreenFooter';
 import FilmList from '../components/FilmList';
 import FilmListHeader from '../components/FilmListHeader';
 import {selectFilms, selectIsLoading} from '../app/selectors/filmsSelector';
+import UserProfile from '../components/UserProfile';
 
 const HomeScreen = (): React.JSX.Element => {
   const dispatch = useDispatch();
@@ -61,6 +62,7 @@ const HomeScreen = (): React.JSX.Element => {
           <View
             style={isPortrait ? portraitStyles.header : landscapeStyles.header}>
             <HomeScreenHeader onLoadFilmsPress={onLoadFilmsPress} />
+            <UserProfile />
           </View>
         )}
         {isLoading && (

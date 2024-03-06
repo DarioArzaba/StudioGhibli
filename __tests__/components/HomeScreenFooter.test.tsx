@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import HomeScreenFooter from '../src/components/HomeScreenFooter';
+import HomeScreenFooter from '../../src/components/HomeScreenFooter';
 
 describe('Home Screen Footer', () => {
   it('should render correctly', () => {

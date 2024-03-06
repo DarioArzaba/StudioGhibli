@@ -1,9 +1,9 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react-native';
-import Film from '../src/models/FilmsResponse';
-import FilmCard from '../src/components/FilmCard';
+import Film from '../../src/models/FilmsResponse';
+import FilmCard from '../../src/components/FilmCard';
 import '@testing-library/react-native/extend-expect';
-import {mockFilm, mockLongFilmDescription} from '../src/utils/testMocks';
+import {mockFilm, mockLongFilmDescription} from '../../src/utils/testMocks';
 
 describe('Film Card', () => {
   it('should render correctly', () => {

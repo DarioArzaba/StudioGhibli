@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import GetFilmsButton from '../src/components/GetFilmsButton';
+import GetFilmsButton from '../../src/components/GetFilmsButton';
 import '@testing-library/react-native/extend-expect';
 
 describe('Get Films Button', () => {
