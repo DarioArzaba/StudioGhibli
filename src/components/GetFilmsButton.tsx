@@ -1,19 +1,17 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 import {Pressable, Text, StyleSheet} from 'react-native';
-import {
-  getFilms,
-  toggleGetFilmsButtonIsPressed,
-} from '../app/actions/actionCreators';
-import {selectButtonIsPressed} from '../app/selectors/uiSelector';
 
-const GetFilmsButton = (): React.JSX.Element => {
-  const dispatch = useDispatch();
-  const handleClick = () => dispatch(getFilms());
-  const handlePressIn = () => dispatch(toggleGetFilmsButtonIsPressed());
-  const handlePressOut = () => dispatch(toggleGetFilmsButtonIsPressed());
-  const buttonIsPressed = useSelector(selectButtonIsPressed);
-
+const GetFilmsButton = ({
+  buttonIsPressed,
+  onLoadFilmsPress,
+  onLoadFilmsPressIn,
+  onLoadFilmsPressOut,
+}: {
+  buttonIsPressed: boolean;
+  onLoadFilmsPress: () => void;
+  onLoadFilmsPressIn: () => void;
+  onLoadFilmsPressOut: () => void;
+}): React.JSX.Element => {
   return (
     <Pressable
       accessibilityRole="button"
@@ -23,9 +21,9 @@ const GetFilmsButton = (): React.JSX.Element => {
           ? styles.getFilmsButtonPressed
           : styles.getFilmsButtonReleased,
       ]}
-      onPress={handleClick}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}>
+      onPress={onLoadFilmsPress}
+      onPressIn={onLoadFilmsPressIn}
+      onPressOut={onLoadFilmsPressOut}>
       <Text style={styles.getFilmsButtonText}>Get Films</Text>
     </Pressable>
   );

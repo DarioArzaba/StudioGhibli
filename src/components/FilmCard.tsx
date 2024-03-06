@@ -1,27 +1,16 @@
-import {Image, Text, View} from 'react-native';
-import Film from '../models/FilmsResponse';
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
-import {selectScreenDimensions} from '../app/selectors/uiSelector';
+import {Image, Text, View, StyleSheet} from 'react-native';
+import Film from '../models/FilmsResponse';
+import {truncate} from '../utils/filmCardLogic';
 
-const FilmCard = ({film}: {film: Film}): React.JSX.Element => {
-  const truncate = (
-    text: string,
-    maxLength: number,
-    ellipsis: string = '...',
-  ): string => {
-    if (text.length <= maxLength) {
-      return text;
-    }
-    return text.substring(0, maxLength - ellipsis.length) + ellipsis;
-  };
-
+const FilmCard = ({
+  film,
+  isPortrait,
+}: {
+  film: Film;
+  isPortrait: boolean;
+}): React.JSX.Element => {
   const filmDescription = truncate(film.description, 428);
-
-  const screenDimensions = useSelector(selectScreenDimensions);
-  const isPortrait = screenDimensions?.height >= screenDimensions?.width;
-
   return (
     <View
       testID="card"

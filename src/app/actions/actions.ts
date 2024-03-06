@@ -6,6 +6,7 @@ export enum ActionType {
   GET_FILMS_FAILURE = 'GET_FILMS_FAILURE',
   UPDATE_ORIENTATION_STATE = 'UPDATE_ORIENTATION_STATE',
   TOGGLE_GET_FILMS_BUTTON_IS_PRESSED = 'TOGGLE_GET_FILMS_BUTTON_IS_PRESSED',
+  INCREMENT_FILMS_SCROLL_INDEX = 'INCREMENT_FILMS_SCROLL_INDEX',
 }
 
 export interface GetFilmsFetch {
@@ -27,4 +28,8 @@ export interface UpdateOrientationState {
 
 export interface ToggleGetFilmsButtonIsPressed {
   type: ActionType.TOGGLE_GET_FILMS_BUTTON_IS_PRESSED;
+}
+
+export interface IncrementFilmsScrollIndex {
+  type: ActionType.INCREMENT_FILMS_SCROLL_INDEX;
 }

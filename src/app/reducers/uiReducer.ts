@@ -3,15 +3,18 @@ import {
   UpdateOrientationState,
   ActionType,
   ToggleGetFilmsButtonIsPressed,
+  IncrementFilmsScrollIndex,
 } from '../actions/actions';
 
 type UserInterfaceActions =
   | UpdateOrientationState
-  | ToggleGetFilmsButtonIsPressed;
+  | ToggleGetFilmsButtonIsPressed
+  | IncrementFilmsScrollIndex;
 
 const initialState = {
   screenDimensions: Dimensions.get('window'),
   isPressed: false,
+  index: 5,
 };
 
 const uiReducer = (state = initialState, action: UserInterfaceActions) => {
@@ -25,6 +28,11 @@ const uiReducer = (state = initialState, action: UserInterfaceActions) => {
       return {
         ...state,
         isPressed: !state.isPressed,
+      };
+    case ActionType.INCREMENT_FILMS_SCROLL_INDEX:
+      return {
+        ...state,
+        index: state.index + 4,
       };
     default:
       return state;

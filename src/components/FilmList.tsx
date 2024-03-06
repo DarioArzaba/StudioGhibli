@@ -1,30 +1,48 @@
-import React, {useState} from 'react';
-import FilmCard from './FilmCard';
-import {useSelector} from 'react-redux';
-import {selectFilms} from '../app/selectors/filmsSelector';
+import React from 'react';
 import {FlatList, View} from 'react-native';
-import Film from '../models/FilmsResponse';
 import FilmListHeader from './FilmListHeader';
+import FilmCard from './FilmCard';
+import Film from '../models/FilmsResponse';
 
-const FilmList = (): React.JSX.Element => {
-  const films = useSelector(selectFilms);
-  const [currentIndex, setCurrentIndex] = useState(5);
-
-  const filmCard = ({item}: {item: Film}) => (
-    <FilmCard key={item.id} film={item} />
-  );
-
+const FilmList = ({
+  isPortrait,
+  buttonIsPressed,
+  films,
+  filmsIndex,
+  onLoadMoreFilms,
+  onLoadFilmsPress,
+  onLoadFilmsPressIn,
+  onLoadFilmsPressOut,
+}: {
+  isPortrait: boolean;
+  buttonIsPressed: boolean;
+  films: Film[];
+  filmsIndex: number;
+  onLoadMoreFilms: () => void;
+  onLoadFilmsPress: () => void;
+  onLoadFilmsPressIn: () => void;
+  onLoadFilmsPressOut: () => void;
+}): React.JSX.Element => {
   const loadMoreFilms = () => {
-    if (currentIndex < films.length) {
-      setCurrentIndex(currentIndex + 5);
+    if (filmsIndex < films.length) {
+      onLoadMoreFilms();
     }
   };
 
+  const filmCard = ({item}: {item: Film}) => (
+    <FilmCard key={item.id} film={item} isPortrait={isPortrait} />
+  );
+
   return (
     <View testID="FilmListContainer">
-      <FilmListHeader />
+      <FilmListHeader
+        buttonIsPressed={buttonIsPressed}
+        onLoadFilmsPress={onLoadFilmsPress}
+        onLoadFilmsPressIn={onLoadFilmsPressIn}
+        onLoadFilmsPressOut={onLoadFilmsPressOut}
+      />
       <FlatList
-        data={films.slice(0, currentIndex) || []}
+        data={films.slice(0, filmsIndex) || []}
         renderItem={filmCard}
         keyExtractor={item => item.id}
         onEndReached={loadMoreFilms}

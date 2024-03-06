@@ -21,3 +21,7 @@ export const updateOrientationState = () => ({
 export const toggleGetFilmsButtonIsPressed = () => ({
   type: ActionType.TOGGLE_GET_FILMS_BUTTON_IS_PRESSED,
 });
+
+export const incrementFilmsScrollIndex = () => ({
+  type: ActionType.INCREMENT_FILMS_SCROLL_INDEX,
+});

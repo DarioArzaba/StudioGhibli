@@ -5,7 +5,7 @@ import {
   ActionType,
 } from '../actions/actions';
 
-type FilmsActions = GetFilmsFetch | GetFilmsSuccess | GetFilmsFailure;
+export type FilmsActions = GetFilmsFetch | GetFilmsSuccess | GetFilmsFailure;
 
 const initialState = {
   films: [],

@@ -7,16 +7,38 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import {updateOrientationState} from '../app/actions/actionCreators';
-import {useHomeScreenLogic} from '../hooks/useHomeScreenLogic';
+import {
+  getFilms,
+  incrementFilmsScrollIndex,
+  toggleGetFilmsButtonIsPressed,
+  updateOrientationState,
+} from '../app/actions/actionCreators';
+import {
+  selectButtonIsPressed,
+  selectFilmsScrollIndex,
+  selectScreenDimensions,
+} from '../app/selectors/uiSelector';
+import {
+  areFilmsFetched,
+  backgroundImageFilms,
+  backgroundImageNoFilms,
+  isDeviceAndroidOS,
+  isDeviceInPortrait,
+} from '../utils/homeScreenLogic';
+import {useDispatch, useSelector} from 'react-redux';
 import HomeScreenHeader from '../components/HomeScreenHeader';
 import HomeScreenFooter from '../components/HomeScreenFooter';
 import FilmList from '../components/FilmList';
 import FilmListHeader from '../components/FilmListHeader';
+import {selectFilms, selectIsLoading} from '../app/selectors/filmsSelector';
 
 const HomeScreen = (): React.JSX.Element => {
   const dispatch = useDispatch();
+  const films = useSelector(selectFilms);
+  const isLoading = useSelector(selectIsLoading);
+  const screenDimensions = useSelector(selectScreenDimensions);
+  const buttonIsPressed = useSelector(selectButtonIsPressed);
+  const filmsIndex = useSelector(selectFilmsScrollIndex);
 
   useEffect(() => {
     const updateDimensions = () => dispatch(updateOrientationState());
@@ -27,31 +49,38 @@ const HomeScreen = (): React.JSX.Element => {
     return () => subscription.remove();
   });
 
-  const {
-    filmsFetched,
-    isLoading,
-    isPortrait,
-    isAndroid,
-    bgNoFilmsFetched,
-    bgFilmsFetched,
-  } = useHomeScreenLogic();
-
+  const onLoadMoreFilms = () => dispatch(incrementFilmsScrollIndex());
+  const onLoadFilmsPress = () => dispatch(getFilms());
+  const onLoadFilmsPressIn = () => dispatch(toggleGetFilmsButtonIsPressed());
+  const onLoadFilmsPressOut = () => dispatch(toggleGetFilmsButtonIsPressed());
+  const filmsFetched = areFilmsFetched(films);
+  const isPortrait = isDeviceInPortrait(screenDimensions);
   return (
     <SafeAreaView style={portraitStyles.safeAreaView}>
       <ImageBackground
-        source={!filmsFetched ? bgNoFilmsFetched : bgFilmsFetched}
+        source={!filmsFetched ? backgroundImageNoFilms : backgroundImageFilms}
         resizeMode="cover"
-        blurRadius={!isAndroid ? 5 : undefined}
+        blurRadius={!isDeviceAndroidOS ? 5 : undefined}
         style={portraitStyles.bgImage}>
         {!filmsFetched && !isLoading && (
           <View
             style={isPortrait ? portraitStyles.header : landscapeStyles.header}>
-            <HomeScreenHeader />
+            <HomeScreenHeader
+              buttonIsPressed={buttonIsPressed}
+              onLoadFilmsPress={onLoadFilmsPress}
+              onLoadFilmsPressIn={onLoadFilmsPressIn}
+              onLoadFilmsPressOut={onLoadFilmsPressOut}
+            />
           </View>
         )}
         {isLoading && (
           <View style={portraitStyles.fetchingFilmsContainer}>
-            <FilmListHeader />
+            <FilmListHeader
+              buttonIsPressed={buttonIsPressed}
+              onLoadFilmsPress={onLoadFilmsPress}
+              onLoadFilmsPressIn={onLoadFilmsPressIn}
+              onLoadFilmsPressOut={onLoadFilmsPressOut}
+            />
             <ActivityIndicator
               color="blue"
               size={'large'}
@@ -63,7 +92,18 @@ const HomeScreen = (): React.JSX.Element => {
             />
           </View>
         )}
-        {filmsFetched && !isLoading && <FilmList />}
+        {filmsFetched && !isLoading && (
+          <FilmList
+            isPortrait={isPortrait}
+            buttonIsPressed={buttonIsPressed}
+            films={films}
+            filmsIndex={filmsIndex}
+            onLoadMoreFilms={onLoadMoreFilms}
+            onLoadFilmsPress={onLoadFilmsPress}
+            onLoadFilmsPressIn={onLoadFilmsPressIn}
+            onLoadFilmsPressOut={onLoadFilmsPressOut}
+          />
+        )}
       </ImageBackground>
       {!filmsFetched && <HomeScreenFooter />}
     </SafeAreaView>

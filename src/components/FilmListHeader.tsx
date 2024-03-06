@@ -2,11 +2,26 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import GetFilmsButton from './GetFilmsButton';
 
-const FilmListHeader = (): React.JSX.Element => {
+const FilmListHeader = ({
+  buttonIsPressed,
+  onLoadFilmsPress,
+  onLoadFilmsPressIn,
+  onLoadFilmsPressOut,
+}: {
+  buttonIsPressed: boolean;
+  onLoadFilmsPress: () => void;
+  onLoadFilmsPressIn: () => void;
+  onLoadFilmsPressOut: () => void;
+}): React.JSX.Element => {
   return (
     <View style={styles.header}>
       <Text style={styles.headerText}>Studio Ghibli Films</Text>
-      <GetFilmsButton />
+      <GetFilmsButton
+        buttonIsPressed={buttonIsPressed}
+        onLoadFilmsPress={onLoadFilmsPress}
+        onLoadFilmsPressIn={onLoadFilmsPressIn}
+        onLoadFilmsPressOut={onLoadFilmsPressOut}
+      />
     </View>
   );
 };
