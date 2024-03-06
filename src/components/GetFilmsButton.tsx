@@ -1,23 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Pressable, Text, StyleSheet} from 'react-native';
 
 const GetFilmsButton = ({
-  buttonIsPressed,
   onLoadFilmsPress,
-  onLoadFilmsPressIn,
-  onLoadFilmsPressOut,
 }: {
-  buttonIsPressed: boolean;
   onLoadFilmsPress: () => void;
-  onLoadFilmsPressIn: () => void;
-  onLoadFilmsPressOut: () => void;
 }): React.JSX.Element => {
+  const [isPressed, setIsPressed] = useState(false);
+
+  const onLoadFilmsPressIn = () => setIsPressed(true);
+  const onLoadFilmsPressOut = () => setIsPressed(false);
+
   return (
     <Pressable
       accessibilityRole="button"
       style={[
         styles.getFilmsButton,
-        buttonIsPressed
+        isPressed
           ? styles.getFilmsButtonPressed
           : styles.getFilmsButtonReleased,
       ]}

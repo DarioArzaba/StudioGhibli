@@ -6,22 +6,16 @@ import Film from '../models/FilmsResponse';
 
 const FilmList = ({
   isPortrait,
-  buttonIsPressed,
   films,
   filmsIndex,
   onLoadMoreFilms,
   onLoadFilmsPress,
-  onLoadFilmsPressIn,
-  onLoadFilmsPressOut,
 }: {
   isPortrait: boolean;
-  buttonIsPressed: boolean;
   films: Film[];
   filmsIndex: number;
   onLoadMoreFilms: () => void;
   onLoadFilmsPress: () => void;
-  onLoadFilmsPressIn: () => void;
-  onLoadFilmsPressOut: () => void;
 }): React.JSX.Element => {
   const loadMoreFilms = () => {
     if (filmsIndex < films.length) {
@@ -35,12 +29,7 @@ const FilmList = ({
 
   return (
     <View testID="FilmListContainer">
-      <FilmListHeader
-        buttonIsPressed={buttonIsPressed}
-        onLoadFilmsPress={onLoadFilmsPress}
-        onLoadFilmsPressIn={onLoadFilmsPressIn}
-        onLoadFilmsPressOut={onLoadFilmsPressOut}
-      />
+      <FilmListHeader onLoadFilmsPress={onLoadFilmsPress} />
       <FlatList
         data={films.slice(0, filmsIndex) || []}
         renderItem={filmCard}

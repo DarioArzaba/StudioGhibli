@@ -1,4 +1,4 @@
-export const truncate = (
+export const truncateFilmDescription = (
   text: string,
   maxLength: number,
   ellipsis: string = '...',

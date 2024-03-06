@@ -9,6 +9,12 @@
     "start": "react-native start",
     "test": "jest"
   },
+  "jest": {
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|react-redux|react-saga|@react-native)/)"
+    ]
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.7",

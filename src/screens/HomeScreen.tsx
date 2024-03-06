@@ -10,11 +10,9 @@ import {
 import {
   getFilms,
   incrementFilmsScrollIndex,
-  toggleGetFilmsButtonIsPressed,
   updateOrientationState,
 } from '../app/actions/actionCreators';
 import {
-  selectButtonIsPressed,
   selectFilmsScrollIndex,
   selectScreenDimensions,
 } from '../app/selectors/uiSelector';
@@ -37,8 +35,9 @@ const HomeScreen = (): React.JSX.Element => {
   const films = useSelector(selectFilms);
   const isLoading = useSelector(selectIsLoading);
   const screenDimensions = useSelector(selectScreenDimensions);
-  const buttonIsPressed = useSelector(selectButtonIsPressed);
   const filmsIndex = useSelector(selectFilmsScrollIndex);
+  const onLoadMoreFilms = () => dispatch(incrementFilmsScrollIndex());
+  const onLoadFilmsPress = () => dispatch(getFilms());
 
   useEffect(() => {
     const updateDimensions = () => dispatch(updateOrientationState());
@@ -49,10 +48,6 @@ const HomeScreen = (): React.JSX.Element => {
     return () => subscription.remove();
   });
 
-  const onLoadMoreFilms = () => dispatch(incrementFilmsScrollIndex());
-  const onLoadFilmsPress = () => dispatch(getFilms());
-  const onLoadFilmsPressIn = () => dispatch(toggleGetFilmsButtonIsPressed());
-  const onLoadFilmsPressOut = () => dispatch(toggleGetFilmsButtonIsPressed());
   const filmsFetched = areFilmsFetched(films);
   const isPortrait = isDeviceInPortrait(screenDimensions);
   return (
@@ -65,22 +60,12 @@ const HomeScreen = (): React.JSX.Element => {
         {!filmsFetched && !isLoading && (
           <View
             style={isPortrait ? portraitStyles.header : landscapeStyles.header}>
-            <HomeScreenHeader
-              buttonIsPressed={buttonIsPressed}
-              onLoadFilmsPress={onLoadFilmsPress}
-              onLoadFilmsPressIn={onLoadFilmsPressIn}
-              onLoadFilmsPressOut={onLoadFilmsPressOut}
-            />
+            <HomeScreenHeader onLoadFilmsPress={onLoadFilmsPress} />
           </View>
         )}
         {isLoading && (
           <View style={portraitStyles.fetchingFilmsContainer}>
-            <FilmListHeader
-              buttonIsPressed={buttonIsPressed}
-              onLoadFilmsPress={onLoadFilmsPress}
-              onLoadFilmsPressIn={onLoadFilmsPressIn}
-              onLoadFilmsPressOut={onLoadFilmsPressOut}
-            />
+            <FilmListHeader onLoadFilmsPress={onLoadFilmsPress} />
             <ActivityIndicator
               color="blue"
               size={'large'}
@@ -95,13 +80,10 @@ const HomeScreen = (): React.JSX.Element => {
         {filmsFetched && !isLoading && (
           <FilmList
             isPortrait={isPortrait}
-            buttonIsPressed={buttonIsPressed}
             films={films}
             filmsIndex={filmsIndex}
             onLoadMoreFilms={onLoadMoreFilms}
             onLoadFilmsPress={onLoadFilmsPress}
-            onLoadFilmsPressIn={onLoadFilmsPressIn}
-            onLoadFilmsPressOut={onLoadFilmsPressOut}
           />
         )}
       </ImageBackground>

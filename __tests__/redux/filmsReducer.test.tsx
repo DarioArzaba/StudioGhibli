@@ -1,5 +1,6 @@
 import {ActionType} from '../../src/app/actions/actions';
 import filmsReducer, {FilmsActions} from '../../src/app/reducers/filmsReducer';
+import {mockFilms} from '../../src/utils/testMocks';
 
 describe('Films Reducer', () => {
   const initialState = {
@@ -32,20 +33,6 @@ describe('Films Reducer', () => {
   });
 
   it('Should handle get films success', () => {
-    const mockFilms = [
-      {
-        id: 'uniqueId 1',
-        title: 'Film Title 1',
-        description: 'A generic film description 1.',
-        image: 'https://example.com/image1.jpg',
-      },
-      {
-        id: 'uniqueId 2',
-        title: 'Film Title 2',
-        description: 'A generic film description 2.',
-        image: 'https://example.com/image2.jpg',
-      },
-    ];
     const action: FilmsActions = {
       type: ActionType.GET_FILMS_SUCCESS,
       payload: mockFilms,

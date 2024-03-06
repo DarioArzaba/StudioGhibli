@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, Text, View, StyleSheet} from 'react-native';
 import Film from '../models/FilmsResponse';
-import {truncate} from '../utils/filmCardLogic';
+import {truncateFilmDescription} from '../utils/filmCardLogic';
 
 const FilmCard = ({
   film,
@@ -10,7 +10,7 @@ const FilmCard = ({
   film: Film;
   isPortrait: boolean;
 }): React.JSX.Element => {
-  const filmDescription = truncate(film.description, 428);
+  const filmDescription = truncateFilmDescription(film.description, 428);
   return (
     <View
       testID="card"
