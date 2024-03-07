@@ -6,120 +6,91 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
-import {readData, storeData, updateData} from '../utils/PersistanceManager';
 import {Picker} from '@react-native-picker/picker';
+import {useTheme} from '../hooks/useTheme';
+import {readData, storeObject} from '../utils/persistanceManager';
 
-interface UserProfileProps {
-  defaultName?: string;
-  defaultEmail?: string;
-  defaultColor?: string;
-}
+type Profile = {
+  name: string;
+  email: string;
+  theme: string;
+};
 
-const UserProfile: React.FC<UserProfileProps> = ({
-  defaultName: nameProp = 'Dario',
-  defaultEmail: emailProp = 'dario@gmail.com',
-  defaultColor: colorProp = 'lightblue',
-}) => {
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>('');
-  const [userEmail, setUserEmail] = useState<string>('');
-  const [userColor, setUserColor] = useState<string>('');
-
-  const nullToEmptyString = (value: string | null): string => {
-    return value === null ? '' : value;
+const UserProfile = (): React.JSX.Element => {
+  const defaultProfile = {
+    name: '',
+    email: '',
+    theme: 'default',
   };
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [currentProfile, setCurrentProfile] = useState<Profile>(defaultProfile);
+  const {theme, setTheme} = useTheme();
+
   useEffect(() => {
-    const storeUserData = async () => {
-      const name = await readData('name');
-      const email = await readData('email');
-      const color = await readData('color');
-      if (!name || !email || !color) {
-        await storeData('name', nameProp);
-        await storeData('email', emailProp);
-        await storeData('color', colorProp);
-        const nameStored = await readData('name');
-        const emailStored = await readData('email');
-        const colorStored = await readData('color');
-        setUserName(nullToEmptyString(nameStored));
-        setUserEmail(nullToEmptyString(emailStored));
-        setUserColor(nullToEmptyString(colorStored));
-      } else {
-        setUserName(nullToEmptyString(name));
-        setUserEmail(nullToEmptyString(email));
-        setUserColor(nullToEmptyString(color));
+    const checkProfile = async () => {
+      const storedProfile = await readData('profile');
+      if (storedProfile !== null) {
+        setCurrentProfile(JSON.parse(storedProfile));
       }
     };
-    storeUserData();
+    checkProfile();
   }, []);
 
-  const handleNameChange = async (newName: string) => {
-    await updateData('name', newName);
-    const updatedName = await readData('name');
-    setUserName(nullToEmptyString(nullToEmptyString(updatedName)));
-  };
-
-  const handleEmailChange = async (newEmail: string) => {
-    await updateData('email', newEmail);
-    const updatedEmail = await readData('email');
-    setUserEmail(nullToEmptyString(updatedEmail));
-  };
-
-  const handleColorChange = async (newColor: string) => {
-    await updateData('color', newColor);
-    const updatedColor = await readData('color');
-    setUserColor(nullToEmptyString(updatedColor));
-  };
-
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: userColor,
-        },
-      ]}>
+    <View style={styles.container}>
       {isEditMode ? (
         <View>
           <Text style={styles.label}>Enter your name:</Text>
           <TextInput
-            style={styles.input}
-            onChangeText={handleNameChange}
+            onChangeText={newName => {
+              setCurrentProfile(prevProfile => ({
+                ...prevProfile,
+                name: newName,
+              }));
+            }}
             accessibilityLabel="name"
-            value={userName}
+            value={currentProfile.name}
           />
           <Text style={styles.label}>Enter your email:</Text>
           <TextInput
-            style={styles.input}
-            onChangeText={handleEmailChange}
+            onChangeText={newEmail => {
+              setCurrentProfile(prevProfile => ({
+                ...prevProfile,
+                email: newEmail,
+              }));
+            }}
             accessibilityLabel="email"
-            value={userEmail}
+            value={currentProfile.email}
           />
-          <Text style={styles.label}>Change the theme:</Text>
           <Picker
-            selectedValue={userColor}
-            onValueChange={handleColorChange}
-            style={styles.picker}>
-            <Picker.Item label="White" value="white" />
-            <Picker.Item label="Green" value="lightgreen" />
-            <Picker.Item label="Blue" value="lightblue" />
+            testID="theme-picker"
+            selectedValue={currentProfile.theme}
+            onValueChange={newTheme => {
+              setCurrentProfile(prevProfile => ({
+                ...prevProfile,
+                theme: newTheme,
+              }));
+              setTheme(newTheme);
+            }}>
+            <Picker.Item label="Blue" value="blue" />
+            <Picker.Item label="Red" value="red" />
+            <Picker.Item label="Green" value="green" />
           </Picker>
           <TouchableOpacity
             style={styles.button}
             testID="save-button"
             onPress={() => {
               setIsEditMode(false);
+              storeObject('profile', currentProfile);
             }}>
             <Text>Save</Text>
           </TouchableOpacity>
         </View>
       ) : (
         <View>
-          <Text style={styles.label}>Name:</Text>
-          <Text style={styles.text}>{userName}</Text>
-          <Text style={styles.label}>Email:</Text>
-          <Text style={styles.text}>{userEmail}</Text>
-          <Text style={styles.label}>Theme:</Text>
-          <Text style={styles.text}>{userColor}</Text>
+          <Text>{currentProfile.name}</Text>
+          <Text>{currentProfile.email}</Text>
+          <Text>{theme}</Text>
           <TouchableOpacity
             style={styles.button}
             testID="edit-button"
@@ -136,47 +107,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    alignItems: 'center',
-    paddingTop: 50,
-  },
-  button: {
-    alignItems: 'center',
-    width: 200,
-    height: 40,
-    borderWidth: 1,
-    paddingLeft: 10,
-    paddingVertical: 10,
-    marginVertical: 40,
-    marginTop: 200,
-  },
-  label: {
-    marginBottom: 5,
-  },
-  text: {
-    justifyContent: 'center',
-    height: 40,
-    paddingLeft: 10,
-    paddingVertical: 10,
-    marginBottom: 20,
-    borderRadius: 5,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingLeft: 10,
-    marginBottom: 20,
-    borderRadius: 5,
-  },
-  picker: {
-    height: 50,
-    width: 150,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginVertical: 10,
+    backgroundColor: 'white',
   },
 });
-
 export default UserProfile;
