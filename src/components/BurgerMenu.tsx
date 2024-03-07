@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   Pressable,
   Text,
@@ -8,15 +8,12 @@ import {
   View,
 } from 'react-native';
 import UserProfile from './UserProfile';
+import {readData, storeData} from '../utils/PersistanceManager';
 
 const BurgerMenu = (): React.JSX.Element => {
-  const [isPressed, setIsPressed] = useState(false);
-  const onLoadFilmsPressIn = () => setIsPressed(true);
-  const onLoadFilmsPressOut = () => setIsPressed(false);
-
   const [menuVisible, setMenuVisible] = useState(false);
   const menuAnimation = useRef(new Animated.Value(0)).current;
-
+  const [theme, setTheme] = useState('');
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
     Animated.timing(menuAnimation, {
@@ -25,6 +22,22 @@ const BurgerMenu = (): React.JSX.Element => {
       useNativeDriver: true,
     }).start();
   };
+  const nullToEmptyString = (value: string | null): string => {
+    return value === null ? '' : value;
+  };
+  useEffect(() => {
+    const fetchTheme = async () => {
+      const currentTheme = await readData('color');
+      if (!currentTheme) {
+        await storeData('color', 'lightred');
+        const defaultTheme = await readData('color');
+        setTheme(nullToEmptyString(defaultTheme));
+      } else {
+        setTheme(nullToEmptyString(currentTheme));
+      }
+    };
+    fetchTheme();
+  }, []);
 
   const menuTranslateX = menuAnimation.interpolate({
     inputRange: [0, 1],
@@ -35,16 +48,9 @@ const BurgerMenu = (): React.JSX.Element => {
     <View style={styles.container}>
       <Pressable
         accessibilityRole="button"
-        style={[
-          styles.getFilmsButton,
-          isPressed
-            ? styles.getFilmsButtonPressed
-            : styles.getFilmsButtonReleased,
-        ]}
-        onPress={toggleMenu}
-        onPressIn={onLoadFilmsPressIn}
-        onPressOut={onLoadFilmsPressOut}>
-        <Text style={styles.getFilmsButtonText}>☰</Text>
+        style={[styles.menuButton]}
+        onPress={toggleMenu}>
+        <Text style={styles.menuButtonText}>☰</Text>
       </Pressable>
       <Animated.View
         style={[
@@ -65,36 +71,32 @@ export const styles = StyleSheet.create({
   },
   menu: {
     flexDirection: 'column',
+    justifyContent: 'space-between',
     alignItems: 'center',
     position: 'absolute',
     width: '110%',
+    height: 500,
     top: 80,
     right: '100%',
-    backgroundColor: '#f2f2f2',
-    padding: 20,
     zIndex: 2,
+    backgroundColor: 'white',
   },
-  getFilmsButton: {
+  menuButton: {
     position: 'absolute',
-    top: 50,
-    left: 20,
+    top: 30,
+    left: 30,
     zIndex: 1,
     borderRadius: 5,
     fontFamily: 'inherit',
     fontSize: 34,
-    backgroundColor: '#008080',
   },
-  getFilmsButtonPressed: {
-    backgroundColor: '#00A0A0',
-  },
-  getFilmsButtonReleased: {
-    backgroundColor: '#008080',
-  },
-  getFilmsButtonText: {
+  menuButtonText: {
+    fontSize: 34,
     color: 'white',
   },
   menuItem: {
     padding: 10,
+    marginVertical: 100,
   },
   menuItemText: {
     fontSize: 18,

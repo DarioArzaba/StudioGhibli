@@ -4,9 +4,7 @@ import UserProfile from '../../src/components/UserProfile';
 
 describe('User Profile', () => {
   it('should display a user name and an email', () => {
-    const {getByText} = render(
-      <UserProfile name="Dario" email="dario@gmail.com" />,
-    );
+    const {getByText} = render(<UserProfile />);
     expect(getByText('Dario')).toBeTruthy();
     expect(getByText('dario@gmail.com')).toBeTruthy();
   });

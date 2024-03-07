@@ -1,24 +1,17 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import GetFilmsButton from './GetFilmsButton';
-import BurgerMenu from './BurgerMenuTwo';
 
-const FilmListHeader = ({
-  onLoadFilmsPress,
-}: {
-  onLoadFilmsPress: () => void;
-}): React.JSX.Element => {
+const FilmListHeader = ({}: {}): React.JSX.Element => {
   return (
     <View style={styles.header}>
       <Text style={styles.headerText}>Studio Ghibli Films</Text>
-      <GetFilmsButton onLoadFilmsPress={onLoadFilmsPress} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     fontFamily: 'Verdana, Geneva, Tahoma, sans-serif',
@@ -27,6 +20,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#004156',
     borderBottomWidth: 1,
     borderBottomColor: 'darkgrey',
+    height: 90,
   },
   headerText: {
     fontSize: 20,
