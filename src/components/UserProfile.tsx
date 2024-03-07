@@ -3,46 +3,50 @@ import {Text, TouchableOpacity, View, TextInput} from 'react-native';
 import {readData, storeData, updateData} from '../utils/PersistanceManager';
 
 interface UserProfileProps {
-  name?: string;
-  email?: string;
+  defaultName?: string;
+  defaultEmail?: string;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
-  name = 'Dario',
-  email = 'dario@gmail.com',
+  defaultName: nameProp = 'Dario',
+  defaultEmail: emailProp = 'dario@gmail.com',
 }) => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
 
-  const fetchName = () => {
-    let userName;
-    readData('name').then(resolvedName => {
-      userName = resolvedName;
-    });
-    return userName;
+  const nullToEmptyString = (value: string | null): string => {
+    return value === null ? '' : value;
   };
-
-  const fetchEmail = () => {
-    let userEmail;
-    readData('email').then(resolvedEmail => {
-      userEmail = resolvedEmail;
-    });
-    return userEmail;
-  };
-
   useEffect(() => {
     const storeUserData = async () => {
-      storeData('name', name);
-      storeData('email', email);
+      const name = await readData('name');
+      const email = await readData('email');
+      if (!name && !email) {
+        await storeData('name', nameProp);
+        await storeData('email', emailProp);
+        const nameStored = await readData('name');
+        const emailStored = await readData('email');
+        setUserName(nullToEmptyString(nameStored));
+        setUserEmail(nullToEmptyString(emailStored));
+      } else {
+        setUserName(nullToEmptyString(name));
+        setUserEmail(nullToEmptyString(email));
+      }
     };
     storeUserData();
-  }, [name, email]);
+  }, []);
 
   const handleNameChange = async (newName: string) => {
     await updateData('name', newName);
+    const updatedName = await readData('name');
+    setUserName(nullToEmptyString(nullToEmptyString(updatedName)));
   };
 
   const handleEmailChange = async (newEmail: string) => {
     await updateData('email', newEmail);
+    const updatedEmail = await readData('email');
+    setUserEmail(nullToEmptyString(updatedEmail));
   };
 
   return (
@@ -52,12 +56,12 @@ const UserProfile: React.FC<UserProfileProps> = ({
           <TextInput
             onChangeText={handleNameChange}
             accessibilityLabel="name"
-            value={fetchName()}
+            value={userName}
           />
           <TextInput
             onChangeText={handleEmailChange}
             accessibilityLabel="email"
-            value={fetchEmail()}
+            value={userEmail}
           />
           <TouchableOpacity
             testID="save-button"
@@ -69,8 +73,8 @@ const UserProfile: React.FC<UserProfileProps> = ({
         </View>
       ) : (
         <View>
-          <Text>{fetchName()}</Text>
-          <Text>{fetchEmail()}</Text>
+          <Text>{userName}</Text>
+          <Text>{userEmail}</Text>
           <TouchableOpacity
             testID="edit-button"
             onPress={() => {

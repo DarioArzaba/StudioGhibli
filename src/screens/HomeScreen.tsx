@@ -29,7 +29,7 @@ import HomeScreenFooter from '../components/HomeScreenFooter';
 import FilmList from '../components/FilmList';
 import FilmListHeader from '../components/FilmListHeader';
 import {selectFilms, selectIsLoading} from '../app/selectors/filmsSelector';
-import UserProfile from '../components/UserProfile';
+import BurgerMenu from '../components/BurgerMenu';
 
 const HomeScreen = (): React.JSX.Element => {
   const dispatch = useDispatch();
@@ -62,7 +62,6 @@ const HomeScreen = (): React.JSX.Element => {
           <View
             style={isPortrait ? portraitStyles.header : landscapeStyles.header}>
             <HomeScreenHeader onLoadFilmsPress={onLoadFilmsPress} />
-            <UserProfile />
           </View>
         )}
         {isLoading && (
@@ -80,13 +79,16 @@ const HomeScreen = (): React.JSX.Element => {
           </View>
         )}
         {filmsFetched && !isLoading && (
-          <FilmList
-            isPortrait={isPortrait}
-            films={films}
-            filmsIndex={filmsIndex}
-            onLoadMoreFilms={onLoadMoreFilms}
-            onLoadFilmsPress={onLoadFilmsPress}
-          />
+          <View>
+            <BurgerMenu />
+            <FilmList
+              isPortrait={isPortrait}
+              films={films}
+              filmsIndex={filmsIndex}
+              onLoadMoreFilms={onLoadMoreFilms}
+              onLoadFilmsPress={onLoadFilmsPress}
+            />
+          </View>
         )}
       </ImageBackground>
       {!filmsFetched && <HomeScreenFooter />}
