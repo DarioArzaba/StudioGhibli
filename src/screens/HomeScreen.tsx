@@ -18,8 +18,13 @@ import {
 } from '../app/selectors/uiSelector';
 import {
   areFilmsFetched,
+  backgroundImageBlue,
+  backgroundImageDefault,
   backgroundImageFilms,
+  backgroundImageGreen,
   backgroundImageNoFilms,
+  backgroundImageRed,
+  imageBackgroundURI,
   isDeviceAndroidOS,
   isDeviceInPortrait,
 } from '../utils/homeScreenLogic';
@@ -30,6 +35,7 @@ import FilmList from '../components/FilmList';
 import FilmListHeader from '../components/FilmListHeader';
 import {selectFilms, selectIsLoading} from '../app/selectors/filmsSelector';
 import UserProfile from '../components/UserProfile';
+import {useTheme} from '../hooks/useTheme';
 
 const HomeScreen = (): React.JSX.Element => {
   const dispatch = useDispatch();
@@ -39,6 +45,7 @@ const HomeScreen = (): React.JSX.Element => {
   const filmsIndex = useSelector(selectFilmsScrollIndex);
   const onLoadMoreFilms = () => dispatch(incrementFilmsScrollIndex());
   const onLoadFilmsPress = () => dispatch(getFilms());
+  const {theme} = useTheme();
 
   useEffect(() => {
     const updateDimensions = () => dispatch(updateOrientationState());
@@ -51,10 +58,11 @@ const HomeScreen = (): React.JSX.Element => {
 
   const filmsFetched = areFilmsFetched(films);
   const isPortrait = isDeviceInPortrait(screenDimensions);
+
   return (
     <SafeAreaView style={portraitStyles.safeAreaView}>
       <ImageBackground
-        source={!filmsFetched ? backgroundImageNoFilms : backgroundImageFilms}
+        source={imageBackgroundURI(theme)}
         resizeMode="cover"
         blurRadius={!isDeviceAndroidOS ? 5 : undefined}
         style={portraitStyles.bgImage}>

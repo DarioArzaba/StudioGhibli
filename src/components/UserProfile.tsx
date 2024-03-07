@@ -1,44 +1,93 @@
-import React, {useState} from 'react';
-import {Text, TouchableOpacity, View, TextInput} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  TextInput,
+  StyleSheet,
+} from 'react-native';
+import {Picker} from '@react-native-picker/picker';
+import {useTheme} from '../hooks/useTheme';
+import {readData, storeObject} from '../utils/persistanceManager';
 
-interface UserProfileProps {
-  name?: string;
-  email?: string;
-}
+type Profile = {
+  name: string;
+  email: string;
+  theme: string;
+};
 
-const UserProfile: React.FC<UserProfileProps> = ({
-  name = 'Dario',
-  email = 'dario@gmail.com',
-}) => {
+const UserProfile = (): React.JSX.Element => {
+  const defaultProfile = {
+    name: '',
+    email: '',
+    theme: 'default',
+  };
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>(name);
-  const [userEmail, setUserEmail] = useState<string>(email);
+  const [currentProfile, setCurrentProfile] = useState<Profile>(defaultProfile);
+  const {theme, setTheme} = useTheme();
+
+  useEffect(() => {
+    const checkProfile = async () => {
+      const storedProfile = await readData('profile');
+      if (storedProfile !== null) {
+        setCurrentProfile(JSON.parse(storedProfile));
+      }
+    };
+    checkProfile();
+  }, []);
+
   return (
-    <View>
+    <View style={styles.container}>
       {isEditMode ? (
         <View>
           <TextInput
-            onChangeText={newName => setUserName(newName)}
+            onChangeText={newName => {
+              setCurrentProfile(prevProfile => ({
+                ...prevProfile,
+                name: newName,
+              }));
+            }}
             accessibilityLabel="name"
-            value={userName}
+            value={currentProfile.name}
           />
           <TextInput
-            onChangeText={newEmail => setUserEmail(newEmail)}
+            onChangeText={newEmail => {
+              setCurrentProfile(prevProfile => ({
+                ...prevProfile,
+                email: newEmail,
+              }));
+            }}
             accessibilityLabel="email"
-            value={userEmail}
+            value={currentProfile.email}
           />
+          <Picker
+            testID="theme-picker"
+            selectedValue={currentProfile.theme}
+            onValueChange={newTheme => {
+              setCurrentProfile(prevProfile => ({
+                ...prevProfile,
+                theme: newTheme,
+              }));
+              setTheme(newTheme);
+            }}>
+            <Picker.Item label="Blue" value="blue" />
+            <Picker.Item label="Red" value="red" />
+            <Picker.Item label="Green" value="green" />
+          </Picker>
           <TouchableOpacity
             testID="save-button"
             onPress={() => {
               setIsEditMode(false);
+              storeObject('profile', currentProfile);
             }}>
             <Text>Save</Text>
           </TouchableOpacity>
         </View>
       ) : (
         <View>
-          <Text>{userName}</Text>
-          <Text>{userEmail}</Text>
+          <Text>{currentProfile.name}</Text>
+          <Text>{currentProfile.email}</Text>
+          <Text>{theme}</Text>
           <TouchableOpacity
             testID="edit-button"
             onPress={() => {
@@ -51,4 +100,10 @@ const UserProfile: React.FC<UserProfileProps> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+  },
+});
 export default UserProfile;

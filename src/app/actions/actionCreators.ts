@@ -25,3 +25,8 @@ export const toggleGetFilmsButtonIsPressed = () => ({
 export const incrementFilmsScrollIndex = () => ({
   type: ActionType.INCREMENT_FILMS_SCROLL_INDEX,
 });
+
+export const updateTheme = (theme: string) => ({
+  type: ActionType.UPDATE_THEME,
+  payload: theme,
+});
