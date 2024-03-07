@@ -70,7 +70,6 @@ const HomeScreen = (): React.JSX.Element => {
           <View
             style={isPortrait ? portraitStyles.header : landscapeStyles.header}>
             <HomeScreenHeader onLoadFilmsPress={onLoadFilmsPress} />
-            <UserProfile />
           </View>
         )}
         {isLoading && (
@@ -88,13 +87,16 @@ const HomeScreen = (): React.JSX.Element => {
           </View>
         )}
         {filmsFetched && !isLoading && (
-          <FilmList
-            isPortrait={isPortrait}
-            films={films}
-            filmsIndex={filmsIndex}
-            onLoadMoreFilms={onLoadMoreFilms}
-            onLoadFilmsPress={onLoadFilmsPress}
-          />
+          <View>
+            <BurgerMenu />
+            <FilmList
+              isPortrait={isPortrait}
+              films={films}
+              filmsIndex={filmsIndex}
+              onLoadMoreFilms={onLoadMoreFilms}
+              onLoadFilmsPress={onLoadFilmsPress}
+            />
+          </View>
         )}
       </ImageBackground>
       {!filmsFetched && <HomeScreenFooter />}

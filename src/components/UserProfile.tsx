@@ -40,6 +40,7 @@ const UserProfile = (): React.JSX.Element => {
     <View style={styles.container}>
       {isEditMode ? (
         <View>
+          <Text style={styles.label}>Enter your name:</Text>
           <TextInput
             onChangeText={newName => {
               setCurrentProfile(prevProfile => ({
@@ -50,6 +51,7 @@ const UserProfile = (): React.JSX.Element => {
             accessibilityLabel="name"
             value={currentProfile.name}
           />
+          <Text style={styles.label}>Enter your email:</Text>
           <TextInput
             onChangeText={newEmail => {
               setCurrentProfile(prevProfile => ({
@@ -75,6 +77,7 @@ const UserProfile = (): React.JSX.Element => {
             <Picker.Item label="Green" value="green" />
           </Picker>
           <TouchableOpacity
+            style={styles.button}
             testID="save-button"
             onPress={() => {
               setIsEditMode(false);
@@ -89,6 +92,7 @@ const UserProfile = (): React.JSX.Element => {
           <Text>{currentProfile.email}</Text>
           <Text>{theme}</Text>
           <TouchableOpacity
+            style={styles.button}
             testID="edit-button"
             onPress={() => {
               setIsEditMode(true);
