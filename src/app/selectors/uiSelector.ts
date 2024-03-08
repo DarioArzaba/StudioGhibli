@@ -5,5 +5,4 @@ const uiSelector = (state: AppState) => state.userinterface;
 export const selectScreenDimensions = (state: AppState) =>
   uiSelector(state).screenDimensions;
 
-export const selectFilmsScrollIndex = (state: AppState) =>
-  uiSelector(state).index;
+export const selectTheme = (state: AppState) => uiSelector(state).theme;

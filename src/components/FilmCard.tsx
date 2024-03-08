@@ -10,6 +10,8 @@ const FilmCard = ({
   film: Film;
   isPortrait: boolean;
 }): React.JSX.Element => {
+  const {theme} = useTheme();
+  const color = getColorFromTheme(theme);
   const filmDescription = truncateFilmDescription(film.description, 428);
   return (
     <View

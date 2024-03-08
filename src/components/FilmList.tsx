@@ -9,13 +9,11 @@ const FilmList = ({
   films,
   filmsIndex,
   onLoadMoreFilms,
-  onLoadFilmsPress,
 }: {
   isPortrait: boolean;
   films: Film[];
   filmsIndex: number;
   onLoadMoreFilms: () => void;
-  onLoadFilmsPress: () => void;
 }): React.JSX.Element => {
   const loadMoreFilms = () => {
     if (filmsIndex < films.length) {
@@ -29,7 +27,7 @@ const FilmList = ({
 
   return (
     <View testID="FilmListContainer">
-      <FilmListHeader onLoadFilmsPress={onLoadFilmsPress} />
+      <FilmListHeader />
       <FlatList
         data={films.slice(0, filmsIndex) || []}
         renderItem={filmCard}

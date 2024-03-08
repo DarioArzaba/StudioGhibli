@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-const FilmListHeader = ({}: {}): React.JSX.Element => {
+const FilmListHeader = (): React.JSX.Element => {
   return (
     <View style={styles.header}>
       <Text style={styles.headerText}>Studio Ghibli Films</Text>
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     fontFamily: 'Verdana, Geneva, Tahoma, sans-serif',
-    paddingVertical: 5,
+    paddingTop: 40,
     paddingHorizontal: 10,
     backgroundColor: '#004156',
     borderBottomWidth: 1,

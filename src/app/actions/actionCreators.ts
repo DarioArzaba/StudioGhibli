@@ -14,16 +14,12 @@ export const getFilmsFailure = () => ({
   type: ActionType.GET_FILMS_FAILURE,
 });
 
-export const updateOrientationState = () => ({
-  type: ActionType.UPDATE_ORIENTATION_STATE,
-});
-
-export const toggleGetFilmsButtonIsPressed = () => ({
-  type: ActionType.TOGGLE_GET_FILMS_BUTTON_IS_PRESSED,
-});
-
 export const incrementFilmsScrollIndex = () => ({
   type: ActionType.INCREMENT_FILMS_SCROLL_INDEX,
+});
+
+export const updateOrientationState = () => ({
+  type: ActionType.UPDATE_ORIENTATION_STATE,
 });
 
 export const updateTheme = (theme: string) => ({

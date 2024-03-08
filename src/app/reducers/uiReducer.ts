@@ -1,20 +1,15 @@
 import {Dimensions} from 'react-native';
 import {
-  UpdateOrientationState,
   ActionType,
-  ToggleGetFilmsButtonIsPressed,
-  IncrementFilmsScrollIndex,
+  UpdateOrientationState,
+  UpdateTheme,
 } from '../actions/actions';
 
-type UserInterfaceActions =
-  | UpdateOrientationState
-  | ToggleGetFilmsButtonIsPressed
-  | IncrementFilmsScrollIndex;
+type UserInterfaceActions = UpdateOrientationState | UpdateTheme;
 
 const initialState = {
   screenDimensions: Dimensions.get('window'),
-  isPressed: false,
-  index: 5,
+  theme: 'default',
 };
 
 const uiReducer = (state = initialState, action: UserInterfaceActions) => {
@@ -24,16 +19,12 @@ const uiReducer = (state = initialState, action: UserInterfaceActions) => {
         ...state,
         screenDimensions: Dimensions.get('window'),
       };
-    case ActionType.TOGGLE_GET_FILMS_BUTTON_IS_PRESSED:
+    case ActionType.UPDATE_THEME:
       return {
         ...state,
-        isPressed: !state.isPressed,
+        theme: action.payload,
       };
-    case ActionType.INCREMENT_FILMS_SCROLL_INDEX:
-      return {
-        ...state,
-        index: state.index + 4,
-      };
+
     default:
       return state;
   }

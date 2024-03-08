@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Pressable, Text, StyleSheet} from 'react-native';
 
-const GetFilmsButton = ({navigation}): React.JSX.Element => {
+const UserProfileButton = ({navigation}): React.JSX.Element => {
   const [isPressed, setIsPressed] = useState(false);
 
   const onLoadFilmsPressIn = () => setIsPressed(true);
@@ -16,17 +16,17 @@ const GetFilmsButton = ({navigation}): React.JSX.Element => {
           ? styles.getFilmsButtonPressed
           : styles.getFilmsButtonReleased,
       ]}
-      onPress={() => navigation.navigate('FilmList')}
+      onPress={() => navigation.navigate('UserProfile')}
       onPressIn={onLoadFilmsPressIn}
       onPressOut={onLoadFilmsPressOut}>
-      <Text style={styles.getFilmsButtonText}>Get Films</Text>
+      <Text style={styles.getFilmsButtonText}>Settings</Text>
     </Pressable>
   );
 };
 
 export const styles = StyleSheet.create({
   getFilmsButton: {
-    marginTop: 40,
+    marginTop: 1,
     marginBottom: 16,
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -46,4 +46,4 @@ export const styles = StyleSheet.create({
   },
 });
 
-export default GetFilmsButton;
+export default UserProfileButton;

@@ -1,11 +1,11 @@
 import React, {PropsWithChildren} from 'react';
-import {RenderOptions, render} from '@testing-library/react-native';
-import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
-import reducer, {AppState} from '../app/reducers/combineReducers';
+import {configureStore} from '@reduxjs/toolkit';
+import {RenderOptions, render} from '@testing-library/react-native';
 import store from '../app/store/store';
+import reducer, {AppState} from '../app/reducers/combineReducers';
 
-export function renderWithProvidersSimple(component: React.ReactElement) {
+export function renderWithNewProvider(component: React.ReactElement) {
   const emptyStore = configureStore({
     reducer,
   });
@@ -16,8 +16,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<AppState>;
   mystore?: typeof store;
 }
-
-export function renderWithProviders(
+export function renderWithAppProvider(
   ui: React.ReactElement,
   {preloadedState, mystore, ...renderOptions}: ExtendedRenderOptions = {},
 ) {

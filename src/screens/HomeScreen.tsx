@@ -1,51 +1,32 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  ActivityIndicator,
   ImageBackground,
-  SafeAreaView,
   View,
   StyleSheet,
   Dimensions,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
+import {updateOrientationState} from '../app/actions/actionCreators';
+import {selectScreenDimensions} from '../app/selectors/uiSelector';
 import {
-  getFilms,
-  incrementFilmsScrollIndex,
-  updateOrientationState,
-} from '../app/actions/actionCreators';
-import {
-  selectFilmsScrollIndex,
-  selectScreenDimensions,
-} from '../app/selectors/uiSelector';
-import {
-  areFilmsFetched,
-  backgroundImageBlue,
-  backgroundImageDefault,
-  backgroundImageFilms,
-  backgroundImageGreen,
-  backgroundImageNoFilms,
-  backgroundImageRed,
   imageBackgroundURI,
   isDeviceAndroidOS,
   isDeviceInPortrait,
-} from '../utils/homeScreenLogic';
+} from '../utils/appLogic';
 import {useDispatch, useSelector} from 'react-redux';
 import HomeScreenHeader from '../components/HomeScreenHeader';
-import HomeScreenFooter from '../components/HomeScreenFooter';
-import FilmList from '../components/FilmList';
-import FilmListHeader from '../components/FilmListHeader';
-import {selectFilms, selectIsLoading} from '../app/selectors/filmsSelector';
-import UserProfile from '../components/UserProfile';
 import {useTheme} from '../hooks/useTheme';
+import HomeScreenFooter from '../components/HomeScreenFooter';
 
-const HomeScreen = (): React.JSX.Element => {
+import {useTranslation} from 'react-i18next';
+import '../../i18n';
+
+const HomeScreen = ({navigation}): React.JSX.Element => {
   const dispatch = useDispatch();
-  const films = useSelector(selectFilms);
-  const isLoading = useSelector(selectIsLoading);
   const screenDimensions = useSelector(selectScreenDimensions);
-  const filmsIndex = useSelector(selectFilmsScrollIndex);
-  const onLoadMoreFilms = () => dispatch(incrementFilmsScrollIndex());
-  const onLoadFilmsPress = () => dispatch(getFilms());
   const {theme} = useTheme();
+  const {t} = useTranslation();
 
   useEffect(() => {
     const updateDimensions = () => dispatch(updateOrientationState());
@@ -56,51 +37,23 @@ const HomeScreen = (): React.JSX.Element => {
     return () => subscription.remove();
   });
 
-  const filmsFetched = areFilmsFetched(films);
   const isPortrait = isDeviceInPortrait(screenDimensions);
 
   return (
-    <SafeAreaView style={portraitStyles.safeAreaView}>
+    <View style={portraitStyles.safeAreaView}>
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
         blurRadius={!isDeviceAndroidOS ? 5 : undefined}
         style={portraitStyles.bgImage}>
-        {!filmsFetched && !isLoading && (
-          <View
-            style={isPortrait ? portraitStyles.header : landscapeStyles.header}>
-            <HomeScreenHeader onLoadFilmsPress={onLoadFilmsPress} />
-          </View>
-        )}
-        {isLoading && (
-          <View style={portraitStyles.fetchingFilmsContainer}>
-            <FilmListHeader onLoadFilmsPress={onLoadFilmsPress} />
-            <ActivityIndicator
-              color="blue"
-              size={'large'}
-              style={
-                isPortrait
-                  ? portraitStyles.loadingIndicator
-                  : landscapeStyles.loadingIndicator
-              }
-            />
-          </View>
-        )}
-        {filmsFetched && !isLoading && (
-          <View>
-            <BurgerMenu />
-            <FilmList
-              isPortrait={isPortrait}
-              films={films}
-              filmsIndex={filmsIndex}
-              onLoadMoreFilms={onLoadMoreFilms}
-              onLoadFilmsPress={onLoadFilmsPress}
-            />
-          </View>
-        )}
+        <View
+          style={isPortrait ? portraitStyles.header : landscapeStyles.header}>
+          <HomeScreenHeader navigation={navigation} />
+        </View>
       </ImageBackground>
-      {!filmsFetched && <HomeScreenFooter />}
-    </SafeAreaView>
+      <Text>{t('welcome')}</Text>
+      <HomeScreenFooter />
+    </View>
   );
 };
 

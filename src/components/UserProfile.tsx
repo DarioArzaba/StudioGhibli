@@ -40,8 +40,9 @@ const UserProfile = (): React.JSX.Element => {
     <View style={styles.container}>
       {isEditMode ? (
         <View>
-          <Text style={styles.label}>Enter your name:</Text>
+          <Text style={styles.profileLabel}>Enter your name:</Text>
           <TextInput
+            style={styles.textInput}
             onChangeText={newName => {
               setCurrentProfile(prevProfile => ({
                 ...prevProfile,
@@ -51,8 +52,9 @@ const UserProfile = (): React.JSX.Element => {
             accessibilityLabel="name"
             value={currentProfile.name}
           />
-          <Text style={styles.label}>Enter your email:</Text>
+          <Text style={styles.profileLabel}>Enter your email:</Text>
           <TextInput
+            style={styles.textInput}
             onChangeText={newEmail => {
               setCurrentProfile(prevProfile => ({
                 ...prevProfile,
@@ -62,6 +64,7 @@ const UserProfile = (): React.JSX.Element => {
             accessibilityLabel="email"
             value={currentProfile.email}
           />
+          <Text style={styles.profileLabel}>Select a Theme:</Text>
           <Picker
             testID="theme-picker"
             selectedValue={currentProfile.theme}
@@ -77,7 +80,6 @@ const UserProfile = (): React.JSX.Element => {
             <Picker.Item label="Green" value="green" />
           </Picker>
           <TouchableOpacity
-            style={styles.button}
             testID="save-button"
             onPress={() => {
               setIsEditMode(false);
@@ -88,16 +90,25 @@ const UserProfile = (): React.JSX.Element => {
         </View>
       ) : (
         <View>
-          <Text>{currentProfile.name}</Text>
-          <Text>{currentProfile.email}</Text>
-          <Text>{theme}</Text>
+          <View style={styles.profileSection}>
+            <Text style={styles.profileLabel}>Name</Text>
+            <Text>{currentProfile.name}</Text>
+          </View>
+          <View style={styles.profileSection}>
+            <Text style={styles.profileLabel}>Email</Text>
+            <Text>{currentProfile.email}</Text>
+          </View>
+          <View style={styles.profileSection}>
+            <Text style={styles.profileLabel}>Theme</Text>
+            <Text>{theme}</Text>
+          </View>
           <TouchableOpacity
             style={styles.button}
             testID="edit-button"
             onPress={() => {
               setIsEditMode(true);
             }}>
-            <Text>Edit</Text>
+            <Text style={styles.buttonText}>Edit</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -108,6 +119,37 @@ const UserProfile = (): React.JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
+    paddingTop: 50,
+    paddingLeft: 20,
+    paddingBottom: 20,
+    paddingRight: 20,
+  },
+  profileSection: {
+    marginBottom: 15,
+  },
+  profileLabel: {
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 15,
+  },
+  picker: {
+    marginBottom: 15,
+  },
+  button: {
+    backgroundColor: '#ddd',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontWeight: 'bold',
   },
 });
+
 export default UserProfile;
