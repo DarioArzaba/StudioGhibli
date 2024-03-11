@@ -1,33 +1,31 @@
 import i18next from 'i18next';
 import * as RNLocalize from 'react-native-localize';
 import {initReactI18next} from 'react-i18next';
+import {readData} from './asyncStorageManager';
+import {addResources} from './dynamicImports';
 
-import resourcesToBackend from 'i18next-resources-to-backend';
+// const locales = RNLocalize.getLocales()[0].languageTag;
 
-import translationEN from '../locales/en/translation.json';
-import translationES from '../locales/es/translation.json';
-
-// the translations
-const resources = {
-  en: {
-    translation: translationEN,
-  },
-  es: {
-    translation: translationES,
-  },
+const setDefaultLanguage = async i18n => {
+  const profile = await readData('profile');
+  if (profile === null) {
+    i18n.changeLanguage('en');
+    addResources(i18n, 'en');
+  } else {
+    const lng = JSON.parse(profile).language;
+    addResources(i18n, lng);
+  }
 };
 
-const locales = RNLocalize.getLocales()[0].languageTag;
-
 i18next.use(initReactI18next).init({
+  resources: {},
+  ns: ['common'],
+  lng: 'cimode',
   debug: false,
   compatibilityJSON: 'v3',
-  resources,
-  lng: locales,
-  fallbackLng: 'en',
-  ns: ['translation'],
+  partialBundledLanguages: true,
 });
 
-console.log(i18next.languages);
+setDefaultLanguage(i18next);
 
 export default i18next;

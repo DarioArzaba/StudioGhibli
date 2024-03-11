@@ -1,0 +1,18 @@
+{
+  "title": "Films des Studios Ghibli",
+  "get-films-button": "Obtenir des films",
+  "go-to-settings": "Paramètres",
+  "settings-name-label-display": "Nom",
+  "settings-email-label-display": "E-mail",
+  "settings-theme-label-display": "Thème",
+  "settings-language-label-display": "Langue",
+  "settings-name-label-edit": "Entrez votre nom:",
+  "settings-email-label-edit": "Entrer votre Email:",
+  "settings-language-label-edit": "Sélectionnez une langue:",
+  "settings-theme-picker-option-blue": "Bleu",
+  "settings-theme-picker-option-red": "Rouge",
+  "settings-theme-picker-option-green": "Vert",
+  "settings-language-picker-option-spanish": "Espagnol",
+  "settings-language-picker-option-english": "Anglais",
+  "settings-language-picker-option-french": "Français"
+}

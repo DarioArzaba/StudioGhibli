@@ -10,8 +10,8 @@ import {Picker} from '@react-native-picker/picker';
 import {useTheme} from '../hooks/useTheme';
 import {readData, storeObject} from '../utils/asyncStorageManager';
 import {useTranslation} from 'react-i18next';
-import '../utils/i18n';
 import i18next from '../utils/i18n';
+import {addResources} from '../utils/dynamicImports';
 
 type Profile = {
   name: string;
@@ -20,19 +20,13 @@ type Profile = {
   language: string;
 };
 
-// const changeLanguage = async (i18nInstance, profile, lng, ns) => {
-//   const translations = await import(`./locales/${lng}/${ns}.json`);
-//   i18nInstance.addResourceBundle(lng, ns, translations);
-//   i18nInstance.changeLanguage(profile.language);
-// };
-
 const UserProfile = (): React.JSX.Element => {
   const {t} = useTranslation();
   const defaultProfile = {
     name: '',
     email: '',
     theme: 'default',
-    language: 'es',
+    language: 'en',
   };
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [currentProfile, setCurrentProfile] = useState<Profile>(defaultProfile);
@@ -93,9 +87,18 @@ const UserProfile = (): React.JSX.Element => {
               }));
               setTheme(newTheme);
             }}>
-            <Picker.Item label="Blue" value="blue" />
-            <Picker.Item label="Red" value="red" />
-            <Picker.Item label="Green" value="green" />
+            <Picker.Item
+              label={t('settings-theme-picker-option-blue')}
+              value="blue"
+            />
+            <Picker.Item
+              label={t('settings-theme-picker-option-red')}
+              value="red"
+            />
+            <Picker.Item
+              label={t('settings-theme-picker-option-green')}
+              value="green"
+            />
           </Picker>
           <Text style={styles.profileLabel}>
             {t('settings-language-label-edit')}
@@ -109,21 +112,27 @@ const UserProfile = (): React.JSX.Element => {
                 language: newLanguage,
               }));
             }}>
-            <Picker.Item label="Español" value="es" />
-            <Picker.Item label="Ingles" value="en" />
+            <Picker.Item
+              label={t('settings-language-picker-option-spanish')}
+              value="es"
+            />
+            <Picker.Item
+              label={t('settings-language-picker-option-english')}
+              value="en"
+            />
+            <Picker.Item
+              label={t('settings-language-picker-option-french')}
+              value="fr"
+            />
           </Picker>
           <TouchableOpacity
             testID="save-button"
             onPress={() => {
               setIsEditMode(false);
               storeObject('profile', currentProfile);
-              i18next.changeLanguage(currentProfile.language);
-              // changeLanguage(
-              //   i18next,
-              //   currentProfile,
-              //   currentProfile.language,
-              //   'common',
-              // );
+              console.log(i18next.languages);
+              addResources(i18next, currentProfile.language);
+              console.log(i18next.languages);
             }}>
             <Text>Save</Text>
           </TouchableOpacity>

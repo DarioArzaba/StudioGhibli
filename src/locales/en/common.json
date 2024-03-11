@@ -9,4 +9,10 @@
   "settings-name-label-edit": "Enter your name:",
   "settings-email-label-edit": "Enter your email:",
   "settings-language-label-edit": "Select a language:",
+  "settings-theme-picker-option-blue": "Blue",
+  "settings-theme-picker-option-red": "Red",
+  "settings-theme-picker-option-green": "Green",
+  "settings-language-picker-option-spanish": "Spanish",
+  "settings-language-picker-option-english": "English",
+  "settings-language-picker-option-french": "French",
 }
