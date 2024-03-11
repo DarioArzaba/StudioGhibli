@@ -1,12 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {
-  ImageBackground,
-  View,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
 import {updateOrientationState} from '../app/actions/actionCreators';
 import {selectScreenDimensions} from '../app/selectors/uiSelector';
 import {
@@ -19,14 +12,10 @@ import HomeScreenHeader from '../components/HomeScreenHeader';
 import {useTheme} from '../hooks/useTheme';
 import HomeScreenFooter from '../components/HomeScreenFooter';
 
-import {useTranslation} from 'react-i18next';
-import '../../i18n';
-
 const HomeScreen = ({navigation}): React.JSX.Element => {
   const dispatch = useDispatch();
   const screenDimensions = useSelector(selectScreenDimensions);
   const {theme} = useTheme();
-  const {t} = useTranslation();
 
   useEffect(() => {
     const updateDimensions = () => dispatch(updateOrientationState());
@@ -51,7 +40,6 @@ const HomeScreen = ({navigation}): React.JSX.Element => {
           <HomeScreenHeader navigation={navigation} />
         </View>
       </ImageBackground>
-      <Text>{t('welcome')}</Text>
       <HomeScreenFooter />
     </View>
   );

@@ -1,0 +1,13 @@
+{
+  "title": "Peliculas Studio Ghibli",
+  "get-films-button": "Peliculas",
+  "go-to-settings": "Ajustes",
+  "settings-name-label-display": "Nombre",
+  "settings-email-label-display": "Email",
+  "settings-theme-label-display": "Tema",
+  "settings-language-label-display": "Selecciona lenguage:",
+  "settings-name-label-edit": "Edita tu nombre:",
+  "settings-email-label-edit": "Edita tu email:",
+  "settings-theme-label-edit": "Selecciona un tema:",
+  "settings-language-label-edit": "Selecciona lenguage:"
+}

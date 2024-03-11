@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {Pressable, Text, StyleSheet} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import '../utils/i18n';
 
 const UserProfileButton = ({navigation}): React.JSX.Element => {
   const [isPressed, setIsPressed] = useState(false);
-
+  const {t} = useTranslation();
   const onLoadFilmsPressIn = () => setIsPressed(true);
   const onLoadFilmsPressOut = () => setIsPressed(false);
 
@@ -19,7 +21,7 @@ const UserProfileButton = ({navigation}): React.JSX.Element => {
       onPress={() => navigation.navigate('UserProfile')}
       onPressIn={onLoadFilmsPressIn}
       onPressOut={onLoadFilmsPressOut}>
-      <Text style={styles.getFilmsButtonText}>Settings</Text>
+      <Text style={styles.getFilmsButtonText}>{t('go-to-settings')}</Text>
     </Pressable>
   );
 };

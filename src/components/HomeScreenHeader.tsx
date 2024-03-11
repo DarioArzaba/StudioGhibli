@@ -3,18 +3,19 @@ import {StyleSheet, Text, View} from 'react-native';
 import GetFilmsButton from './GetFilmsButton';
 import UserProfileButton from './UserProfileButton';
 
-const HomeScreenHeader = ({
-  onLoadFilmsPress,
-  navigation,
-}: {
-  onLoadFilmsPress: () => void;
-}): React.JSX.Element => (
-  <View testID="HeaderContainer" style={styles.header}>
-    <Text style={styles.headerText}>Studio Ghibli Films</Text>
-    <GetFilmsButton navigation={navigation} />
-    <UserProfileButton navigation={navigation} />
-  </View>
-);
+import {useTranslation} from 'react-i18next';
+import '../utils/i18n';
+
+const HomeScreenHeader = ({navigation}: {}): React.JSX.Element => {
+  const {t} = useTranslation();
+  return (
+    <View testID="HeaderContainer" style={styles.header}>
+      <Text style={styles.headerText}>{t('title')}</Text>
+      <GetFilmsButton navigation={navigation} />
+      <UserProfileButton navigation={navigation} />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   header: {

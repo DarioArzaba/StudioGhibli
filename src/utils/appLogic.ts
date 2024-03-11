@@ -36,14 +36,29 @@ export const imageBackgroundURI = (theme: string) => {
 export const getColorFromTheme = (theme: string) => {
   switch (theme) {
     case 'default':
-      return {primaryColor: '#428bca', secondaryColor: '#5bc0de'};
+      return {
+        primaryColor: '#7b762a',
+        secondaryColor: '#938b37',
+      };
     case 'red':
-      return {primaryColor: '#428bca', secondaryColor: '#5bc0de'};
+      return {
+        primaryColor: '#7b2a2a',
+        secondaryColor: '#934837',
+      };
     case 'blue':
-      return {primaryColor: '#428bca', secondaryColor: '#5bc0de'};
+      return {
+        primaryColor: '#2a567b',
+        secondaryColor: '#29606f',
+      };
     case 'green':
-      return {primaryColor: '#428bca', secondaryColor: '#5bc0de'};
+      return {
+        primaryColor: '#224f22',
+        secondaryColor: '#2b732d',
+      };
     default:
-      return {primaryColor: '#428bca', secondaryColor: '#5bc0de'};
+      return {
+        primaryColor: '#7b762a',
+        secondaryColor: '#938b37',
+      };
   }
 };

@@ -1,0 +1,12 @@
+{
+  "title": "Studio Ghibli Films",
+  "get-films-button": "Get Films",
+  "go-to-settings": "Settings",
+  "settings-name-label-display": "Name",
+  "settings-email-label-display": "Email",
+  "settings-theme-label-display": "Theme",
+  "settings-language-label-display": "Language",
+  "settings-name-label-edit": "Enter your name:",
+  "settings-email-label-edit": "Enter your email:",
+  "settings-language-label-edit": "Select a language:",
+}

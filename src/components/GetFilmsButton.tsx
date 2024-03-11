@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {Pressable, Text, StyleSheet} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import '../utils/i18n';
 
 const GetFilmsButton = ({navigation}): React.JSX.Element => {
   const [isPressed, setIsPressed] = useState(false);
 
   const onLoadFilmsPressIn = () => setIsPressed(true);
   const onLoadFilmsPressOut = () => setIsPressed(false);
-
+  const {t} = useTranslation();
   return (
     <Pressable
       accessibilityRole="button"
@@ -19,7 +21,7 @@ const GetFilmsButton = ({navigation}): React.JSX.Element => {
       onPress={() => navigation.navigate('FilmList')}
       onPressIn={onLoadFilmsPressIn}
       onPressOut={onLoadFilmsPressOut}>
-      <Text style={styles.getFilmsButtonText}>Get Films</Text>
+      <Text style={styles.getFilmsButtonText}>{t('get-films-button')}</Text>
     </Pressable>
   );
 };

@@ -9,18 +9,30 @@ import {
 import {Picker} from '@react-native-picker/picker';
 import {useTheme} from '../hooks/useTheme';
 import {readData, storeObject} from '../utils/persistanceManager';
+import {useTranslation} from 'react-i18next';
+import '../utils/i18n';
+import i18next from '../utils/i18n';
 
 type Profile = {
   name: string;
   email: string;
   theme: string;
+  language: string;
 };
 
+// const changeLanguage = async (i18nInstance, profile, lng, ns) => {
+//   const translations = await import(`./locales/${lng}/${ns}.json`);
+//   i18nInstance.addResourceBundle(lng, ns, translations);
+//   i18nInstance.changeLanguage(profile.language);
+// };
+
 const UserProfile = (): React.JSX.Element => {
+  const {t} = useTranslation();
   const defaultProfile = {
     name: '',
     email: '',
     theme: 'default',
+    language: 'es',
   };
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [currentProfile, setCurrentProfile] = useState<Profile>(defaultProfile);
@@ -40,7 +52,9 @@ const UserProfile = (): React.JSX.Element => {
     <View style={styles.container}>
       {isEditMode ? (
         <View>
-          <Text style={styles.profileLabel}>Enter your name:</Text>
+          <Text style={styles.profileLabel}>
+            {t('settings-name-label-edit')}
+          </Text>
           <TextInput
             style={styles.textInput}
             onChangeText={newName => {
@@ -52,7 +66,9 @@ const UserProfile = (): React.JSX.Element => {
             accessibilityLabel="name"
             value={currentProfile.name}
           />
-          <Text style={styles.profileLabel}>Enter your email:</Text>
+          <Text style={styles.profileLabel}>
+            {t('settings-email-label-edit')}
+          </Text>
           <TextInput
             style={styles.textInput}
             onChangeText={newEmail => {
@@ -64,7 +80,9 @@ const UserProfile = (): React.JSX.Element => {
             accessibilityLabel="email"
             value={currentProfile.email}
           />
-          <Text style={styles.profileLabel}>Select a Theme:</Text>
+          <Text style={styles.profileLabel}>
+            {t('settings-theme-label-edit')}
+          </Text>
           <Picker
             testID="theme-picker"
             selectedValue={currentProfile.theme}
@@ -79,11 +97,33 @@ const UserProfile = (): React.JSX.Element => {
             <Picker.Item label="Red" value="red" />
             <Picker.Item label="Green" value="green" />
           </Picker>
+          <Text style={styles.profileLabel}>
+            {t('settings-language-label-edit')}
+          </Text>
+          <Picker
+            testID="language-picker"
+            selectedValue={currentProfile.language}
+            onValueChange={newLanguage => {
+              setCurrentProfile(prevProfile => ({
+                ...prevProfile,
+                language: newLanguage,
+              }));
+            }}>
+            <Picker.Item label="Español" value="es" />
+            <Picker.Item label="Ingles" value="en" />
+          </Picker>
           <TouchableOpacity
             testID="save-button"
             onPress={() => {
               setIsEditMode(false);
               storeObject('profile', currentProfile);
+              i18next.changeLanguage(currentProfile.language);
+              // changeLanguage(
+              //   i18next,
+              //   currentProfile,
+              //   currentProfile.language,
+              //   'common',
+              // );
             }}>
             <Text>Save</Text>
           </TouchableOpacity>
@@ -91,16 +131,28 @@ const UserProfile = (): React.JSX.Element => {
       ) : (
         <View>
           <View style={styles.profileSection}>
-            <Text style={styles.profileLabel}>Name</Text>
+            <Text style={styles.profileLabel}>
+              {t('settings-name-label-display')}
+            </Text>
             <Text>{currentProfile.name}</Text>
           </View>
           <View style={styles.profileSection}>
-            <Text style={styles.profileLabel}>Email</Text>
+            <Text style={styles.profileLabel}>
+              {t('settings-email-label-display')}
+            </Text>
             <Text>{currentProfile.email}</Text>
           </View>
           <View style={styles.profileSection}>
-            <Text style={styles.profileLabel}>Theme</Text>
+            <Text style={styles.profileLabel}>
+              {t('settings-theme-label-display')}
+            </Text>
             <Text>{theme}</Text>
+          </View>
+          <View style={styles.profileSection}>
+            <Text style={styles.profileLabel}>
+              {t('settings-language-label-display')}
+            </Text>
+            <Text>{currentProfile.language}</Text>
           </View>
           <TouchableOpacity
             style={styles.button}

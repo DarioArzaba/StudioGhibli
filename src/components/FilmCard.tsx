@@ -2,6 +2,8 @@ import React from 'react';
 import {Image, Text, View, StyleSheet} from 'react-native';
 import Film from '../models/FilmsResponse';
 import {truncateFilmDescription} from '../utils/filmCardLogic';
+import {useTheme} from '../hooks/useTheme';
+import {getColorFromTheme} from '../utils/appLogic';
 
 const FilmCard = ({
   film,
@@ -16,7 +18,11 @@ const FilmCard = ({
   return (
     <View
       testID="card"
-      style={isPortrait ? portraitStyles.card : landscapeStyles.card}>
+      style={
+        isPortrait
+          ? [portraitStyles.card, {backgroundColor: color.primaryColor}]
+          : [landscapeStyles.card, {backgroundColor: color.primaryColor}]
+      }>
       <Image
         src={film.image}
         alt={film.title}
@@ -47,7 +53,6 @@ export const portraitStyles = StyleSheet.create({
     margin: 14,
     padding: 10,
     borderRadius: 8,
-    backgroundColor: '#00334e',
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 15,
     shadowOpacity: 1,

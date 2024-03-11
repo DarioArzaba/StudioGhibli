@@ -5,7 +5,7 @@ import {RenderOptions, render} from '@testing-library/react-native';
 import store from '../app/store/store';
 import reducer, {AppState} from '../app/reducers/combineReducers';
 
-export function renderWithNewProvider(component: React.ReactElement) {
+export function renderWithEmptyReduxStore(component: React.ReactElement) {
   const emptyStore = configureStore({
     reducer,
   });
@@ -16,7 +16,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<AppState>;
   mystore?: typeof store;
 }
-export function renderWithAppProvider(
+export function renderWithReduxStore(
   ui: React.ReactElement,
   {preloadedState, mystore, ...renderOptions}: ExtendedRenderOptions = {},
 ) {
