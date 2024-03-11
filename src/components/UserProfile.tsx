@@ -126,15 +126,14 @@ const UserProfile = (): React.JSX.Element => {
             />
           </Picker>
           <TouchableOpacity
+            style={styles.button}
             testID="save-button"
             onPress={() => {
               setIsEditMode(false);
               storeObject('profile', currentProfile);
-              console.log(i18next.languages);
               addResources(i18next, currentProfile.language);
-              console.log(i18next.languages);
             }}>
-            <Text>Save</Text>
+            <Text style={styles.buttonText}>{t('settings-save-button')}</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -169,7 +168,7 @@ const UserProfile = (): React.JSX.Element => {
             onPress={() => {
               setIsEditMode(true);
             }}>
-            <Text style={styles.buttonText}>Edit</Text>
+            <Text style={styles.buttonText}>{t('settings-edit-button')}</Text>
           </TouchableOpacity>
         </View>
       )}

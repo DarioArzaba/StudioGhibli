@@ -1,11 +1,15 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-
-const HomeScreenFooter = (): React.JSX.Element => (
-  <View style={styles.footer}>
-    <Text style={styles.footerText}>© 2024 My App. All rights reserved.</Text>
-  </View>
-);
+import {useTranslation} from 'react-i18next';
+import '../utils/i18n';
+const HomeScreenFooter = (): React.JSX.Element => {
+  const {t} = useTranslation();
+  return (
+    <View style={styles.footer}>
+      <Text style={styles.footerText}>{t('footer')}</Text>
+    </View>
+  );
+};
 
 export const styles = StyleSheet.create({
   footer: {

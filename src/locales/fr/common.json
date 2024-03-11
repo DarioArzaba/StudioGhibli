@@ -3,7 +3,7 @@
   "get-films-button": "Obtenir des films",
   "go-to-settings": "Paramètres",
   "settings-name-label-display": "Nom",
-  "settings-email-label-display": "E-mail",
+  "settings-email-label-display": "Email",
   "settings-theme-label-display": "Thème",
   "settings-language-label-display": "Langue",
   "settings-name-label-edit": "Entrez votre nom:",
@@ -14,5 +14,9 @@
   "settings-theme-picker-option-green": "Vert",
   "settings-language-picker-option-spanish": "Espagnol",
   "settings-language-picker-option-english": "Anglais",
-  "settings-language-picker-option-french": "Français"
+  "settings-language-picker-option-french": "Français",
+  "settings-save-button": "Enregister",
+  "settings-edit-button": "Modifier",
+  "no-connection": "Pas de connexion ! Essaye à nouveau.",
+  "footer":"© 2024 Mon application. Tous droits réservés."
 }

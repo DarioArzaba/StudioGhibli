@@ -5,7 +5,6 @@ import '../utils/i18n';
 
 const GetFilmsButton = ({navigation}): React.JSX.Element => {
   const [isPressed, setIsPressed] = useState(false);
-
   const onLoadFilmsPressIn = () => setIsPressed(true);
   const onLoadFilmsPressOut = () => setIsPressed(false);
   const {t} = useTranslation();

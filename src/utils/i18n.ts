@@ -1,8 +1,8 @@
 import i18next from 'i18next';
-import * as RNLocalize from 'react-native-localize';
 import {initReactI18next} from 'react-i18next';
 import {readData} from './asyncStorageManager';
 import {addResources} from './dynamicImports';
+// import * as RNLocalize from 'react-native-localize';
 
 // const locales = RNLocalize.getLocales()[0].languageTag;
 

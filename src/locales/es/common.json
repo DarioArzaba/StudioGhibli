@@ -15,5 +15,9 @@
   "settings-theme-picker-option-green": "Verde",
   "settings-language-picker-option-spanish": "Español",
   "settings-language-picker-option-english": "Ingles",
-  "settings-language-picker-option-french": "Frances"
+  "settings-language-picker-option-french": "Frances",
+  "settings-save-button": "Guardar",
+  "settings-edit-button": "Editar",
+  "no-connection": "Sin conexión! Intentalo de nuevo.",
+  "footer":"© 2024 Mi app. Todos los derechos reservados."
 }

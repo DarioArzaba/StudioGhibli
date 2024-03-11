@@ -15,4 +15,8 @@
   "settings-language-picker-option-spanish": "Spanish",
   "settings-language-picker-option-english": "English",
   "settings-language-picker-option-french": "French",
+  "settings-save-button": "Save",
+  "settings-edit-button": "Edit",
+  "no-connection": "No connection! Try again.",
+  "footer": "© 2024 My App. All rights reserved."
 }

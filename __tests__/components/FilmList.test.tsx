@@ -5,7 +5,6 @@ import {mockFilms} from '../../src/utils/testMocks';
 
 describe('Film List', () => {
   const mockOnLoadMoreFilms = jest.fn();
-  const mockOnLoadFilmsPress = jest.fn();
 
   it('should render correctly', () => {
     const {getByTestId} = render(
@@ -13,7 +12,6 @@ describe('Film List', () => {
         isPortrait={true}
         filmsIndex={5}
         onLoadMoreFilms={mockOnLoadMoreFilms}
-        onLoadFilmsPress={mockOnLoadFilmsPress}
         films={mockFilms}
       />,
     );
