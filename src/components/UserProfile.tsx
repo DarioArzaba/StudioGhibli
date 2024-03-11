@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {useTheme} from '../hooks/useTheme';
-import {readData, storeObject} from '../utils/persistanceManager';
+import {readData, storeObject} from '../utils/asyncStorageManager';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
 import i18next from '../utils/i18n';

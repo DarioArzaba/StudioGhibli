@@ -4,7 +4,7 @@ import {
   storeData,
   storeObject,
   updateData,
-} from '../../src/utils/persistanceManager';
+} from '../../src/utils/asyncStorageManager';
 import asyncStorage from '../../__mocks__/@react-native-async-storage/async-storage';
 
 beforeEach(() => {

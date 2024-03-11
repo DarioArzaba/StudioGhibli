@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectTheme} from '../app/selectors/uiSelector';
 import {useCallback, useEffect} from 'react';
 import {updateTheme} from '../app/actions/actionCreators';
-import {readData, storeData} from '../utils/persistanceManager';
+import {readData, storeData} from '../utils/asyncStorageManager';
 
 export const useTheme = () => {
   const dispatch = useDispatch();
