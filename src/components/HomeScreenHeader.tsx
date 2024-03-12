@@ -6,13 +6,13 @@ import UserProfileButton from './UserProfileButton';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
 
-const HomeScreenHeader = ({navigation}: {}): React.JSX.Element => {
+const HomeScreenHeader = (): React.JSX.Element => {
   const {t} = useTranslation();
   return (
     <View testID="HeaderContainer" style={styles.header}>
       <Text style={styles.headerText}>{t('title')}</Text>
-      <GetFilmsButton navigation={navigation} />
-      <UserProfileButton navigation={navigation} />
+      <GetFilmsButton />
+      <UserProfileButton />
     </View>
   );
 };

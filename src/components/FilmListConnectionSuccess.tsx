@@ -46,7 +46,7 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
     );
     getFilmsOnMount();
     return () => subscription.remove();
-  }, []);
+  }, [dispatch]);
 
   const filmsFetched = areFilmsFetched(films);
   const isPortrait = isDeviceInPortrait(screenDimensions);

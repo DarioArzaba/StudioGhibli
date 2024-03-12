@@ -2,10 +2,15 @@ import React, {useState} from 'react';
 import {Pressable, Text, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
+import {useNavigation} from '@react-navigation/native';
+import {UserProfileNavProps} from '../navigation/NavProps';
 
-const UserProfileButton = ({navigation}): React.JSX.Element => {
+const UserProfileButton = (): React.JSX.Element => {
   const [isPressed, setIsPressed] = useState(false);
+
   const {t} = useTranslation();
+  const navigation = useNavigation<UserProfileNavProps>();
+
   const onLoadFilmsPressIn = () => setIsPressed(true);
   const onLoadFilmsPressOut = () => setIsPressed(false);
 
@@ -18,7 +23,7 @@ const UserProfileButton = ({navigation}): React.JSX.Element => {
           ? styles.getFilmsButtonPressed
           : styles.getFilmsButtonReleased,
       ]}
-      onPress={() => navigation.navigate('UserProfile')}
+      onPress={() => navigation.navigate('UserProfile')} // 2 out of 2 occurrences, we don't need to prop drill the navigation prop, use hook instead.
       onPressIn={onLoadFilmsPressIn}
       onPressOut={onLoadFilmsPressOut}>
       <Text style={styles.getFilmsButtonText}>{t('go-to-settings')}</Text>
