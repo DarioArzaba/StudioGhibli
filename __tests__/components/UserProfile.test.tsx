@@ -1,7 +1,6 @@
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react-native';
 import UserProfile from '../../src/components/UserProfile';
-import {Picker} from '@react-native-picker/picker';
 
 describe('User Profile', () => {
   it('should display a user profile', () => {

@@ -18,7 +18,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 }
 export function renderWithReduxStore(
   ui: React.ReactElement,
-  {preloadedState, mystore, ...renderOptions}: ExtendedRenderOptions = {},
+  {...renderOptions}: ExtendedRenderOptions = {}, // ???
 ) {
   function Wrapper({children}: PropsWithChildren<{}>): JSX.Element {
     return <Provider store={store}>{children}</Provider>;

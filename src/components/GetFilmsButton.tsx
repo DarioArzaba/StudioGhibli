@@ -2,12 +2,17 @@ import React, {useState} from 'react';
 import {Pressable, Text, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
+import {useNavigation} from '@react-navigation/native';
+import {FilmListNavProps} from '../navigation/NavProps';
 
-const GetFilmsButton = ({navigation}): React.JSX.Element => {
+const GetFilmsButton = (): React.JSX.Element => {
   const [isPressed, setIsPressed] = useState(false);
+
+  const {t} = useTranslation();
+  const navigation = useNavigation<FilmListNavProps>();
+
   const onLoadFilmsPressIn = () => setIsPressed(true);
   const onLoadFilmsPressOut = () => setIsPressed(false);
-  const {t} = useTranslation();
   return (
     <Pressable
       accessibilityRole="button"
@@ -17,7 +22,7 @@ const GetFilmsButton = ({navigation}): React.JSX.Element => {
           ? styles.getFilmsButtonPressed
           : styles.getFilmsButtonReleased,
       ]}
-      onPress={() => navigation.navigate('FilmList')}
+      onPress={() => navigation.navigate('FilmList')} // 1 of two occurrences of this invokation, why not access through the hook?
       onPressIn={onLoadFilmsPressIn}
       onPressOut={onLoadFilmsPressOut}>
       <Text style={styles.getFilmsButtonText}>{t('get-films-button')}</Text>

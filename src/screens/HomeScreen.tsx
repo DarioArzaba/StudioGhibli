@@ -12,7 +12,7 @@ import HomeScreenHeader from '../components/HomeScreenHeader';
 import {useTheme} from '../hooks/useTheme';
 import HomeScreenFooter from '../components/HomeScreenFooter';
 
-const HomeScreen = ({navigation}): React.JSX.Element => {
+const HomeScreen = (): React.JSX.Element => {
   const dispatch = useDispatch();
   const screenDimensions = useSelector(selectScreenDimensions);
   const {theme} = useTheme();
@@ -37,7 +37,7 @@ const HomeScreen = ({navigation}): React.JSX.Element => {
         style={portraitStyles.bgImage}>
         <View
           style={isPortrait ? portraitStyles.header : landscapeStyles.header}>
-          <HomeScreenHeader navigation={navigation} />
+          <HomeScreenHeader />
         </View>
       </ImageBackground>
       <HomeScreenFooter />

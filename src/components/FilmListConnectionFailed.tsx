@@ -3,11 +3,11 @@ import {ImageBackground, View, StyleSheet, Text} from 'react-native';
 import {imageBackgroundURI, isDeviceAndroidOS} from '../utils/appLogic';
 import FilmListHeader from '../components/FilmListHeader';
 import {useTheme} from '../hooks/useTheme';
-import GetFilmsButton from './GetFilmsButton';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
 
-const FilmListConnectionFailed = ({navigation}): React.JSX.Element => {
+// You were not even using navigation here
+const FilmListConnectionFailed = (): React.JSX.Element => {
   const {theme} = useTheme();
   const {t} = useTranslation();
   return (

@@ -2,12 +2,10 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import store from './app/store/store';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
 import FilmListScreen from './screens/FilmListScreen';
-
-const Stack = createNativeStackNavigator();
+import Stack from './navigation/Stack';
 
 const App = (): React.JSX.Element => (
   <Provider store={store}>
