@@ -1,11 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-/**
- * Custom Props for navigation ensures type safety
- */
-
 export type RootStackParamList = {
-  Home: undefined; // Add here props signature for every component, undefined means no props.
+  Home: undefined;
   UserProfile: undefined;
   FilmList: undefined;
 };

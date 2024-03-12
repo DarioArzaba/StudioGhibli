@@ -6,7 +6,6 @@ import {useTheme} from '../hooks/useTheme';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
 
-// You were not even using navigation here
 const FilmListConnectionFailed = (): React.JSX.Element => {
   const {theme} = useTheme();
   const {t} = useTranslation();

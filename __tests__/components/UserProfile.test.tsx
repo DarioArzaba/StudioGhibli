@@ -34,12 +34,9 @@ describe('User Profile', () => {
     fireEvent.press(getByTestId('edit-button'));
     const picker = getByTestId('theme-picker');
 
-    // Text inputs
     fireEvent.changeText(getByLabelText('name'), 'Bob');
     fireEvent.changeText(getByLabelText('email'), 'bob@gmail.com');
-    // Picker
     fireEvent(picker, 'onValueChange', 'red');
-    // Save profile
     fireEvent.press(getByTestId('save-button'));
 
     expect(getByText('Bob')).toBeTruthy();

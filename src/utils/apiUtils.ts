@@ -2,7 +2,7 @@ import axios, {AxiosRequestConfig} from 'axios';
 
 interface GenericAxiosApiResponse<T> {
   data: T;
-  status: number; // HTTP status handling
+  status: number;
 }
 
 export async function axiosApiCall<T>(
