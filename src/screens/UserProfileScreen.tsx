@@ -50,138 +50,130 @@ const UserProfile = (): React.JSX.Element => {
         <Text style={styles.title}>User Profile</Text>
         {isEditMode ? (
           <ScrollView>
-            <View>
-              <Text style={styles.profileLabel}>
-                {t('settings-name-label-edit')}
-              </Text>
-              <TextInput
-                style={styles.textInput}
-                onChangeText={newName => {
-                  setCurrentProfile(prevProfile => ({
-                    ...prevProfile,
-                    name: newName,
-                  }));
-                }}
-                accessibilityLabel="name"
-                value={currentProfile.name}
+            <Text style={styles.profileLabel}>
+              {t('settings-name-label-edit')}
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={newName => {
+                setCurrentProfile(prevProfile => ({
+                  ...prevProfile,
+                  name: newName,
+                }));
+              }}
+              accessibilityLabel="name"
+              value={currentProfile.name}
+            />
+            <Text style={styles.profileLabel}>
+              {t('settings-email-label-edit')}
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={newEmail => {
+                setCurrentProfile(prevProfile => ({
+                  ...prevProfile,
+                  email: newEmail,
+                }));
+              }}
+              accessibilityLabel="email"
+              value={currentProfile.email}
+            />
+            <Text style={styles.profileLabel}>
+              {t('settings-theme-label-edit')}
+            </Text>
+            <Picker
+              testID="theme-picker"
+              selectedValue={currentProfile.theme}
+              onValueChange={newTheme => {
+                setCurrentProfile(prevProfile => ({
+                  ...prevProfile,
+                  theme: newTheme,
+                }));
+                setTheme(newTheme);
+              }}>
+              <Picker.Item
+                label={t('settings-theme-picker-option-blue')}
+                value="blue"
               />
-              <Text style={styles.profileLabel}>
-                {t('settings-email-label-edit')}
-              </Text>
-              <TextInput
-                style={styles.textInput}
-                onChangeText={newEmail => {
-                  setCurrentProfile(prevProfile => ({
-                    ...prevProfile,
-                    email: newEmail,
-                  }));
-                }}
-                accessibilityLabel="email"
-                value={currentProfile.email}
+              <Picker.Item
+                label={t('settings-theme-picker-option-red')}
+                value="red"
               />
-              <Text style={styles.profileLabel}>
-                {t('settings-theme-label-edit')}
-              </Text>
-              <Picker
-                testID="theme-picker"
-                selectedValue={currentProfile.theme}
-                onValueChange={newTheme => {
-                  setCurrentProfile(prevProfile => ({
-                    ...prevProfile,
-                    theme: newTheme,
-                  }));
-                  setTheme(newTheme);
-                }}>
-                <Picker.Item
-                  label={t('settings-theme-picker-option-blue')}
-                  value="blue"
-                />
-                <Picker.Item
-                  label={t('settings-theme-picker-option-red')}
-                  value="red"
-                />
-                <Picker.Item
-                  label={t('settings-theme-picker-option-green')}
-                  value="green"
-                />
-              </Picker>
-              <Text style={styles.profileLabel}>
-                {t('settings-language-label-edit')}
-              </Text>
-              <Picker
-                testID="language-picker"
-                selectedValue={currentProfile.language}
-                onValueChange={newLanguage => {
-                  setCurrentProfile(prevProfile => ({
-                    ...prevProfile,
-                    language: newLanguage,
-                  }));
-                }}>
-                <Picker.Item
-                  label={t('settings-language-picker-option-spanish')}
-                  value="es"
-                />
-                <Picker.Item
-                  label={t('settings-language-picker-option-english')}
-                  value="en"
-                />
-                <Picker.Item
-                  label={t('settings-language-picker-option-french')}
-                  value="fr"
-                />
-              </Picker>
-              <TouchableOpacity
-                style={styles.button}
-                testID="save-button"
-                onPress={() => {
-                  setIsEditMode(false);
-                  storeObject('profile', currentProfile);
-                  i18next.changeLanguage(currentProfile.language);
-                }}>
-                <Text style={styles.buttonText}>
-                  {t('settings-save-button')}
-                </Text>
-              </TouchableOpacity>
-            </View>
+              <Picker.Item
+                label={t('settings-theme-picker-option-green')}
+                value="green"
+              />
+            </Picker>
+            <Text style={styles.profileLabel}>
+              {t('settings-language-label-edit')}
+            </Text>
+            <Picker
+              testID="language-picker"
+              selectedValue={currentProfile.language}
+              onValueChange={newLanguage => {
+                setCurrentProfile(prevProfile => ({
+                  ...prevProfile,
+                  language: newLanguage,
+                }));
+              }}>
+              <Picker.Item
+                label={t('settings-language-picker-option-spanish')}
+                value="es"
+              />
+              <Picker.Item
+                label={t('settings-language-picker-option-english')}
+                value="en"
+              />
+              <Picker.Item
+                label={t('settings-language-picker-option-french')}
+                value="fr"
+              />
+            </Picker>
+            <TouchableOpacity
+              style={styles.button}
+              testID="save-button"
+              onPress={() => {
+                setIsEditMode(false);
+                storeObject('profile', currentProfile);
+                i18next.changeLanguage(currentProfile.language);
+              }}>
+              <Text style={styles.buttonText}>{t('settings-save-button')}</Text>
+            </TouchableOpacity>
           </ScrollView>
         ) : (
           <ScrollView>
-            <View>
-              <View style={styles.profileSection}>
-                <Text style={styles.profileLabel}>
-                  {t('settings-name-label-display')}
-                </Text>
-                <Text>{currentProfile.name}</Text>
-              </View>
-              <View style={styles.profileSection}>
-                <Text style={styles.profileLabel}>
-                  {t('settings-email-label-display')}
-                </Text>
-                <Text>{currentProfile.email}</Text>
-              </View>
-              <View style={styles.profileSection}>
-                <Text style={styles.profileLabel}>
-                  {t('settings-theme-label-display')}
-                </Text>
-                <Text>{theme}</Text>
-              </View>
-              <View style={styles.profileSection}>
-                <Text style={styles.profileLabel}>
-                  {t('settings-language-label-display')}
-                </Text>
-                <Text>{currentProfile.language}</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.button}
-                testID="edit-button"
-                onPress={() => {
-                  setIsEditMode(true);
-                }}>
-                <Text style={styles.buttonText}>
-                  {t('settings-edit-button')}
-                </Text>
-              </TouchableOpacity>
+            <View style={styles.profileSection}>
+              <Text style={styles.profileLabel}>
+                {t('settings-name-label-display')}
+              </Text>
+              <Text>{currentProfile.name}</Text>
             </View>
+            <View style={styles.profileSection}>
+              <Text style={styles.profileLabel}>
+                {t('settings-email-label-display')}
+              </Text>
+              <Text>{currentProfile.email}</Text>
+            </View>
+            <View style={styles.profileSection}>
+              <Text style={styles.profileLabel}>
+                {t('settings-theme-label-display')}
+              </Text>
+              <Text>{theme}</Text>
+            </View>
+            <View style={styles.profileSection}>
+              <Text style={styles.profileLabel}>
+                {t('settings-language-label-display')}
+              </Text>
+              <Text>{currentProfile.language}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.button}
+              testID="edit-button"
+              onPress={() => {
+                setIsEditMode(true);
+              }}>
+              <Text style={styles.buttonText}>{t('settings-edit-button')}</Text>
+            </TouchableOpacity>
           </ScrollView>
         )}
       </View>
