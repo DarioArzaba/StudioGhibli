@@ -15,6 +15,7 @@ const GetFilmsButton = (): React.JSX.Element => {
   const onLoadFilmsPressOut = () => setIsPressed(false);
   return (
     <Pressable
+      testID="GetFilmsButton"
       accessibilityRole="button"
       style={[
         styles.getFilmsButton,

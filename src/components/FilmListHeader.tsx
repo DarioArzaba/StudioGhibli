@@ -2,22 +2,27 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useTheme} from '../hooks/useTheme';
 import {getColorFromTheme} from '../utils/appLogic';
+import {useTranslation} from 'react-i18next';
+import '../utils/i18n';
 
 const FilmListHeader = (): React.JSX.Element => {
   const {theme} = useTheme();
   const color = getColorFromTheme(theme);
+  const {t} = useTranslation();
+
   return (
-    <View style={[styles.header, {backgroundColor: color.secondaryColor}]}>
-      <Text style={styles.headerText}>Studio Ghibli Films</Text>
+    <View
+      testID="HeaderTitle"
+      style={[styles.header, {backgroundColor: color.secondaryColor}]}>
+      <Text style={styles.headerText}>{t('title')}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItems: 'center',
     fontFamily: 'Verdana, Geneva, Tahoma, sans-serif',
     paddingTop: 45,
     paddingHorizontal: 10,

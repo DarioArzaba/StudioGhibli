@@ -1,13 +1,15 @@
 import React from 'react';
-import {render} from '@testing-library/react-native';
 import FilmListHeader from '../../src/components/FilmListHeader';
+import {renderWithReduxStore} from '../../src/utils/testWrappers';
+import {act} from '@testing-library/react-native';
 
 describe('Film List Header', () => {
-  const mockOnLoadFilmsPress = jest.fn();
-  it('should render correctly', () => {
-    const {getByText} = render(
-      <FilmListHeader onLoadFilmsPress={mockOnLoadFilmsPress} />,
-    );
-    expect(getByText('Studio Ghibli Films')).toBeTruthy();
+  it('should render correctly', async () => {
+    jest.useFakeTimers();
+    const {getByTestId} = renderWithReduxStore(<FilmListHeader />);
+    act(() => {
+      jest.runAllTimers();
+    });
+    expect(getByTestId('HeaderTitle')).toBeTruthy();
   });
 });

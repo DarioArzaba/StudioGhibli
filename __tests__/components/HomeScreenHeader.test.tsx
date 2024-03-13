@@ -1,11 +1,19 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react-native';
+import {act, render} from '@testing-library/react-native';
 import HomeScreenHeader from '../../src/components/HomeScreenHeader';
+import {NavigationContainer} from '@react-navigation/native';
 
 describe('Home Screen Header', () => {
+  jest.useFakeTimers();
   it('should render correctly', () => {
-    const mockOnLoadFilmsPress = jest.fn();
-    render(<HomeScreenHeader onLoadFilmsPress={mockOnLoadFilmsPress} />);
-    expect(screen.getByText('Studio Ghibli Films')).toBeTruthy();
+    const {getByTestId} = render(
+      <NavigationContainer>
+        <HomeScreenHeader />
+      </NavigationContainer>,
+    );
+    act(() => {
+      jest.runAllTimers();
+    });
+    expect(getByTestId('HeaderContainer')).toBeTruthy();
   });
 });

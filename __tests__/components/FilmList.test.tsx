@@ -1,19 +1,23 @@
 import React from 'react';
-import {render} from '@testing-library/react-native';
 import FilmList from '../../src/components/FilmList';
 import {mockFilms} from '../../src/utils/testMocks';
+import {renderWithReduxStore} from '../../src/utils/testWrappers';
+import {NavigationContainer} from '@react-navigation/native';
 
 describe('Film List', () => {
   const mockOnLoadMoreFilms = jest.fn();
 
   it('should render correctly', () => {
-    const {getByTestId} = render(
-      <FilmList
-        isPortrait={true}
-        filmsIndex={5}
-        onLoadMoreFilms={mockOnLoadMoreFilms}
-        films={mockFilms}
-      />,
+    const {getByTestId} = renderWithReduxStore(
+      <NavigationContainer>
+        <FilmList
+          isPortrait={true}
+          filmsIndex={5}
+          onLoadMoreFilms={mockOnLoadMoreFilms}
+          films={mockFilms}
+        />
+        ,
+      </NavigationContainer>,
     );
     expect(getByTestId('FilmListContainer')).toBeTruthy();
   });

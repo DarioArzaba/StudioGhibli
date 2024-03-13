@@ -11,6 +11,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import HomeScreenHeader from '../components/HomeScreenHeader';
 import {useTheme} from '../hooks/useTheme';
 import HomeScreenFooter from '../components/HomeScreenFooter';
+import {HomeScreenNavProps} from '../navigation/NavProps';
+import {useNavigation} from '@react-navigation/native';
+import GoBackButton from '../components/GoBackButton';
 
 const HomeScreen = (): React.JSX.Element => {
   const dispatch = useDispatch();
@@ -25,11 +28,13 @@ const HomeScreen = (): React.JSX.Element => {
     );
     return () => subscription.remove();
   });
-
+  const navigation = useNavigation<HomeScreenNavProps>();
+  const state = navigation.getState();
+  const isFirstScreen = state?.index === 0;
   const isPortrait = isDeviceInPortrait(screenDimensions);
-
   return (
-    <View style={portraitStyles.safeAreaView}>
+    <View testID="HomeScreenContainer" style={portraitStyles.safeAreaView}>
+      {!isFirstScreen && <GoBackButton />}
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
