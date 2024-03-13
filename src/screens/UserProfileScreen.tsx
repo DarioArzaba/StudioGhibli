@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     marginTop: 90,
+    marginBottom: 200,
   },
   profileSection: {
     marginBottom: 15,

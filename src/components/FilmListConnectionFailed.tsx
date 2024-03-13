@@ -12,7 +12,6 @@ import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
 import {FilmListNavProps} from '../navigation/NavProps';
 import {useNavigation} from '@react-navigation/native';
-import GoBackButton from './GoBackButton';
 
 const FilmListConnectionFailed = (): React.JSX.Element => {
   const navigation = useNavigation<FilmListNavProps>();
@@ -21,7 +20,6 @@ const FilmListConnectionFailed = (): React.JSX.Element => {
   const {t} = useTranslation();
   return (
     <View style={portraitStyles.safeAreaView}>
-      <GoBackButton />
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
@@ -33,9 +31,9 @@ const FilmListConnectionFailed = (): React.JSX.Element => {
               {t('no-connection')}
             </Text>
             <TouchableOpacity
-              onPress={() => navigation.push('Home')}
+              onPress={() => navigation.popToTop()}
               style={portraitStyles.homeButton}>
-              <Text style={portraitStyles.homeButtonText}>Home</Text>
+              <Text style={portraitStyles.homeButtonText}>Go to Home</Text>
             </TouchableOpacity>
           </View>
         </View>
