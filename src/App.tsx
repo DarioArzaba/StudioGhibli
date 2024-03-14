@@ -6,7 +6,7 @@ import store from './app/store/store';
 import {NavigationContainer} from '@react-navigation/native';
 import Stack from './navigation/Stack';
 import {deepLinksConfig} from './navigation/DeepLinkConfig';
-
+// TODO: add lazy load
 import HomeScreen from './screens/HomeScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
 import FilmListScreen from './screens/FilmListScreen';

@@ -1,4 +1,7 @@
-export const deepLinksConfig = {
+import {LinkingOptions} from '@react-navigation/native';
+import {RootStackParamList} from './NavProps';
+
+export const deepLinksConfig: LinkingOptions<RootStackParamList> = {
   prefixes: ['ghiblifilmsapp://'],
   config: {
     screens: {
