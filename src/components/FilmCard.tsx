@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../navigation/NavProps';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
+// TODO Add prop types
 const FilmCard = ({
   filmId,
   film,
