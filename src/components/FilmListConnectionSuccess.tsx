@@ -26,7 +26,7 @@ import {
   selectFilmsScrollIndex,
 } from '../app/selectors/filmsSelector';
 import {useTheme} from '../hooks/useTheme';
-import GoBackButton from './GoBackButton';
+import ButtonGoBack from './ButtonGoBack';
 
 const FilmListConnectionSuccess = (): React.JSX.Element => {
   const dispatch = useDispatch();
@@ -52,28 +52,28 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
   const isPortrait = isDeviceInPortrait(screenDimensions);
 
   return (
-    <View style={portraitStyles.safeAreaView}>
+    <View style={portStyles.safeAreaView}>
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
         blurRadius={!isDeviceAndroidOS ? 5 : undefined}
-        style={portraitStyles.bgImage}>
+        style={portStyles.bgImage}>
         {isLoading && (
-          <View style={portraitStyles.fetchingFilmsContainer}>
+          <View style={portStyles.fetchingFilmsContainer}>
             <ActivityIndicator
               color="blue"
               size={'large'}
               style={
                 isPortrait
-                  ? portraitStyles.loadingIndicator
-                  : landscapeStyles.loadingIndicator
+                  ? portStyles.loadingIndicator
+                  : landStyles.loadingIndicator
               }
             />
           </View>
         )}
         {filmsFetched && !isLoading && (
-          <View style={portraitStyles.filmListContainer}>
-            <GoBackButton />
+          <View style={portStyles.filmListContainer}>
+            <ButtonGoBack />
             <FilmList
               isPortrait={isPortrait}
               films={films}
@@ -87,7 +87,7 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
   );
 };
 
-const portraitStyles = StyleSheet.create({
+const portStyles = StyleSheet.create({
   filmListContainer: {
     width: '100%',
   },
@@ -109,7 +109,7 @@ const portraitStyles = StyleSheet.create({
   },
 });
 
-const landscapeStyles = StyleSheet.create({
+const landStyles = StyleSheet.create({
   loadingIndicator: {
     marginTop: '20%',
   },

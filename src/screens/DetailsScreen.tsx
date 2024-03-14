@@ -1,37 +1,67 @@
-import React from 'react';
-import {Text, View, StyleSheet, ScrollView, Image} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Image,
+  ScrollView,
+} from 'react-native';
 import {RootStackParamList} from '../navigation/NavProps';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import GoBackButton from '../components/GoBackButton';
+import ButtonGoBack from '../components/ButtonGoBack';
+import {areFilmsFetched, getFilmFromId} from '../utils/appLogic';
+import {getFilms} from '../app/actions/actionCreators';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectFilms, selectIsLoading} from '../app/selectors/filmsSelector';
 
 type DetailsRouteProp = RouteProp<RootStackParamList, 'Details'>;
 
 const DetailsScreen = (): React.JSX.Element => {
   const route = useRoute<DetailsRouteProp>();
-  const {filmInfo} = route.params;
+  const {filmIdNavProp} = route.params;
+
+  const dispatch = useDispatch();
+  const films = useSelector(selectFilms);
+  const isLoading = useSelector(selectIsLoading);
+  const filmsFetched = areFilmsFetched(films);
+
+  useEffect(() => {
+    const fetchFilmsIfNotLoaded = () => dispatch(getFilms());
+    if (!filmsFetched) {
+      fetchFilmsIfNotLoaded();
+    }
+  });
+
+  const filmDetails = getFilmFromId(films, filmIdNavProp);
   return (
     <View style={styles.detailsScreenContainer}>
-      <GoBackButton />
+      <ButtonGoBack />
       <View style={styles.container}>
-        <Image
-          style={styles.image}
-          src={filmInfo?.image}
-          alt={filmInfo?.title}
-        />
-        <Text style={styles.title}>{filmInfo?.title}</Text>
-        <ScrollView>
+        {isLoading && <ActivityIndicator color="blue" size={'large'} />}
+        {filmsFetched && !isLoading && (
           <View>
-            <Text style={styles.movieInfoText}>
-              Director: {filmInfo?.director}
-            </Text>
-            <Text style={styles.movieInfoScore}>
-              Score: {filmInfo?.rt_score}
-            </Text>
-            <Text style={styles.movieInfoDescription}>
-              {filmInfo?.description}
-            </Text>
+            <Image
+              style={styles.image}
+              src={filmDetails?.image}
+              alt={filmDetails?.title}
+            />
+            <Text style={styles.title}>{filmDetails?.title}</Text>
+            <ScrollView>
+              <View>
+                <Text style={styles.movieInfoText}>
+                  Director: {filmDetails?.director}
+                </Text>
+                <Text style={styles.movieInfoScore}>
+                  Score: {filmDetails?.rt_score}
+                </Text>
+                <Text style={styles.movieInfoDescription}>
+                  {filmDetails?.description}
+                </Text>
+              </View>
+            </ScrollView>
           </View>
-        </ScrollView>
+        )}
       </View>
     </View>
   );

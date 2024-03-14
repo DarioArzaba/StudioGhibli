@@ -19,21 +19,21 @@ const FilmListConnectionFailed = (): React.JSX.Element => {
   const {theme} = useTheme();
   const {t} = useTranslation();
   return (
-    <View style={portraitStyles.safeAreaView}>
+    <View style={portStyles.safeAreaView}>
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
         blurRadius={!isDeviceAndroidOS ? 5 : undefined}
-        style={portraitStyles.bgImage}>
-        <View style={portraitStyles.fetchingFilmsContainer}>
-          <View style={portraitStyles.noConnectionContainer}>
-            <Text style={portraitStyles.noConnectionText}>
+        style={portStyles.bgImage}>
+        <View style={portStyles.fetchingFilmsContainer}>
+          <View style={portStyles.noConnectionContainer}>
+            <Text style={portStyles.noConnectionText}>
               {t('no-connection')}
             </Text>
             <TouchableOpacity
               onPress={() => navigation.popToTop()}
-              style={portraitStyles.homeButton}>
-              <Text style={portraitStyles.homeButtonText}>Go to Home</Text>
+              style={portStyles.homeButton}>
+              <Text style={portStyles.homeButtonText}>Go to Home</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -42,7 +42,7 @@ const FilmListConnectionFailed = (): React.JSX.Element => {
   );
 };
 
-const portraitStyles = StyleSheet.create({
+const portStyles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
   },

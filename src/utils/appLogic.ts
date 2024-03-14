@@ -1,5 +1,6 @@
 import {Platform, ScaledSize} from 'react-native';
 import Film from '../models/FilmsResponse';
+import FilmDetails from '../models/FilmDetails';
 
 export const isDeviceAndroidOS = Platform.OS === 'android';
 
@@ -7,6 +8,14 @@ export const isDeviceInPortrait = (screen: ScaledSize) =>
   screen.height >= screen.width;
 
 export const areFilmsFetched = (films: Film[]) => films && films.length !== 0;
+
+export const getFilmFromId = (films: Film[], filmId: string): FilmDetails => {
+  const film = films.find(filmMatch => filmMatch.id === filmId);
+  if (!film) {
+    throw new Error(`Film with ID ${filmId} not found.`);
+  }
+  return film;
+};
 
 export const imageBackgroundURI = (theme: string) => {
   switch (theme) {

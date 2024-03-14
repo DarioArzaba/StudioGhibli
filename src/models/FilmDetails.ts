@@ -3,6 +3,6 @@ export default interface FilmDetails {
   title: string;
   description: string;
   image: string;
-  director?: string;
-  rt_score?: string;
+  director: string;
+  rt_score: string;
 } // eslint-disable-line semi

@@ -1,18 +1,18 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import GetFilmsButton from './GetFilmsButton';
-import UserProfileButton from './UserProfileButton';
+import ButtonGoToFilmList from './ButtonGoToFilmList';
+import ButtonGoToUserProfile from './ButtonGoToUserProfile';
 
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
 
-const HomeScreenHeader = (): React.JSX.Element => {
+const HomeHub = (): React.JSX.Element => {
   const {t} = useTranslation();
   return (
     <View testID="HeaderContainer" style={styles.header}>
       <Text style={styles.headerText}>{t('title')}</Text>
-      <GetFilmsButton />
-      <UserProfileButton />
+      <ButtonGoToFilmList />
+      <ButtonGoToUserProfile />
     </View>
   );
 };
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreenHeader;
+export default HomeHub;

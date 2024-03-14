@@ -3,37 +3,37 @@ import {Pressable, Text, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
 import {useNavigation} from '@react-navigation/native';
-import {UserProfileNavProps} from '../navigation/NavProps';
+import {FilmListNavProps} from '../navigation/NavProps';
 
-const UserProfileButton = (): React.JSX.Element => {
+const ButtonGoToFilmList = (): React.JSX.Element => {
   const [isPressed, setIsPressed] = useState(false);
 
   const {t} = useTranslation();
-  const navigation = useNavigation<UserProfileNavProps>();
+  const navigation = useNavigation<FilmListNavProps>();
 
   const onLoadFilmsPressIn = () => setIsPressed(true);
   const onLoadFilmsPressOut = () => setIsPressed(false);
-
   return (
     <Pressable
+      testID="ButtonGoToFilmList"
       accessibilityRole="button"
       style={[
-        styles.getFilmsButton,
+        styles.ButtonGoToFilmList,
         isPressed
-          ? styles.getFilmsButtonPressed
-          : styles.getFilmsButtonReleased,
+          ? styles.ButtonGoToFilmListPressed
+          : styles.ButtonGoToFilmListReleased,
       ]}
-      onPress={() => navigation.navigate('UserProfile')}
+      onPress={() => navigation.navigate('FilmList')}
       onPressIn={onLoadFilmsPressIn}
       onPressOut={onLoadFilmsPressOut}>
-      <Text style={styles.getFilmsButtonText}>{t('go-to-settings')}</Text>
+      <Text style={styles.ButtonGoToFilmListText}>{t('get-films-button')}</Text>
     </Pressable>
   );
 };
 
 export const styles = StyleSheet.create({
-  getFilmsButton: {
-    marginTop: 1,
+  ButtonGoToFilmList: {
+    marginTop: 40,
     marginBottom: 16,
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -41,16 +41,16 @@ export const styles = StyleSheet.create({
     fontFamily: 'inherit',
     backgroundColor: '#008080',
   },
-  getFilmsButtonPressed: {
+  ButtonGoToFilmListPressed: {
     backgroundColor: '#00A0A0',
   },
-  getFilmsButtonReleased: {
+  ButtonGoToFilmListReleased: {
     backgroundColor: '#008080',
   },
-  getFilmsButtonText: {
+  ButtonGoToFilmListText: {
     fontSize: 16,
     color: 'white',
   },
 });
 
-export default UserProfileButton;
+export default ButtonGoToFilmList;

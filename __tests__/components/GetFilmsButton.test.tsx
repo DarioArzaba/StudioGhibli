@@ -1,5 +1,5 @@
 import React from 'react';
-import GetFilmsButton from '../../src/components/GetFilmsButton';
+import ButtonGoToFilmList from '../../src/components/ButtonGoToFilmList';
 import '@testing-library/react-native/extend-expect';
 import {renderWithReduxStore} from '../../src/utils/testWrappers';
 import {NavigationContainer} from '@react-navigation/native';
@@ -10,7 +10,7 @@ describe('Get Films Button', () => {
     jest.useFakeTimers();
     const {getByRole} = renderWithReduxStore(
       <NavigationContainer>
-        <GetFilmsButton />
+        <ButtonGoToFilmList />
       </NavigationContainer>,
     );
     act(() => {
@@ -23,7 +23,7 @@ describe('Get Films Button', () => {
     jest.useFakeTimers();
     const {getByRole} = renderWithReduxStore(
       <NavigationContainer>
-        <GetFilmsButton />
+        <ButtonGoToFilmList />
       </NavigationContainer>,
     );
     act(() => {

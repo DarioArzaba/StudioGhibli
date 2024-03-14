@@ -1,6 +1,6 @@
 import React from 'react';
 import {act, render} from '@testing-library/react-native';
-import HomeScreenHeader from '../../src/components/HomeScreenHeader';
+import HomeHub from '../../src/components/HomeHub';
 import {NavigationContainer} from '@react-navigation/native';
 
 describe('Home Screen Header', () => {
@@ -8,7 +8,7 @@ describe('Home Screen Header', () => {
   it('should render correctly', () => {
     const {getByTestId} = render(
       <NavigationContainer>
-        <HomeScreenHeader />
+        <HomeHub />
       </NavigationContainer>,
     );
     act(() => {
