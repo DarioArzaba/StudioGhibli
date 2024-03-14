@@ -1,11 +1,9 @@
 import React from 'react';
-import {FlatList, View} from 'react-native';
-import FilmListHeader from './FilmListHeader';
+import {FlatList, StyleSheet, View} from 'react-native';
 import FilmCard from './FilmCard';
 import Film from '../models/FilmsResponse';
 
 const FilmList = ({
-  isPortrait,
   films,
   filmsIndex,
   onLoadMoreFilms,
@@ -22,12 +20,11 @@ const FilmList = ({
   };
 
   const filmCard = ({item}: {item: Film}) => (
-    <FilmCard key={item.id} film={item} isPortrait={isPortrait} />
+    <FilmCard key={item.id} film={item} />
   );
 
   return (
-    <View testID="FilmListContainer">
-      <FilmListHeader />
+    <View testID="FilmListContainer" style={styles.container}>
       <FlatList
         data={films.slice(0, filmsIndex) || []}
         renderItem={filmCard}
@@ -38,5 +35,11 @@ const FilmList = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 110,
+  },
+});
 
 export default FilmList;

@@ -17,6 +17,6 @@
   "settings-language-picker-option-french": "French",
   "settings-save-button": "Save",
   "settings-edit-button": "Edit",
-  "no-connection": "No connection! Try again.",
+  "no-connection": "No connection, please try again later",
   "footer": "© 2024 My App. All rights reserved."
 }

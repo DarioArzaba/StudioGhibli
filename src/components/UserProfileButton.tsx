@@ -23,7 +23,7 @@ const UserProfileButton = (): React.JSX.Element => {
           ? styles.getFilmsButtonPressed
           : styles.getFilmsButtonReleased,
       ]}
-      onPress={() => navigation.navigate('UserProfile')} // 2 out of 2 occurrences, we don't need to prop drill the navigation prop, use hook instead.
+      onPress={() => navigation.navigate('UserProfile')}
       onPressIn={onLoadFilmsPressIn}
       onPressOut={onLoadFilmsPressOut}>
       <Text style={styles.getFilmsButtonText}>{t('go-to-settings')}</Text>

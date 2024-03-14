@@ -15,6 +15,7 @@ import HomeScreenFooter from '../components/HomeScreenFooter';
 const HomeScreen = (): React.JSX.Element => {
   const dispatch = useDispatch();
   const screenDimensions = useSelector(selectScreenDimensions);
+  const isPortrait = isDeviceInPortrait(screenDimensions);
   const {theme} = useTheme();
 
   useEffect(() => {
@@ -25,11 +26,8 @@ const HomeScreen = (): React.JSX.Element => {
     );
     return () => subscription.remove();
   });
-
-  const isPortrait = isDeviceInPortrait(screenDimensions);
-
   return (
-    <View style={portraitStyles.safeAreaView}>
+    <View testID="HomeScreenContainer" style={portraitStyles.safeAreaView}>
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"

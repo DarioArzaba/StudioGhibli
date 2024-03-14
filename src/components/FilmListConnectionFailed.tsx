@@ -1,13 +1,21 @@
 import React from 'react';
-import {ImageBackground, View, StyleSheet, Text} from 'react-native';
+import {
+  ImageBackground,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {imageBackgroundURI, isDeviceAndroidOS} from '../utils/appLogic';
-import FilmListHeader from '../components/FilmListHeader';
 import {useTheme} from '../hooks/useTheme';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
+import {FilmListNavProps} from '../navigation/NavProps';
+import {useNavigation} from '@react-navigation/native';
 
-// You were not even using navigation here
 const FilmListConnectionFailed = (): React.JSX.Element => {
+  const navigation = useNavigation<FilmListNavProps>();
+
   const {theme} = useTheme();
   const {t} = useTranslation();
   return (
@@ -18,11 +26,15 @@ const FilmListConnectionFailed = (): React.JSX.Element => {
         blurRadius={!isDeviceAndroidOS ? 5 : undefined}
         style={portraitStyles.bgImage}>
         <View style={portraitStyles.fetchingFilmsContainer}>
-          <FilmListHeader />
           <View style={portraitStyles.noConnectionContainer}>
             <Text style={portraitStyles.noConnectionText}>
               {t('no-connection')}
             </Text>
+            <TouchableOpacity
+              onPress={() => navigation.popToTop()}
+              style={portraitStyles.homeButton}>
+              <Text style={portraitStyles.homeButtonText}>Go to Home</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
@@ -37,6 +49,7 @@ const portraitStyles = StyleSheet.create({
   bgImage: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   loadingIndicator: {
     marginTop: '50%',
@@ -62,6 +75,19 @@ const portraitStyles = StyleSheet.create({
     fontSize: 28,
     color: 'white',
     textAlign: 'center',
+  },
+  homeButtonText: {
+    fontSize: 20,
+    color: 'white',
+  },
+  homeButton: {
+    marginTop: 40,
+    marginBottom: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    fontFamily: 'inherit',
+    backgroundColor: '#008080',
   },
 });
 

@@ -20,13 +20,13 @@ import {
 } from '../utils/appLogic';
 import {useDispatch, useSelector} from 'react-redux';
 import FilmList from '../components/FilmList';
-import FilmListHeader from '../components/FilmListHeader';
 import {
   selectFilms,
   selectIsLoading,
   selectFilmsScrollIndex,
 } from '../app/selectors/filmsSelector';
 import {useTheme} from '../hooks/useTheme';
+import GoBackButton from './GoBackButton';
 
 const FilmListConnectionSuccess = (): React.JSX.Element => {
   const dispatch = useDispatch();
@@ -60,7 +60,6 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
         style={portraitStyles.bgImage}>
         {isLoading && (
           <View style={portraitStyles.fetchingFilmsContainer}>
-            <FilmListHeader />
             <ActivityIndicator
               color="blue"
               size={'large'}
@@ -73,7 +72,8 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
           </View>
         )}
         {filmsFetched && !isLoading && (
-          <View>
+          <View style={portraitStyles.filmListContainer}>
+            <GoBackButton />
             <FilmList
               isPortrait={isPortrait}
               films={films}
@@ -88,6 +88,9 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
 };
 
 const portraitStyles = StyleSheet.create({
+  filmListContainer: {
+    width: '100%',
+  },
   safeAreaView: {
     flex: 1,
   },

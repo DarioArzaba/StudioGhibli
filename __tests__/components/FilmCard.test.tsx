@@ -1,15 +1,21 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react-native';
+import {screen} from '@testing-library/react-native';
 import Film from '../../src/models/FilmsResponse';
 import FilmCard from '../../src/components/FilmCard';
 import '@testing-library/react-native/extend-expect';
 import {mockFilm, mockLongFilmDescription} from '../../src/utils/testMocks';
+import {renderWithEmptyReduxStore} from '../../src/utils/testWrappers';
+import {NavigationContainer} from '@react-navigation/native';
 
 describe('Film Card', () => {
   it('should render correctly', () => {
-    render(<FilmCard film={mockFilm} isPortrait={true} />);
-    expect(screen.getByText(mockFilm.title)).toBeTruthy();
-    expect(screen.getByText(mockFilm.description)).toBeTruthy();
+    const {getByText} = renderWithEmptyReduxStore(
+      <NavigationContainer>
+        <FilmCard film={mockFilm} isPortrait={true} />
+      </NavigationContainer>,
+    );
+    expect(getByText(mockFilm.title)).toBeTruthy();
+    expect(getByText(mockFilm.description)).toBeTruthy();
   });
 
   it('should truncate and add ellipsis to long film descriptions', () => {
@@ -17,7 +23,11 @@ describe('Film Card', () => {
       ...mockFilm,
       description: mockLongFilmDescription,
     };
-    render(<FilmCard film={mockFilmWithLongDescription} isPortrait={false} />);
+    renderWithEmptyReduxStore(
+      <NavigationContainer>
+        <FilmCard film={mockFilmWithLongDescription} isPortrait={false} />
+      </NavigationContainer>,
+    );
     expect(screen.getByText(mockFilmWithLongDescription.title)).toBeTruthy();
     const truncatedDescription = screen.getByText(/.*\.\.\./);
     expect(truncatedDescription).toBeTruthy();

@@ -6,7 +6,9 @@ const HomeScreenFooter = (): React.JSX.Element => {
   const {t} = useTranslation();
   return (
     <View style={styles.footer}>
-      <Text style={styles.footerText}>{t('footer')}</Text>
+      <Text testID="footer" style={styles.footerText}>
+        {t('footer')}
+      </Text>
     </View>
   );
 };

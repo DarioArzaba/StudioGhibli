@@ -15,6 +15,7 @@ const GetFilmsButton = (): React.JSX.Element => {
   const onLoadFilmsPressOut = () => setIsPressed(false);
   return (
     <Pressable
+      testID="GetFilmsButton"
       accessibilityRole="button"
       style={[
         styles.getFilmsButton,
@@ -22,7 +23,7 @@ const GetFilmsButton = (): React.JSX.Element => {
           ? styles.getFilmsButtonPressed
           : styles.getFilmsButtonReleased,
       ]}
-      onPress={() => navigation.navigate('FilmList')} // 1 of two occurrences of this invokation, why not access through the hook?
+      onPress={() => navigation.navigate('FilmList')}
       onPressIn={onLoadFilmsPressIn}
       onPressOut={onLoadFilmsPressOut}>
       <Text style={styles.getFilmsButtonText}>{t('get-films-button')}</Text>

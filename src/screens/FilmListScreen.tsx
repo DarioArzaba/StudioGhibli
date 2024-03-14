@@ -5,7 +5,6 @@ import {NetInfoState, useNetInfo} from '@react-native-community/netinfo';
 
 const FilmListScreen = (): React.JSX.Element => {
   const netInfo: NetInfoState = useNetInfo();
-  console.log('FILM SCREEN TRIGGER connection is:', netInfo.isConnected);
   return netInfo.isConnected ? (
     <FilmListConnectionSuccess />
   ) : (

@@ -1,6 +1,6 @@
+import {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectTheme} from '../app/selectors/uiSelector';
-import {useCallback, useEffect} from 'react';
 import {updateTheme} from '../app/actions/actionCreators';
 import {readData, storeData} from '../utils/asyncStorageManager';
 
