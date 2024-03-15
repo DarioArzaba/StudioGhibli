@@ -9,7 +9,7 @@ export const isDeviceInPortrait = (screen: ScaledSize) =>
 
 export const areFilmsFetched = (films: Film[]) => films && films.length !== 0;
 
-export const getFilmFromId = (films: Film[], filmId: string): FilmDetails => {
+export const getFilmFromId = (films: Film[], filmId: string): Film => {
   const film = films.find(filmMatch => filmMatch.id === filmId);
   if (!film) {
     throw new Error(`Film with ID ${filmId} not found.`);

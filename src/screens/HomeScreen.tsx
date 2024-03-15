@@ -12,7 +12,7 @@ import {
 } from '../utils/appLogic';
 import {useTheme} from '../hooks/useTheme';
 import HomeHub from '../components/HomeHub';
-import HomeFooter from '../components/HomeFooter';
+import Footer from '../components/Footer';
 
 const HomeScreen = (): React.JSX.Element => {
   const dispatch = useDispatch();
@@ -30,22 +30,22 @@ const HomeScreen = (): React.JSX.Element => {
   });
 
   return (
-    <View testID="HomeScreenContainer" style={portStyles.mainContainer}>
+    <View testID="HomeScreenContainer" style={portraitStyles.mainContainer}>
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
         blurRadius={!isDeviceAndroidOS ? 3 : undefined}
-        style={portStyles.bgImage}>
-        <View style={isPortrait ? portStyles.hub : landStyles.hub}>
+        style={portraitStyles.bgImage}>
+        <View style={isPortrait ? portraitStyles.hub : landscapeStyles.hub}>
           <HomeHub />
         </View>
       </ImageBackground>
-      <HomeFooter />
+      <Footer textKey="home-footer" />
     </View>
   );
 };
 
-const portStyles = StyleSheet.create({
+const portraitStyles = StyleSheet.create({
   mainContainer: {
     flex: 1,
   },
@@ -58,7 +58,7 @@ const portStyles = StyleSheet.create({
   },
 });
 
-const landStyles = StyleSheet.create({
+const landscapeStyles = StyleSheet.create({
   hub: {
     marginTop: '10%',
   },
