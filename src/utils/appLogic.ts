@@ -1,11 +1,8 @@
-import {Platform, ScaledSize} from 'react-native';
+import {Platform} from 'react-native';
 import Film from '../models/FilmsResponse';
 import FilmDetails from '../models/FilmDetails';
 
 export const isDeviceAndroidOS = Platform.OS === 'android';
-
-export const isDeviceInPortrait = (screen: ScaledSize) =>
-  screen.height >= screen.width;
 
 export const areFilmsFetched = (films: Film[]) => films && films.length !== 0;
 

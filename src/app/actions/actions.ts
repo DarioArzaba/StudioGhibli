@@ -5,7 +5,6 @@ export enum ActionType {
   GET_FILMS_SUCCESS = 'GET_FILMS_SUCCESS',
   GET_FILMS_FAILURE = 'GET_FILMS_FAILURE',
   INCREMENT_FILMS_SCROLL_INDEX = 'INCREMENT_FILMS_SCROLL_INDEX',
-  UPDATE_ORIENTATION_STATE = 'UPDATE_ORIENTATION_STATE',
   UPDATE_THEME = 'UPDATE_THEME',
 }
 
@@ -24,10 +23,6 @@ export interface GetFilmsFailure {
 
 export interface IncrementFilmsScrollIndex {
   type: ActionType.INCREMENT_FILMS_SCROLL_INDEX;
-}
-
-export interface UpdateOrientationState {
-  type: ActionType.UPDATE_ORIENTATION_STATE;
 }
 
 export interface UpdateTheme {

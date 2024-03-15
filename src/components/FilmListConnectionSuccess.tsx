@@ -4,19 +4,15 @@ import {
   ImageBackground,
   View,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 import {
   getFilms,
   incrementFilmsScrollIndex,
-  updateOrientationState,
 } from '../app/actions/actionCreators';
-import {selectScreenDimensions} from '../app/selectors/uiSelector';
 import {
   areFilmsFetched,
   imageBackgroundURI,
   isDeviceAndroidOS,
-  isDeviceInPortrait,
 } from '../utils/appLogic';
 import {useDispatch, useSelector} from 'react-redux';
 import FilmList from '../components/FilmList';
@@ -27,29 +23,23 @@ import {
 } from '../app/selectors/filmsSelector';
 import {useTheme} from '../hooks/useTheme';
 import ButtonGoBack from './ButtonGoBack';
+import {useDeviceDimensions} from '../hooks/useDeviceDimensions';
 
 const FilmListConnectionSuccess = (): React.JSX.Element => {
   const dispatch = useDispatch();
   const films = useSelector(selectFilms);
   const isLoading = useSelector(selectIsLoading);
-  const screenDimensions = useSelector(selectScreenDimensions);
   const filmsIndex = useSelector(selectFilmsScrollIndex);
   const onLoadMoreFilms = () => dispatch(incrementFilmsScrollIndex());
+  const {isDeviceInPortraitMode} = useDeviceDimensions();
   const {theme} = useTheme();
 
   useEffect(() => {
     const getFilmsOnMount = () => dispatch(getFilms());
-    const updateDimensions = () => dispatch(updateOrientationState());
-    const subscription = Dimensions.addEventListener(
-      'change',
-      updateDimensions,
-    );
     getFilmsOnMount();
-    return () => subscription.remove();
   }, [dispatch]);
 
   const filmsFetched = areFilmsFetched(films);
-  const isPortrait = isDeviceInPortrait(screenDimensions);
 
   return (
     <View style={portStyles.safeAreaView}>
@@ -64,7 +54,7 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
               color="blue"
               size={'large'}
               style={
-                isPortrait
+                isDeviceInPortraitMode
                   ? portStyles.loadingIndicator
                   : landStyles.loadingIndicator
               }
@@ -75,7 +65,7 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
           <View style={portStyles.filmListContainer}>
             <ButtonGoBack />
             <FilmList
-              isPortrait={isPortrait}
+              isPortrait={isDeviceInPortraitMode}
               films={films}
               filmsIndex={filmsIndex}
               onLoadMoreFilms={onLoadMoreFilms}
