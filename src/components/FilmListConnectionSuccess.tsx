@@ -26,7 +26,7 @@ import {
   selectFilmsScrollIndex,
 } from '../app/selectors/filmsSelector';
 import {useTheme} from '../hooks/useTheme';
-import GoBackButton from './GoBackButton';
+import ButtonGoBack from './ButtonGoBack';
 
 const FilmListConnectionSuccess = (): React.JSX.Element => {
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
         )}
         {filmsFetched && !isLoading && (
           <View style={portraitStyles.filmListContainer}>
-            <GoBackButton />
+            <ButtonGoBack />
             <FilmList
               isPortrait={isPortrait}
               films={films}

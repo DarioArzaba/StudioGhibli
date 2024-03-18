@@ -8,6 +8,7 @@
   "settings-language-label-display": "Langue",
   "settings-name-label-edit": "Entrez votre nom:",
   "settings-email-label-edit": "Entrer votre Email:",
+  "settings-theme-label-edit": "Sélectionner un thème",
   "settings-language-label-edit": "Sélectionnez une langue:",
   "settings-theme-picker-option-blue": "Bleu",
   "settings-theme-picker-option-red": "Rouge",
@@ -18,5 +19,5 @@
   "settings-save-button": "Enregister",
   "settings-edit-button": "Modifier",
   "no-connection": "Pas de connexion ! Essaye à nouveau.",
-  "footer":"© 2024 Mon application. Tous droits réservés."
+  "home-footer":"© 2024 Mon application. Tous droits réservés."
 }

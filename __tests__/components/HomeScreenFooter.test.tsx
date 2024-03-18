@@ -1,11 +1,11 @@
 import React from 'react';
 import {act, render} from '@testing-library/react-native';
-import HomeScreenFooter from '../../src/components/HomeScreenFooter';
+import Footer from '../../src/components/Footer';
 
 describe('Home Screen Footer', () => {
   it('should render correctly', () => {
     jest.useFakeTimers();
-    const {getByTestId} = render(<HomeScreenFooter />);
+    const {getByTestId} = render(<Footer />);
     act(() => {
       jest.runAllTimers();
     });

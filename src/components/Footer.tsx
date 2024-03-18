@@ -2,12 +2,12 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
-const HomeScreenFooter = (): React.JSX.Element => {
+const Footer = ({textKey}: {textKey: string}): React.JSX.Element => {
   const {t} = useTranslation();
   return (
     <View style={styles.footer}>
       <Text testID="footer" style={styles.footerText}>
-        {t('footer')}
+        {t(`${textKey}`)}
       </Text>
     </View>
   );
@@ -26,4 +26,4 @@ export const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreenFooter;
+export default Footer;

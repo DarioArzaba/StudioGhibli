@@ -1,11 +1,10 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import FilmDetails from '../models/FilmDetails';
 
 export type RootStackParamList = {
   Home: undefined;
   UserProfile: undefined;
   FilmList: undefined;
-  Details: {filmInfo: FilmDetails};
+  Details: {filmIdNavProp: string};
 };
 
 export type HomeScreenNavProps = NativeStackNavigationProp<

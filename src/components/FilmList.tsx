@@ -20,7 +20,7 @@ const FilmList = ({
   };
 
   const filmCard = ({item}: {item: Film}) => (
-    <FilmCard key={item.id} film={item} />
+    <FilmCard filmId={item.id} film={item} />
   );
 
   return (

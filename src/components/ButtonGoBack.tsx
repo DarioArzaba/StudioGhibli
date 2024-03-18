@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-const GoBackButton = (): React.JSX.Element => {
+const ButtonGoBack = (): React.JSX.Element => {
   const navigation = useNavigation();
 
   return (
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GoBackButton;
+export default ButtonGoBack;

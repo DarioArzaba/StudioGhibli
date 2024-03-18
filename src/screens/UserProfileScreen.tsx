@@ -12,7 +12,7 @@ import {useTheme} from '../hooks/useTheme';
 import {readData, storeObject} from '../utils/asyncStorageManager';
 import {useTranslation} from 'react-i18next';
 import i18next from '../utils/i18n';
-import GoBackButton from '../components/GoBackButton';
+import ButtonGoBack from '../components/ButtonGoBack';
 
 type Profile = {
   name: string;
@@ -45,7 +45,7 @@ const UserProfile = (): React.JSX.Element => {
 
   return (
     <View style={styles.profileContainer}>
-      <GoBackButton />
+      <ButtonGoBack />
       <View style={styles.container}>
         <Text style={styles.title}>User Profile</Text>
         {isEditMode ? (

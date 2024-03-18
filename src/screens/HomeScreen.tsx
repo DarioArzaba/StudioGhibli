@@ -1,16 +1,18 @@
 import React, {useEffect} from 'react';
 import {ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
+
+import {useDispatch, useSelector} from 'react-redux';
 import {updateOrientationState} from '../app/actions/actionCreators';
 import {selectScreenDimensions} from '../app/selectors/uiSelector';
+
 import {
   imageBackgroundURI,
   isDeviceAndroidOS,
   isDeviceInPortrait,
 } from '../utils/appLogic';
-import {useDispatch, useSelector} from 'react-redux';
-import HomeScreenHeader from '../components/HomeScreenHeader';
 import {useTheme} from '../hooks/useTheme';
-import HomeScreenFooter from '../components/HomeScreenFooter';
+import HomeHub from '../components/HomeHub';
+import Footer from '../components/Footer';
 
 const HomeScreen = (): React.JSX.Element => {
   const dispatch = useDispatch();
@@ -26,47 +28,38 @@ const HomeScreen = (): React.JSX.Element => {
     );
     return () => subscription.remove();
   });
+
   return (
-    <View testID="HomeScreenContainer" style={portraitStyles.safeAreaView}>
+    <View testID="HomeScreenContainer" style={portraitStyles.mainContainer}>
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
-        blurRadius={!isDeviceAndroidOS ? 5 : undefined}
+        blurRadius={!isDeviceAndroidOS ? 3 : undefined}
         style={portraitStyles.bgImage}>
-        <View
-          style={isPortrait ? portraitStyles.header : landscapeStyles.header}>
-          <HomeScreenHeader />
+        <View style={isPortrait ? portraitStyles.hub : landscapeStyles.hub}>
+          <HomeHub />
         </View>
       </ImageBackground>
-      <HomeScreenFooter />
+      <Footer textKey="home-footer" />
     </View>
   );
 };
 
 const portraitStyles = StyleSheet.create({
-  safeAreaView: {
+  mainContainer: {
     flex: 1,
   },
   bgImage: {
     flex: 1,
     alignItems: 'center',
   },
-  loadingIndicator: {
-    marginTop: '50%',
-  },
-  fetchingFilmsContainer: {
-    width: '100%',
-  },
-  header: {
+  hub: {
     marginTop: '70%',
   },
 });
 
 const landscapeStyles = StyleSheet.create({
-  loadingIndicator: {
-    marginTop: '20%',
-  },
-  header: {
+  hub: {
     marginTop: '10%',
   },
 });

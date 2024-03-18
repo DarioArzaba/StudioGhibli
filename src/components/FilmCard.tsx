@@ -14,7 +14,14 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../navigation/NavProps';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const FilmCard = ({film}: {film: Film}): React.JSX.Element => {
+// TODO Add prop types
+const FilmCard = ({
+  filmId,
+  film,
+}: {
+  filmId: string;
+  film: Film;
+}): React.JSX.Element => {
   const {theme} = useTheme();
   const color = getColorFromTheme(theme);
   const filmDescription = truncateFilmDescription(film.description, 60);
@@ -24,7 +31,7 @@ const FilmCard = ({film}: {film: Film}): React.JSX.Element => {
   return (
     <TouchableWithoutFeedback
       style={styles.cardbutton}
-      onPress={() => navigation.navigate('Details', {filmInfo: film})}>
+      onPress={() => navigation.navigate('Details', {filmIdNavProp: filmId})}>
       <View
         testID="card"
         style={[styles.cardFilm, {backgroundColor: color.primaryColor}]}>

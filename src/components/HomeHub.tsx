@@ -1,18 +1,17 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import GetFilmsButton from './GetFilmsButton';
-import UserProfileButton from './UserProfileButton';
 
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
+import GFButton from './GFButton';
 
-const HomeScreenHeader = (): React.JSX.Element => {
+const HomeHub = (): React.JSX.Element => {
   const {t} = useTranslation();
   return (
     <View testID="HeaderContainer" style={styles.header}>
       <Text style={styles.headerText}>{t('title')}</Text>
-      <GetFilmsButton />
-      <UserProfileButton />
+      <GFButton textKey="get-films-button" route="FilmList" />
+      <GFButton textKey="go-to-settings" route="UserProfile" />
     </View>
   );
 };
@@ -36,4 +35,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreenHeader;
+export default HomeHub;
