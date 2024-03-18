@@ -3,45 +3,40 @@ import {StyleSheet, Switch, Text, TextInput, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
 import GFButton from './GFButton';
-import {readData, storeData, updateData} from '../utils/asyncStorageManager';
-import {useBiometrics} from '../hooks/useBiometrics';
+import {readData, updateData} from '../utils/asyncStorageManager';
+import {checkBiometricSupport, loginWithBiometrics} from '../utils/biometrics';
+import {useNavigation} from '@react-navigation/native';
+import {FilmListNavProps} from '../navigation/NavProps';
 
 const LoginCard = ({titleKey}: {titleKey: string}): React.JSX.Element => {
   const {t} = useTranslation();
+  const navigation = useNavigation<FilmListNavProps>();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const {loginWithBiometrics, biometricsAvailable} = useBiometrics();
-  const [biometricsSwitch, setBiometricsSwitch] = useState(false);
+
+  const [isBiometricsSupported, setIsBiometricsSupported] = useState(false);
+  const [isBiometricLoginEnabled, setIsBiometricLoginEnabled] = useState(false);
 
   useEffect(() => {
-    const setupBiometricLogin = async () => {
-      if (biometricsAvailable) {
-        const loginWithBiometricsSetting = await readData(
-          'loginWithBiometrics',
-        );
-        if (loginWithBiometricsSetting === null) {
-          await storeData('loginWithBiometrics', 'false');
-          setBiometricsSwitch(false);
-        } else if (loginWithBiometricsSetting === 'true') {
-          setBiometricsSwitch(true);
-          loginWithBiometrics();
-        } else {
-          setBiometricsSwitch(false);
-        }
+    const biometricsSetup = async (): Promise<void> => {
+      setIsBiometricsSupported(await checkBiometricSupport());
+      const biometricSettingInStorage = await readData(
+        'isBiometricLoginEnabled',
+      );
+      if (biometricSettingInStorage === 'true') {
+        setIsBiometricLoginEnabled(true);
+        await loginWithBiometrics(navigation);
       }
     };
-    setupBiometricLogin();
-  }, [biometricsAvailable]);
+    biometricsSetup();
+  }, []);
 
-  const biometricsSwitchToggle = async () => {
-    if (!biometricsSwitch) {
-      await updateData('loginWithBiometrics', 'true');
-      setBiometricsSwitch(true);
-      loginWithBiometrics();
-    } else {
-      await updateData('loginWithBiometrics', 'false');
-      setBiometricsSwitch(false);
+  const toggleBiometricsEnabled = async (isSwitchOn: boolean) => {
+    setIsBiometricLoginEnabled(isSwitchOn);
+    if (isSwitchOn) {
+      await loginWithBiometrics(navigation);
     }
+    await updateData('isBiometricLoginEnabled', `${isSwitchOn}`);
   };
 
   return (
@@ -63,16 +58,16 @@ const LoginCard = ({titleKey}: {titleKey: string}): React.JSX.Element => {
       />
       <View style={styles.buttonsContainer}>
         <GFButton route="FilmList" text="Login" />
-        {biometricsAvailable && (
+        {isBiometricsSupported && (
           <View style={styles.biometricsContainer}>
             <Text style={styles.switchText}>Login with Biometrics</Text>
             <Switch
               style={styles.switch}
               trackColor={{false: '#767577', true: '#81b0ff'}}
-              thumbColor={biometricsSwitch ? '#f5dd4b' : '#f4f3f4'}
+              thumbColor={isBiometricLoginEnabled ? '#f5dd4b' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
-              onValueChange={biometricsSwitchToggle}
-              value={biometricsSwitch}
+              onValueChange={isOn => toggleBiometricsEnabled(isOn)}
+              value={isBiometricLoginEnabled}
             />
           </View>
         )}

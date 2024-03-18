@@ -12,6 +12,8 @@ import FilmListScreen from './screens/FilmListScreen';
 import DetailsScreen from './screens/DetailsScreen';
 import HomeScreenV2 from './screens/HomeScreenV2';
 
+// Protected routes maybe
+
 const App = (): React.JSX.Element => {
   return (
     <Provider store={store}>
