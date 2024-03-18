@@ -7,7 +7,8 @@ export enum ActionType {
   GET_FILMS_FAILURE = 'GET_FILMS_FAILURE',
   INCREMENT_FILMS_SCROLL_INDEX = 'INCREMENT_FILMS_SCROLL_INDEX',
   UPDATE_THEME = 'UPDATE_THEME',
-  AUTHENTICATE_USER = 'AUTHENTICATE_USER',
+  SIGN_IN = 'SIGN_IN',
+  SIGN_OUT = 'SIGN_OUT',
 }
 
 export interface GetFilmsFetch {
@@ -32,7 +33,12 @@ export interface UpdateTheme {
   payload: string;
 }
 
-export interface AuthenticateUser {
-  type: ActionType.AUTHENTICATE_USER;
+export interface SignIn {
+  type: ActionType.SIGN_IN;
+  payload: User;
+}
+
+export interface SignOut {
+  type: ActionType.SIGN_OUT;
   payload: User;
 }

@@ -1,11 +1,7 @@
 import React from 'react';
-
 import {Provider} from 'react-redux';
 import store from './app/store/store';
-
 import NavigationGuard from './hoc/NavigationGuard';
-
-// Protected routes maybe
 
 const App = (): React.JSX.Element => {
   return (

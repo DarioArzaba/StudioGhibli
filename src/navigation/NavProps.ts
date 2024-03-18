@@ -6,6 +6,7 @@ export type RootStackParamList = {
   UserProfile: undefined;
   FilmList: undefined;
   Details: {filmIdNavProp: string};
+  NotFound: undefined;
 };
 
 export type HomeScreenNavProps = NativeStackNavigationProp<
@@ -31,4 +32,9 @@ export type DetailsNavProps = NativeStackNavigationProp<
 export type LoginNavProps = NativeStackNavigationProp<
   RootStackParamList,
   'Login'
+>;
+
+export type NotFoundNavProps = NativeStackNavigationProp<
+  RootStackParamList,
+  'NotFound'
 >;

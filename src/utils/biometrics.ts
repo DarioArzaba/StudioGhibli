@@ -1,11 +1,13 @@
 import ReactNativeBiometrics from 'react-native-biometrics';
 import {readData, storeData} from './asyncStorageManager';
-import {FilmListNavProps} from '../navigation/NavProps';
+import User from '../models/User';
+import {Dispatch} from '@reduxjs/toolkit';
+import {signInUser} from '../app/actions/actionCreators';
 
 const rnBiometrics = new ReactNativeBiometrics();
 
 export const loginWithBiometrics = async (
-  navigation: FilmListNavProps,
+  dispatch: Dispatch,
 ): Promise<void> => {
   try {
     const {success} = await rnBiometrics.simplePrompt({
@@ -13,7 +15,14 @@ export const loginWithBiometrics = async (
     });
     const isUserAuthenticated = await isAuthenticated();
     if (isUserAuthenticated && success) {
-      navigation.navigate('FilmList');
+      const mockUser: User = {
+        isSignedIn: true,
+        name: 'Dar',
+        email: 'dar@gmail.com',
+        theme: 'green',
+        language: 'en',
+      };
+      dispatch(signInUser(mockUser));
     }
   } catch (error) {
     console.error('Authentication error:', error);
@@ -83,7 +92,6 @@ const createSignature = async (): Promise<{
 const registerUser = async (): Promise<void> => {
   try {
     const {publicKey} = await rnBiometrics.createKeys();
-    //Hint: Send publicKey to server
     await storeData('biometricsPublicKey', publicKey);
   } catch (error) {
     console.error(`Error registering user: ${error}`);
