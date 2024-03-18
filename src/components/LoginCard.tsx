@@ -7,12 +7,18 @@ import {readData, updateData} from '../utils/asyncStorageManager';
 import {checkBiometricSupport, loginWithBiometrics} from '../utils/biometrics';
 import {useNavigation} from '@react-navigation/native';
 import {FilmListNavProps} from '../navigation/NavProps';
+import User from '../models/User';
+import {useDispatch, useSelector} from 'react-redux';
+import {setUser} from '../app/actions/actionCreators';
+import {selectUserAuth} from '../app/selectors/authSelector';
 
 const LoginCard = ({titleKey}: {titleKey: string}): React.JSX.Element => {
   const {t} = useTranslation();
   const navigation = useNavigation<FilmListNavProps>();
+  const dispatch = useDispatch();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const user = useSelector(selectUserAuth);
 
   const [isBiometricsSupported, setIsBiometricsSupported] = useState(false);
   const [isBiometricLoginEnabled, setIsBiometricLoginEnabled] = useState(false);
@@ -28,8 +34,22 @@ const LoginCard = ({titleKey}: {titleKey: string}): React.JSX.Element => {
         await loginWithBiometrics(navigation);
       }
     };
+    console.log(user);
     biometricsSetup();
   }, []);
+
+  const validateUser = () => {
+    //TODO: User auth validation
+    const mockUser: User = {
+      isUserSigned: true,
+      name: 'Dar',
+      email: 'dar@gmail.com',
+      theme: 'green',
+      language: 'en',
+    };
+    dispatch(setUser(mockUser));
+    navigation.navigate('FilmList');
+  };
 
   const toggleBiometricsEnabled = async (isSwitchOn: boolean) => {
     setIsBiometricLoginEnabled(isSwitchOn);
@@ -57,7 +77,7 @@ const LoginCard = ({titleKey}: {titleKey: string}): React.JSX.Element => {
         onChangeText={newPassword => setPassword(newPassword)}
       />
       <View style={styles.buttonsContainer}>
-        <GFButton route="FilmList" text="Login" />
+        <GFButton text="Login" onClick={validateUser} />
         {isBiometricsSupported && (
           <View style={styles.biometricsContainer}>
             <Text style={styles.switchText}>Login with Biometrics</Text>

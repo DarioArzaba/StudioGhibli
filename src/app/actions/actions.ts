@@ -1,4 +1,5 @@
 import Film from '../../models/FilmsResponse';
+import User from '../../models/User';
 
 export enum ActionType {
   GET_FILMS = 'GET_FILMS',
@@ -6,6 +7,7 @@ export enum ActionType {
   GET_FILMS_FAILURE = 'GET_FILMS_FAILURE',
   INCREMENT_FILMS_SCROLL_INDEX = 'INCREMENT_FILMS_SCROLL_INDEX',
   UPDATE_THEME = 'UPDATE_THEME',
+  AUTHENTICATE_USER = 'AUTHENTICATE_USER',
 }
 
 export interface GetFilmsFetch {
@@ -28,4 +30,9 @@ export interface IncrementFilmsScrollIndex {
 export interface UpdateTheme {
   type: ActionType.UPDATE_THEME;
   payload: string;
+}
+
+export interface AuthenticateUser {
+  type: ActionType.AUTHENTICATE_USER;
+  payload: User;
 }

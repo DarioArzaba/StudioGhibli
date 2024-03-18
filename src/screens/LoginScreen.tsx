@@ -6,7 +6,7 @@ import {useDeviceDimensions} from '../hooks/useDeviceDimensions';
 import HomeFooter from '../components/HomeFooter';
 import LoginCard from '../components/LoginCard';
 
-const HomeScreenV2 = (): React.JSX.Element => {
+const LoginScreen = (): React.JSX.Element => {
   const {isDeviceInPortraitMode} = useDeviceDimensions();
   const {theme} = useTheme();
 
@@ -45,4 +45,4 @@ const landStyles = StyleSheet.create({
   },
 });
 
-export default HomeScreenV2;
+export default LoginScreen;

@@ -1,4 +1,5 @@
 import Film from '../../models/FilmsResponse';
+import User from '../../models/User';
 import {ActionType} from './actions';
 
 export const getFilms = () => ({
@@ -21,4 +22,9 @@ export const incrementFilmsScrollIndex = () => ({
 export const updateTheme = (theme: string) => ({
   type: ActionType.UPDATE_THEME,
   payload: theme,
+});
+
+export const setUser = (user: User) => ({
+  type: ActionType.AUTHENTICATE_USER,
+  payload: user,
 });
