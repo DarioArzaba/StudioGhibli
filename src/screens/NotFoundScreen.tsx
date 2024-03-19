@@ -13,26 +13,26 @@ const NotFoundScreen = (): React.JSX.Element => {
   const {t} = useTranslation();
   const user = useSelector(selectUserAuth);
   return (
-    <View style={portStyles.safeAreaView}>
+    <View style={portraitStyles.safeAreaView}>
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
         blurRadius={!isDeviceAndroidOS ? 5 : undefined}
-        style={portStyles.bgImage}>
-        <View style={portStyles.fetchingFilmsContainer}>
+        style={portraitStyles.bgImage}>
+        <View style={portraitStyles.fetchingFilmsContainer}>
           {user && user.isSignedIn ? (
-            <View style={portStyles.noConnectionContainer}>
-              <Text style={portStyles.noConnectionText}>
-                You are already logged in!
+            <View style={portraitStyles.noConnectionContainer}>
+              <Text style={portraitStyles.noConnectionText}>
+                You are already signed in!
               </Text>
-              <GFButton text="Home" route="Home" />
+              <GFButton textKey="go-home-button" route="Home" />
             </View>
           ) : (
-            <View style={portStyles.noConnectionContainer}>
-              <Text style={portStyles.noConnectionText}>
-                Access Denied. Please sign in first.
+            <View style={portraitStyles.noConnectionContainer}>
+              <Text style={portraitStyles.noConnectionText}>
+                404 Not Found.
               </Text>
-              <GFButton text="Sign In" route="Login" />
+              <GFButton textKey="sign-in-button" route="SignIn" />
             </View>
           )}
         </View>
@@ -41,7 +41,7 @@ const NotFoundScreen = (): React.JSX.Element => {
   );
 };
 
-const portStyles = StyleSheet.create({
+const portraitStyles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
   },

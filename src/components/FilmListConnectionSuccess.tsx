@@ -42,27 +42,27 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
   const filmsFetched = areFilmsFetched(films);
 
   return (
-    <View style={portStyles.safeAreaView}>
+    <View style={portraitStyles.safeAreaView}>
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
         blurRadius={!isDeviceAndroidOS ? 5 : undefined}
-        style={portStyles.bgImage}>
+        style={portraitStyles.bgImage}>
         {isLoading && (
-          <View style={portStyles.fetchingFilmsContainer}>
+          <View style={portraitStyles.fetchingFilmsContainer}>
             <ActivityIndicator
               color="blue"
               size={'large'}
               style={
                 isDeviceInPortraitMode
-                  ? portStyles.loadingIndicator
-                  : landStyles.loadingIndicator
+                  ? portraitStyles.loadingIndicator
+                  : landscapeStyles.loadingIndicator
               }
             />
           </View>
         )}
         {filmsFetched && !isLoading && (
-          <View style={portStyles.filmListContainer}>
+          <View style={portraitStyles.filmListContainer}>
             <ButtonGoBack />
             <FilmList
               isPortrait={isDeviceInPortraitMode}
@@ -77,7 +77,7 @@ const FilmListConnectionSuccess = (): React.JSX.Element => {
   );
 };
 
-const portStyles = StyleSheet.create({
+const portraitStyles = StyleSheet.create({
   filmListContainer: {
     width: '100%',
   },
@@ -99,7 +99,7 @@ const portStyles = StyleSheet.create({
   },
 });
 
-const landStyles = StyleSheet.create({
+const landscapeStyles = StyleSheet.create({
   loadingIndicator: {
     marginTop: '20%',
   },

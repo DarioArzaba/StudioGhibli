@@ -1,5 +1,9 @@
 {
   "title": "Ghibli Films",
+  "sign-in-button": "Sign In",
+  "sign-out-button": "Sign Out",
+  "go-home-button": "Home",
+  "home-footer": "© 2024 My App. All rights reserved.",
   "get-films-button": "Get Films",
   "go-to-settings": "Settings",
   "settings-name-label-display": "Name",
@@ -18,6 +22,5 @@
   "settings-language-picker-option-french": "French",
   "settings-save-button": "Save",
   "settings-edit-button": "Edit",
-  "no-connection": "No connection, please try again later",
-  "footer": "© 2024 My App. All rights reserved."
+  "no-connection": "No connection, please try again later"
 }

@@ -1,23 +1,17 @@
 import React from 'react';
-import {
-  ImageBackground,
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {ImageBackground, View, StyleSheet, Text} from 'react-native';
 import {imageBackgroundURI, isDeviceAndroidOS} from '../utils/appLogic';
 import {useTheme} from '../hooks/useTheme';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
-import {FilmListNavProps} from '../navigation/NavProps';
-import {useNavigation} from '@react-navigation/native';
+import GFButton from '../components/GFButton';
+import {useSelector} from 'react-redux';
+import {selectUserAuth} from '../app/selectors/authSelector';
 
-const FilmListConnectionFailed = (): React.JSX.Element => {
-  const navigation = useNavigation<FilmListNavProps>();
-
+const NotSignedInScreen = (): React.JSX.Element => {
   const {theme} = useTheme();
   const {t} = useTranslation();
+  const user = useSelector(selectUserAuth);
   return (
     <View style={portraitStyles.safeAreaView}>
       <ImageBackground
@@ -26,16 +20,17 @@ const FilmListConnectionFailed = (): React.JSX.Element => {
         blurRadius={!isDeviceAndroidOS ? 5 : undefined}
         style={portraitStyles.bgImage}>
         <View style={portraitStyles.fetchingFilmsContainer}>
-          <View style={portraitStyles.noConnectionContainer}>
-            <Text style={portraitStyles.noConnectionText}>
-              {t('no-connection')}
-            </Text>
-            <TouchableOpacity
-              onPress={() => navigation.popToTop()}
-              style={portraitStyles.homeButton}>
-              <Text style={portraitStyles.homeButtonText}>Go to Home</Text>
-            </TouchableOpacity>
-          </View>
+          {user && user.isSignedIn ? (
+            <View style={portraitStyles.noConnectionContainer}>
+              <Text style={portraitStyles.noConnectionText}>NotLoggediN</Text>
+              <GFButton textKey="go-home-button" route="Home" />
+            </View>
+          ) : (
+            <View style={portraitStyles.noConnectionContainer}>
+              <Text style={portraitStyles.noConnectionText}>logiend in</Text>
+              <GFButton textKey="sign-in-button" route="SignIn" />
+            </View>
+          )}
         </View>
       </ImageBackground>
     </View>
@@ -91,4 +86,4 @@ const portraitStyles = StyleSheet.create({
   },
 });
 
-export default FilmListConnectionFailed;
+export default NotSignedInScreen;

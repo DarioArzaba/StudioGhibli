@@ -1,12 +1,12 @@
 import {ActionType, UpdateTheme} from '../actions/actions';
 
-type UserInterfaceActions = UpdateTheme;
+type UIActions = UpdateTheme;
 
 const initialState = {
   theme: 'default',
 };
 
-const uiReducer = (state = initialState, action: UserInterfaceActions) => {
+const uiReducer = (state = initialState, action: UIActions) => {
   switch (action.type) {
     case ActionType.UPDATE_THEME:
       return {

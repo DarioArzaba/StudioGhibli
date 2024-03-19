@@ -5,7 +5,7 @@ import authReducer from './authReducer';
 
 const reducer = combineReducers({
   films: filmsReducer,
-  userinterface: uiReducer,
+  ui: uiReducer,
   auth: authReducer,
 });
 

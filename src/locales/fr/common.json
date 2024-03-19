@@ -1,5 +1,9 @@
 {
   "title": "Films des Ghibli",
+  "sign-in-button": "Se Connecter",
+  "sign-out-button": "Se Déconnecter",
+  "go-home-button": "Page d'accueil",
+  "home-footer":"© 2024 Mon application. Tous droits réservés.",
   "get-films-button": "Obtenir des films",
   "go-to-settings": "Paramètres",
   "settings-name-label-display": "Nom",
@@ -18,6 +22,5 @@
   "settings-language-picker-option-french": "Français",
   "settings-save-button": "Enregister",
   "settings-edit-button": "Modifier",
-  "no-connection": "Pas de connexion ! Essaye à nouveau.",
-  "footer":"© 2024 Mon application. Tous droits réservés."
+  "no-connection": "Pas de connexion ! Essaye à nouveau."
 }

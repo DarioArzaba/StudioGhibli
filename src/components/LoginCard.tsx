@@ -1,23 +1,24 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {StyleSheet, Switch, Text, TextInput, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
-import GFButton from './GFButton';
-import {readData, updateData} from '../utils/asyncStorageManager';
+import {readData, storeObject, updateData} from '../utils/asyncStorageManager';
 import {checkBiometricSupport, loginWithBiometrics} from '../utils/biometrics';
-import User from '../models/User';
-import {useDispatch} from 'react-redux';
-import {setUser, signInUser} from '../app/actions/actionCreators';
+import {userSignIn, userSignUp} from '../app/actions/actionCreators';
+import GFButton from './GFButton';
+import {useDeviceDimensions} from '../hooks/useDeviceDimensions';
+import {selectUserAuth} from '../app/selectors/authSelector';
 
 const LoginCard = ({titleKey}: {titleKey: string}): React.JSX.Element => {
   const {t} = useTranslation();
+  const {isDeviceInPortraitMode} = useDeviceDimensions();
   const dispatch = useDispatch();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-
   const [isBiometricsSupported, setIsBiometricsSupported] = useState(false);
   const [isBiometricLoginEnabled, setIsBiometricLoginEnabled] = useState(false);
-
+  const user = useSelector(selectUserAuth);
   useEffect(() => {
     const biometricsSetup = async (): Promise<void> => {
       setIsBiometricsSupported(await checkBiometricSupport());
@@ -26,57 +27,74 @@ const LoginCard = ({titleKey}: {titleKey: string}): React.JSX.Element => {
       );
       if (biometricSettingInStorage === 'true') {
         setIsBiometricLoginEnabled(true);
-        await loginWithBiometrics(dispatch);
+        await loginWithBiometrics();
       }
     };
     biometricsSetup();
   }, []);
 
-  const mockUser: User = {
-    isSignedIn: true,
-    name: 'Dar',
-    email: 'dar@gmail.com',
-    theme: 'green',
-    language: 'en',
-  };
-
-  const userSignIn = () => {
-    //TODO: User auth validation
-    dispatch(signInUser(mockUser));
+  const validateUser = async () => {
+    //TODO: Validate that user matches stored one before dispatch
+    const storedProfile = await readData('profile');
+    if (storedProfile !== null) {
+      const profile = JSON.parse(storedProfile);
+      const updatedProfile = {...profile, isSignedIn: true};
+      await storeObject('profile', updatedProfile);
+    }
+    dispatch(userSignIn());
   };
 
   const toggleBiometricsEnabled = async (isSwitchOn: boolean) => {
     setIsBiometricLoginEnabled(isSwitchOn);
     if (isSwitchOn) {
-      await loginWithBiometrics(dispatch);
+      await loginWithBiometrics();
     }
     await updateData('isBiometricLoginEnabled', `${isSwitchOn}`);
   };
 
   return (
-    <View testID="HeaderContainer" style={styles.header}>
-      <Text style={styles.headerText}>{t(`${titleKey}`)}</Text>
+    <View
+      style={
+        isDeviceInPortraitMode
+          ? portraitStyles.mainContainer
+          : landscapeStyles.mainContainer
+      }>
+      <Text
+        style={
+          isDeviceInPortraitMode ? portraitStyles.title : landscapeStyles.title
+        }>
+        {t(`${titleKey}`)}
+      </Text>
 
       <TextInput
         value={userName}
         placeholder="Enter your user name"
-        style={styles.textInput}
+        style={portraitStyles.textInput}
         onChangeText={newUserName => setUserName(newUserName)}
       />
 
       <TextInput
         value={password}
         placeholder="Enter your password"
-        style={styles.textInput}
+        style={portraitStyles.textInput}
         onChangeText={newPassword => setPassword(newPassword)}
       />
-      <View style={styles.buttonsContainer}>
-        <GFButton text="Login" onClick={userSignIn} />
+
+      <View style={portraitStyles.section}>
+        <GFButton textKey="sign-in-button" onClick={validateUser} />
         {isBiometricsSupported && (
-          <View style={styles.biometricsContainer}>
-            <Text style={styles.switchText}>Login with Biometrics</Text>
+          <View
+            style={
+              isDeviceInPortraitMode
+                ? portraitStyles.biometricsContainer
+                : landscapeStyles.biometricsContainer
+            }>
+            {/* TODO: Change for text key */}
+            <Text style={portraitStyles.biometricsDescription}>
+              Login with Biometrics
+            </Text>
             <Switch
-              style={styles.switch}
+              style={portraitStyles.biometricsSwitch}
               trackColor={{false: '#767577', true: '#81b0ff'}}
               thumbColor={isBiometricLoginEnabled ? '#f5dd4b' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
@@ -90,11 +108,9 @@ const LoginCard = ({titleKey}: {titleKey: string}): React.JSX.Element => {
   );
 };
 
-const styles = StyleSheet.create({
-  buttonsContainer: {
-    width: '100%',
-  },
-  header: {
+//TODO: Fix styles
+const portraitStyles = StyleSheet.create({
+  mainContainer: {
     width: 300,
     padding: 40,
     flexDirection: 'column',
@@ -107,21 +123,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowColor: 'rgba(0, 0, 0, 1)',
   },
-  headerText: {
+  title: {
     fontSize: 28,
     paddingBottom: 20,
     color: 'white',
     textAlign: 'center',
     fontWeight: 'bold',
-  },
-  switchText: {
-    fontSize: 16,
-    color: 'lightgrey',
-    textAlign: 'center',
-  },
-  switch: {
-    transform: [{scale: 0.8}],
-    marginLeft: 5,
   },
   textInput: {
     width: '100%',
@@ -134,11 +141,50 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
+  section: {
+    width: '100%',
+  },
   biometricsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
+  },
+  biometricsDescription: {
+    fontSize: 16,
+    color: 'lightgrey',
+    textAlign: 'center',
+  },
+  biometricsSwitch: {
+    transform: [{scale: 0.8}],
+    marginLeft: 5,
+  },
+});
+
+const landscapeStyles = StyleSheet.create({
+  mainContainer: {
+    width: 300,
+    padding: 20,
+    flexDirection: 'column',
+    alignItems: 'center',
+    fontFamily: 'Verdana, Geneva, Tahoma, sans-serif',
+    backgroundColor: '#108e71ff',
+    borderRadius: 15,
+    shadowOffset: {width: 0, height: 0},
+    shadowRadius: 100,
+    shadowOpacity: 1,
+    shadowColor: 'rgba(0, 0, 0, 1)',
+  },
+  title: {
+    fontSize: 24,
+    paddingBottom: 10,
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  biometricsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

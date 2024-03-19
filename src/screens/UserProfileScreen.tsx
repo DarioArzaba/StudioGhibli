@@ -17,15 +17,14 @@ import User from '../models/User';
 
 const UserProfile = (): React.JSX.Element => {
   const {t} = useTranslation();
-  const defaultProfile = {
-    isSignedIn: true,
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [currentProfile, setCurrentProfile] = useState<User>({
     name: '',
     email: '',
-    theme: 'default',
+    theme: 'red',
     language: 'en',
-  };
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [currentProfile, setCurrentProfile] = useState<User>(defaultProfile);
+    isSignedIn: true,
+  });
   const {theme, setTheme} = useTheme();
 
   useEffect(() => {

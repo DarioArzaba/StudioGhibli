@@ -3,16 +3,22 @@ import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/NavProps';
+import {useTranslation} from 'react-i18next';
 
 type GFButtonProps = {
   route?: keyof RootStackParamList;
   onClick?: () => void;
-  text: string;
+  textKey: string;
 };
 
-const GFButton = ({route, onClick, text}: GFButtonProps): React.JSX.Element => {
+const GFButton = ({
+  route,
+  onClick,
+  textKey,
+}: GFButtonProps): React.JSX.Element => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const {t} = useTranslation();
 
   const handleNavigation = () => {
     switch (route) {
@@ -28,7 +34,7 @@ const GFButton = ({route, onClick, text}: GFButtonProps): React.JSX.Element => {
     <TouchableOpacity
       onPress={route ? handleNavigation : onClick}
       style={styles.button}>
-      <Text style={styles.buttonText}>{text}</Text>
+      <Text style={styles.buttonText}>{t(`${textKey}`)}</Text>
     </TouchableOpacity>
   );
 };

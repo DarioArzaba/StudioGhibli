@@ -2,11 +2,12 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
   Home: undefined;
-  Login: undefined;
   UserProfile: undefined;
   FilmList: undefined;
   Details: {filmIdNavProp: string};
   NotFound: undefined;
+  SignIn: undefined;
+  SignUp: undefined;
 };
 
 export type HomeScreenNavProps = NativeStackNavigationProp<
@@ -29,12 +30,12 @@ export type DetailsNavProps = NativeStackNavigationProp<
   'Details'
 >;
 
-export type LoginNavProps = NativeStackNavigationProp<
-  RootStackParamList,
-  'Login'
->;
-
 export type NotFoundNavProps = NativeStackNavigationProp<
   RootStackParamList,
   'NotFound'
+>;
+
+export type SignInNavProps = NativeStackNavigationProp<
+  RootStackParamList,
+  'SignIn'
 >;

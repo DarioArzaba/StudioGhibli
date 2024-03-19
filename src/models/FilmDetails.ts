@@ -1,8 +1,6 @@
-export default interface FilmDetails {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
+import FilmsResponse from './FilmsResponse';
+
+export default interface FilmDetails extends FilmsResponse {
   director: string;
   rt_score: string;
 } // eslint-disable-line semi

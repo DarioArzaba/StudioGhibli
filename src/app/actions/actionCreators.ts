@@ -24,12 +24,15 @@ export const updateTheme = (theme: string) => ({
   payload: theme,
 });
 
-export const signInUser = (user: User) => ({
+export const userSignIn = () => ({
   type: ActionType.SIGN_IN,
-  payload: user,
 });
 
-export const signOutUser = (user: User) => ({
+export const userSignOut = () => ({
   type: ActionType.SIGN_OUT,
+});
+
+export const userSignUp = (user: User) => ({
+  type: ActionType.SIGN_UP,
   payload: user,
 });

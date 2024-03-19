@@ -9,6 +9,7 @@ export enum ActionType {
   UPDATE_THEME = 'UPDATE_THEME',
   SIGN_IN = 'SIGN_IN',
   SIGN_OUT = 'SIGN_OUT',
+  SIGN_UP = 'SIGN_UP',
 }
 
 export interface GetFilmsFetch {
@@ -33,12 +34,15 @@ export interface UpdateTheme {
   payload: string;
 }
 
-export interface SignIn {
+export interface UserSignIn {
   type: ActionType.SIGN_IN;
-  payload: User;
 }
 
-export interface SignOut {
+export interface UserSignOut {
   type: ActionType.SIGN_OUT;
+}
+
+export interface UserSignUp {
+  type: ActionType.SIGN_UP;
   payload: User;
 }

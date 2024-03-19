@@ -1,5 +1,9 @@
 {
   "title": "Peliculas Ghibli",
+  "sign-in-button": "Iniciar Sesión",
+  "sign-out-button": "Cerrar Sesión",
+  "go-home-button": "Inicio",
+  "home-footer":"© 2024 Mi app. Todos los derechos reservados.",
   "get-films-button": "Peliculas",
   "go-to-settings": "Ajustes",
   "settings-name-label-display": "Nombre",
@@ -18,6 +22,5 @@
   "settings-language-picker-option-french": "Frances",
   "settings-save-button": "Guardar",
   "settings-edit-button": "Editar",
-  "no-connection": "Sin conexión! Intentalo de nuevo.",
-  "footer":"© 2024 Mi app. Todos los derechos reservados."
+  "no-connection": "Sin conexión! Intentalo de nuevo."
 }

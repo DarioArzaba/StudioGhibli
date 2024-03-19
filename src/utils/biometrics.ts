@@ -1,28 +1,18 @@
 import ReactNativeBiometrics from 'react-native-biometrics';
 import {readData, storeData} from './asyncStorageManager';
-import User from '../models/User';
-import {Dispatch} from '@reduxjs/toolkit';
-import {signInUser} from '../app/actions/actionCreators';
+import store from '../app/store/store';
+import {userSignIn} from '../app/actions/actionCreators';
 
 const rnBiometrics = new ReactNativeBiometrics();
 
-export const loginWithBiometrics = async (
-  dispatch: Dispatch,
-): Promise<void> => {
+export const loginWithBiometrics = async (): Promise<void> => {
   try {
     const {success} = await rnBiometrics.simplePrompt({
       promptMessage: 'Confirmation',
     });
     const isUserAuthenticated = await isAuthenticated();
     if (isUserAuthenticated && success) {
-      const mockUser: User = {
-        isSignedIn: true,
-        name: 'Dar',
-        email: 'dar@gmail.com',
-        theme: 'green',
-        language: 'en',
-      };
-      dispatch(signInUser(mockUser));
+      store.dispatch(userSignIn());
     }
   } catch (error) {
     console.error('Authentication error:', error);
