@@ -1,7 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import ButtonGoToFilmList from './ButtonGoToFilmList';
-import ButtonGoToUserProfile from './ButtonGoToUserProfile';
 
 import {useTranslation} from 'react-i18next';
 import '../utils/i18n';
@@ -29,9 +27,8 @@ const HomeHub = (): React.JSX.Element => {
   return (
     <View testID="HeaderContainer" style={styles.header}>
       <Text style={styles.headerText}>{t('title')}</Text>
-      <ButtonGoToFilmList />
-      <ButtonGoToUserProfile />
-      <GFButton text="Sign Out" onClick={userSignOut} />
+      <GFButton textKey="get-films-button" route="FilmList" />
+      <GFButton textKey="go-to-settings" route="UserProfile" />
     </View>
   );
 };

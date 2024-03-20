@@ -28,12 +28,11 @@ const DetailsScreen = (): React.JSX.Element => {
 
   useEffect(() => {
     const fetchFilmsIfNotLoaded = () => dispatch(getFilms());
-    if (!filmsFetched) {
-      fetchFilmsIfNotLoaded();
-    }
+    !filmsFetched && fetchFilmsIfNotLoaded();
   });
 
   const filmDetails = getFilmFromId(films, filmIdNavProp);
+
   return (
     <View style={styles.detailsScreenContainer}>
       <ButtonGoBack />
