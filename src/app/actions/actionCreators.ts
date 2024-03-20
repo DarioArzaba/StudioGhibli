@@ -18,10 +18,6 @@ export const incrementFilmsScrollIndex = () => ({
   type: ActionType.INCREMENT_FILMS_SCROLL_INDEX,
 });
 
-export const updateOrientationState = () => ({
-  type: ActionType.UPDATE_ORIENTATION_STATE,
-});
-
 export const updateTheme = (theme: string) => ({
   type: ActionType.UPDATE_THEME,
   payload: theme,
