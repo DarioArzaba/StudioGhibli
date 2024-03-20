@@ -12,22 +12,22 @@ const HomeScreen = (): React.JSX.Element => {
   const {theme} = useTheme();
 
   return (
-    <View testID="HomeScreenContainer" style={portStyles.mainContainer}>
+    <View testID="HomeScreenContainer" style={portraitStyles.mainContainer}>
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
         blurRadius={!isDeviceAndroidOS ? 3 : undefined}
-        style={portStyles.bgImage}>
+        style={portraitStyles.bgImage}>
         <View style={isDeviceInPortraitMode ? portStyles.hub : landStyles.hub}>
           <HomeHub />
         </View>
       </ImageBackground>
-      <HomeFooter />
+      <Footer textKey="home-footer" />
     </View>
   );
 };
 
-const portStyles = StyleSheet.create({
+const portraitStyles = StyleSheet.create({
   mainContainer: {
     flex: 1,
   },
@@ -40,7 +40,7 @@ const portStyles = StyleSheet.create({
   },
 });
 
-const landStyles = StyleSheet.create({
+const landscapeStyles = StyleSheet.create({
   hub: {
     marginTop: '10%',
   },
