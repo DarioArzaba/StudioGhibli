@@ -2,13 +2,12 @@ import React from 'react';
 import {ImageBackground, View, StyleSheet} from 'react-native';
 import {imageBackgroundURI, isDeviceAndroidOS} from '../utils/appLogic';
 import {useTheme} from '../hooks/useTheme';
-import HomeHub from '../components/HomeHub';
-import HomeFooter from '../components/HomeFooter';
 import {useDeviceDimensions} from '../hooks/useDeviceDimensions';
+import HomeFooter from '../components/HomeFooter';
+import LoginCard from '../components/LoginCard';
 
-const HomeScreen = (): React.JSX.Element => {
+const LoginScreen = (): React.JSX.Element => {
   const {isDeviceInPortraitMode} = useDeviceDimensions();
-
   const {theme} = useTheme();
 
   return (
@@ -19,7 +18,7 @@ const HomeScreen = (): React.JSX.Element => {
         blurRadius={!isDeviceAndroidOS ? 3 : undefined}
         style={portStyles.bgImage}>
         <View style={isDeviceInPortraitMode ? portStyles.hub : landStyles.hub}>
-          <HomeHub />
+          <LoginCard titleKey="title" />
         </View>
       </ImageBackground>
       <HomeFooter />
@@ -36,14 +35,14 @@ const portStyles = StyleSheet.create({
     alignItems: 'center',
   },
   hub: {
-    marginTop: '70%',
+    marginTop: '40%',
   },
 });
 
 const landStyles = StyleSheet.create({
   hub: {
-    marginTop: '10%',
+    marginTop: '0%',
   },
 });
 
-export default HomeScreen;
+export default LoginScreen;
