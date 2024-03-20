@@ -1,13 +1,14 @@
 #import "AppDelegate.h"
 #import <React/RCTLinkingManager.h>
 #import <React/RCTBundleURLProvider.h>
+#import <Firebase.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   self.moduleName = @"StudioGhibli";
-  // Firebase, splashscreen before launch here
+  [FIRApp configure];
   self.initialProps = @{};
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];

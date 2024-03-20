@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {Provider} from 'react-redux';
 import store from './app/store/store';
@@ -11,8 +11,17 @@ import HomeScreen from './screens/HomeScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
 import FilmListScreen from './screens/FilmListScreen';
 import DetailsScreen from './screens/DetailsScreen';
+import {listenForNotifications, requestPermission} from './utils/notifications';
 
 const App = (): React.JSX.Element => {
+  useEffect(() => {
+    const notificationsSetup = async () => {
+      await requestPermission();
+      await listenForNotifications();
+    };
+    notificationsSetup();
+  });
+
   return (
     <Provider store={store}>
       <NavigationContainer linking={deepLinksConfig}>

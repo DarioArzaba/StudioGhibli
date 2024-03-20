@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "331008903105",
+    "project_id": "rn-pushnotificationsapp",
+    "storage_bucket": "rn-pushnotificationsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331008903105:android:259cf6f0411f304b981140",
+        "android_client_info": {
+          "package_name": "com.pushnotification"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9SNziSo9byf2bGtvFBLXJ-jXAgvJWACE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331008903105:android:58db165782a64ab0981140",
+        "android_client_info": {
+          "package_name": "com.studioghibli.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9SNziSo9byf2bGtvFBLXJ-jXAgvJWACE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
