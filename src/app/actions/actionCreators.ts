@@ -1,4 +1,5 @@
 import Film from '../../models/FilmsResponse';
+import User from '../../models/User';
 import {ActionType} from './actions';
 
 export const getFilms = () => ({
@@ -18,11 +19,17 @@ export const incrementFilmsScrollIndex = () => ({
   type: ActionType.INCREMENT_FILMS_SCROLL_INDEX,
 });
 
-export const updateOrientationState = () => ({
-  type: ActionType.UPDATE_ORIENTATION_STATE,
-});
-
 export const updateTheme = (theme: string) => ({
   type: ActionType.UPDATE_THEME,
   payload: theme,
+});
+
+export const signInUser = (user: User) => ({
+  type: ActionType.SIGN_IN,
+  payload: user,
+});
+
+export const signOutUser = (user: User) => ({
+  type: ActionType.SIGN_OUT,
+  payload: user,
 });

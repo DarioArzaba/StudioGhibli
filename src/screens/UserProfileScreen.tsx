@@ -13,24 +13,19 @@ import {readData, storeObject} from '../utils/asyncStorageManager';
 import {useTranslation} from 'react-i18next';
 import i18next from '../utils/i18n';
 import ButtonGoBack from '../components/ButtonGoBack';
-
-type Profile = {
-  name: string;
-  email: string;
-  theme: string;
-  language: string;
-};
+import User from '../models/User';
 
 const UserProfile = (): React.JSX.Element => {
   const {t} = useTranslation();
   const defaultProfile = {
+    isSignedIn: true,
     name: '',
     email: '',
     theme: 'default',
     language: 'en',
   };
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [currentProfile, setCurrentProfile] = useState<Profile>(defaultProfile);
+  const [currentProfile, setCurrentProfile] = useState<User>(defaultProfile);
   const {theme, setTheme} = useTheme();
 
   useEffect(() => {

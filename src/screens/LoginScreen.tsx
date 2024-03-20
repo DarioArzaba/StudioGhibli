@@ -2,32 +2,31 @@ import React from 'react';
 import {ImageBackground, View, StyleSheet} from 'react-native';
 import {imageBackgroundURI, isDeviceAndroidOS} from '../utils/appLogic';
 import {useTheme} from '../hooks/useTheme';
-import HomeHub from '../components/HomeHub';
 import {useDeviceDimensions} from '../hooks/useDeviceDimensions';
-import Footer from '../components/Footer';
+import HomeFooter from '../components/HomeFooter';
+import LoginCard from '../components/LoginCard';
 
-const HomeScreen = (): React.JSX.Element => {
+const LoginScreen = (): React.JSX.Element => {
   const {isDeviceInPortraitMode} = useDeviceDimensions();
-
   const {theme} = useTheme();
 
   return (
-    <View testID="HomeScreenContainer" style={portraitStyles.mainContainer}>
+    <View testID="HomeScreenContainer" style={portStyles.mainContainer}>
       <ImageBackground
         source={imageBackgroundURI(theme)}
         resizeMode="cover"
         blurRadius={!isDeviceAndroidOS ? 3 : undefined}
-        style={portraitStyles.bgImage}>
-        <View style={isDeviceInPortraitMode ? portraitStyles.hub : landscapeStyles.hub}>
-          <HomeHub />
+        style={portStyles.bgImage}>
+        <View style={isDeviceInPortraitMode ? portStyles.hub : landStyles.hub}>
+          <LoginCard titleKey="title" />
         </View>
       </ImageBackground>
-      <Footer textKey="home-footer" />
+      <HomeFooter />
     </View>
   );
 };
 
-const portraitStyles = StyleSheet.create({
+const portStyles = StyleSheet.create({
   mainContainer: {
     flex: 1,
   },
@@ -36,14 +35,14 @@ const portraitStyles = StyleSheet.create({
     alignItems: 'center',
   },
   hub: {
-    marginTop: '70%',
+    marginTop: '40%',
   },
 });
 
-const landscapeStyles = StyleSheet.create({
+const landStyles = StyleSheet.create({
   hub: {
-    marginTop: '10%',
+    marginTop: '0%',
   },
 });
 
-export default HomeScreen;
+export default LoginScreen;
