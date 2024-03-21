@@ -1,6 +1,8 @@
 import {PermissionsAndroid, Platform} from 'react-native';
-import notifee from '@notifee/react-native';
-import messaging from '@react-native-firebase/messaging';
+import notifee, {Notification} from '@notifee/react-native';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 
 export const requestPermission = async (): Promise<void> => {
   if (Platform.OS === 'android') {
@@ -19,13 +21,9 @@ export const requestPermission = async (): Promise<void> => {
   }
 };
 
-export const displayLocalNotification = async (message): Promise<void> => {
-  // await notifee.createChannel({
-  //   id: 'default',
-  //   name: 'Default Channel',
-  // });
-  //
-
+export const displayLocalNotification = async (
+  message: FirebaseMessagingTypes.RemoteMessage,
+): Promise<void> => {
   const data = {
     title: message.notification?.title,
     body: message.notification?.body,
@@ -44,20 +42,26 @@ export const displayLocalNotification = async (message): Promise<void> => {
 export const listenForNotifications = async (): Promise<void> => {
   logFCMToken();
 
-  // Get foreground app notifications
+  // Listen for messages in background
+  messaging().onNotificationOpenedApp(message => {
+    console.log(
+      'Notification opened app from background state: ',
+      message.notification?.title,
+    );
+  });
+
+  // Listen for messages in foreground
   messaging().onMessage(async message => {
     console.log('New Foreground Notification: ', message.notification?.title);
     if (Platform.OS === 'ios') {
       displayLocalNotification(message);
     }
   });
-
-  // Get background app notifications
   messaging()
     .getInitialNotification()
     .then(async backgroundMessage => {
       console.log(
-        'App Opened with Notification: ',
+        'Notification opened app from quit state: ',
         JSON.stringify(backgroundMessage?.notification?.title),
       );
     })

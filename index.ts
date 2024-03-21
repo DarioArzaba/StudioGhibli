@@ -8,7 +8,7 @@ messaging().setBackgroundMessageHandler(async message => {
     message.notification?.title,
   );
   console.log(
-    'Notification task before app is registered:',
+    'Notification handled in the background: ',
     backgroundTaskMessage,
   );
 });
