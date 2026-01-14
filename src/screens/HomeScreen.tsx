@@ -1,33 +1,15 @@
-import React, {useEffect} from 'react';
-import {ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
-
-import {useDispatch, useSelector} from 'react-redux';
-import {updateOrientationState} from '../app/actions/actionCreators';
-import {selectScreenDimensions} from '../app/selectors/uiSelector';
-
-import {
-  imageBackgroundURI,
-  isDeviceAndroidOS,
-  isDeviceInPortrait,
-} from '../utils/appLogic';
+import React from 'react';
+import {ImageBackground, View, StyleSheet} from 'react-native';
+import {imageBackgroundURI, isDeviceAndroidOS} from '../utils/appLogic';
 import {useTheme} from '../hooks/useTheme';
 import HomeHub from '../components/HomeHub';
-import Footer from '../components/Footer';
+import HomeFooter from '../components/HomeFooter';
+import {useDeviceDimensions} from '../hooks/useDeviceDimensions';
 
 const HomeScreen = (): React.JSX.Element => {
-  const dispatch = useDispatch();
-  const screenDimensions = useSelector(selectScreenDimensions);
-  const isPortrait = isDeviceInPortrait(screenDimensions);
-  const {theme} = useTheme();
+  const {isDeviceInPortraitMode} = useDeviceDimensions();
 
-  useEffect(() => {
-    const updateDimensions = () => dispatch(updateOrientationState());
-    const subscription = Dimensions.addEventListener(
-      'change',
-      updateDimensions,
-    );
-    return () => subscription.remove();
-  });
+  const {theme} = useTheme();
 
   return (
     <View testID="HomeScreenContainer" style={portraitStyles.mainContainer}>
@@ -36,7 +18,7 @@ const HomeScreen = (): React.JSX.Element => {
         resizeMode="cover"
         blurRadius={!isDeviceAndroidOS ? 3 : undefined}
         style={portraitStyles.bgImage}>
-        <View style={isPortrait ? portraitStyles.hub : landscapeStyles.hub}>
+        <View style={isDeviceInPortraitMode ? portStyles.hub : landStyles.hub}>
           <HomeHub />
         </View>
       </ImageBackground>
